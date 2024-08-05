@@ -38,18 +38,18 @@
                         <Image url="@img/password.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="login" layoutX="151.0" layoutY="390.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="175.0" text="Login">
+                  <Button fx:id="login" layoutX="151.0" layoutY="390.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="175.0" text="Crea Account">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Button>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="128.0" layoutY="79.0" prefHeight="53.0" prefWidth="221.0" style="-fx-font-family: Allan;" text="Accedi" textAlignment="JUSTIFY">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="128.0" layoutY="79.0" prefHeight="53.0" prefWidth="221.0" style="-fx-font-family: Allan;" text="Registrati" textAlignment="JUSTIFY">
                      <font>
                         <Font name="Constantia" size="36.0" />
                      </font>
                   </Label>
-                  <Hyperlink layoutX="269.0" layoutY="445.0" onAction="#goto_register" prefHeight="23.0" prefWidth="64.0" text="Registrati" />
-                  <Label layoutX="151.0" layoutY="448.0" prefHeight="17.0" prefWidth="130.0" text="Se non hai un account," />
+                  <Hyperlink layoutX="268.0" layoutY="445.0" onAction="#goto_login" prefHeight="23.0" prefWidth="64.0" text="Accedi" />
+                  <Label layoutX="167.0" layoutY="448.0" prefHeight="17.0" prefWidth="133.0" text="Hai già un account," />
                </children>
             </AnchorPane>
          </right>

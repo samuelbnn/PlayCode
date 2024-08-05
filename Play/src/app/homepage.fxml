@@ -4,10 +4,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" style="-fx-background-color: #ff9900ff;" prefHeight="317.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.homepage">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" style="-fx-background-color: #ff9900ff;" prefHeight="317.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.Controller">
    <children>
       <ImageView id="background" fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="play_button" layoutX="760.0" layoutY="900.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="400.0" stylesheets="@style.css" text="PLAY" textAlignment="CENTER">
-      </Button>
+      <Button fx:id="play_button" layoutX="760.0" layoutY="900.0" mnemonicParsing="false" onAction="#goto_login" prefHeight="65.0" prefWidth="400.0" stylesheets="@style.css" text="PLAY" textAlignment="CENTER"></Button>
    </children>
 </AnchorPane>

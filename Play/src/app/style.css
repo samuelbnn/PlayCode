@@ -4,10 +4,10 @@
     -fx-background-insets: 0,0 0 5 0,0 0 6 0,0 0 7 0;
     -fx-background-radius: 15;
     -fx-background-color:
-            linear-gradient(from 0% 93% to 0% 100%,#a34313 0%,#903b12 100%),
-            #9d4024,
-            #d86e3a,
-            radial-gradient(center 50% 50%, radius 100%,#d96e3a,#c54e2c);
+            linear-gradient(from 0% 93% to 0% 100%,#2c82d3 0%,#379cfa 100%),
+            #2c82d3,
+            #379cfa,
+            radial-gradient(center 50% 50%, radius 100%,#379cfa,#2c82d3);
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.75),4,0,0,1);
     -fx-font-weight: bold;
     -fx-font-size: 1.1em;
@@ -18,10 +18,10 @@
 
 #play_button:hover {
     -fx-background-color:
-            linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
-            #ff9900ff,
-            #d86e3a,
-            radial-gradient(center 50% 50%, radius 100%, #ea7f4b, #c54e2c);
+            linear-gradient(from 0% 93% to 0% 100%, #2c82d3 0%, #379cfa 100%),
+            #379cfa,
+            #379cfa,
+            radial-gradient(center 50% 50%, radius 100%, #379cfa, #2c82d3);
 }
 
 #play_button:pressed

@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 
 public class homepage 
 {
-
     @FXML
     private ResourceBundle resources;
 
@@ -18,5 +17,4 @@ public class homepage
     {
 
     }
-
 }
