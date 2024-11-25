@@ -1,4 +1,4 @@
-package app;
+
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -14,8 +14,8 @@ public class App extends Application
     {
         try
         {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
-            Parent root = (Parent)loader.load();
+            //FXMLLoader loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("homepage.fxml"));
             Scene scene = new Scene(root);
 
             primaryStage.setTitle("Play");

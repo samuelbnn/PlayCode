@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" style="-fx-background-color: #ff9900ff;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" style="-fx-background-color: #ff9900ff;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AccountManager">
    <children>
       <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true" preserveRatio="true" />
       <BorderPane layoutX="516.0" layoutY="328.0" prefHeight="542.0" prefWidth="850.0" style="-fx-background-color: white;">
@@ -38,7 +38,7 @@
                         <Image url="@img/password.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="login" layoutX="151.0" layoutY="390.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="175.0" text="Crea Account">
+                  <Button fx:id="login" layoutX="151.0" layoutY="390.0" onAction="#handleCreateAccount" mnemonicParsing="false" prefHeight="44.0" prefWidth="175.0" text="Crea Account">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>

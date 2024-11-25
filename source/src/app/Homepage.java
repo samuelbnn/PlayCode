@@ -1,10 +1,10 @@
-package app;
+
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 
-public class homepage 
+public class Homepage 
 {
     @FXML
     private ResourceBundle resources;
