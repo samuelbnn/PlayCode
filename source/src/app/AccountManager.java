@@ -1,3 +1,4 @@
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,13 +21,13 @@ public class AccountManager
     @FXML
     private TextField username;
     @FXML
-    private TextField password;
-    @FXML
     private PasswordField hiddenPassword;
+    @FXML
+    private TextField password;
     @FXML
     private CheckBox showPassword;
     @FXML
-    private TextField errorField;
+    private TextField messageField;
 
     private final File file = new File("accounts.csv");
     private final HashMap<String, String> loginInfo = new HashMap<>();
@@ -71,7 +72,7 @@ public class AccountManager
 
         if (user.isEmpty() || psw.isEmpty()) 
         {
-            showError("Username e Password sono obbligatori.");
+            showMessage("Username e Password sono obbligatori.", false);
             return;
         }
 
@@ -83,20 +84,39 @@ public class AccountManager
             if (encryptedPassword != null && encryptor.encryptString(psw).equals(encryptedPassword)) 
             {
                 System.out.println("Login effettuato con successo!");
-                errorField.setVisible(false);
-               
-                //Naviga nel muenu
-                goto_menu(event);
+                showMessage("Login riuscito! Benvenuto, " + user + "!", true);
+
+                // Esegui il reindirizzamento dopo 2.5 secondi
+                new Thread(() -> {
+                    try 
+                    {
+                        Thread.sleep(2500);  // 2.5 secondi di attesa
+                        Platform.runLater(() -> {
+                            try 
+                            {
+                                goto_menu(event); // Naviga al menu dopo 2.5 secondi
+                            } 
+                            catch (IOException e) 
+                            {
+                                e.printStackTrace();
+                            }
+                        });
+                    } 
+                    catch (InterruptedException e) 
+                    {
+                        e.printStackTrace();
+                    }
+                }).start();
             } 
             else 
             {
-                showError("Credenziali errate.");
+                showMessage("Credenziali errate.", false);
             }
         } 
         catch (Exception e) 
         {
             e.printStackTrace();
-            showError("Errore durante il login.");
+            showMessage("Errore durante il login.", false);
         }
     }
 
@@ -108,30 +128,49 @@ public class AccountManager
 
         if (user.isEmpty() || psw.isEmpty()) 
         {
-            showError("Username e Password sono obbligatori.");
+            showMessage("Username e Password sono obbligatori.", false);
             return;
         }
 
         try 
         {
             updateLoginInfo();
-            if (loginInfo.containsKey(user))
+            if (loginInfo.containsKey(user)) 
             {
-                showError("L'username è già in uso.");
+                showMessage("L'username è già in uso.", false);
                 return;
             }
 
             writeToFile(user, psw);
             System.out.println("Account creato con successo!");
-            errorField.setVisible(false);
-            
-            // Naviga al login
-            goto_login(event);
-        }
+            showMessage("Account creato con successo!", true);
+
+            // Esegui il reindirizzamento dopo 2.5 secondi
+            new Thread(() -> {
+                try 
+                {
+                    Thread.sleep(2500);  // 2.5 secondi di attesa
+                    Platform.runLater(() -> {
+                        try 
+                        {
+                            goto_login(event); // Naviga al login dopo 2.5 secondi
+                        } 
+                        catch (IOException e) 
+                        {
+                            e.printStackTrace();
+                        }
+                    });
+                } 
+                catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+            }).start();
+        } 
         catch (Exception e) 
         {
             e.printStackTrace();
-            showError("Errore durante la creazione dell'account.");
+            showMessage("Errore durante la creazione dell'account.", false);
         }
     }
 
@@ -169,10 +208,34 @@ public class AccountManager
         return password.isVisible() ? password.getText() : hiddenPassword.getText();
     }
 
-    private void showError(String message) 
+    private void showMessage(String message, boolean isSuccess) 
     {
-        errorField.setText(message);
-        errorField.setVisible(true);
+        Platform.runLater(() -> {
+            messageField.setText(message);
+            messageField.setVisible(true);
+
+            if (isSuccess) 
+            {
+                messageField.setStyle("-fx-background-color: #d4edda; -fx-text-fill: #155724; -fx-border-color: #c3e6cb; -fx-border-radius: 4;");
+            } else 
+            {
+                messageField.setStyle("-fx-background-color: #f8d7da; -fx-text-fill: #721c24; -fx-border-color: #f5c6cb; -fx-border-radius: 4;");
+            }
+
+            // Nascondi il messaggio dopo 2.5 secondi
+            new Thread(() -> 
+            {
+                try 
+                {
+                    Thread.sleep(2500);  // 2.5 secondi di attesa
+                    Platform.runLater(() -> messageField.setVisible(false)); // Nascondi il messaggio
+                } 
+                catch (InterruptedException e) 
+                {
+                    e.printStackTrace();
+                }
+            }).start();
+        });
     }
 
     public void goto_login(ActionEvent event) throws IOException 
@@ -180,11 +243,8 @@ public class AccountManager
         navigateTo("login.fxml", event);
     }
 
-    public void goto_register(ActionEvent event) throws IOException {
-        navigateTo("register.fxml", event);
-    }
-
-    public void goto_menu(ActionEvent event) throws IOException {
+    public void goto_menu(ActionEvent event) throws IOException 
+    {
         navigateTo("menu.fxml", event);
     }
 

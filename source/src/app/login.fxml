@@ -25,6 +25,7 @@
      </rowConstraints>
       <children>
           <VBox alignment="CENTER" depthTest="DISABLE" maxWidth="488.0" prefHeight="610.0" prefWidth="488.0" spacing="20" style="-fx-background-color: white; -fx-padding: 80px;" GridPane.columnIndex="1">
+            <!-- Titolo -->
             <Label prefHeight="60.0" prefWidth="132.0" text="PLAY">
                <font>
                   <Font name="Consolas Bold" size="60.0" />
@@ -33,12 +34,16 @@
                   <Insets top="-40.0" />
                </VBox.margin>
             </Label>
-              <TextField fx:id="errorField" alignment="CENTER_RIGHT" editable="false" style="-fx-background-color: #ffc1bd; -fx-border-width: 2; -fx-border-style: solid; -fx-border-color: #e60000; -fx-border-radius: 4; -fx-alignment: center-left;" text="ERROR" visible="false">
-                  <font>
-                      <Font name="System Bold" size="12.0" />
-                  </font>
+            
+            <!-- Messaggio dinamico -->
+            <TextField fx:id="messageField" alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-border-width: 2; -fx-border-style: solid; -fx-border-radius: 4; -fx-alignment: center;" visible="false">
+                <font>
+                    <Font name="System Bold" size="12.0" />
+                </font>
             </TextField>
-              <TextField fx:id="username" prefHeight="38.0" prefWidth="328.0" promptText="Username">
+
+            <!-- Campo Username -->
+            <TextField fx:id="username" prefHeight="38.0" prefWidth="328.0" promptText="Username">
                <font>
                   <Font size="18.0" />
                </font>
@@ -46,27 +51,31 @@
                   <Insets top="-10.0" />
                </VBox.margin>
             </TextField>
-              <StackPane prefHeight="0.0" prefWidth="240.0">
-                  <TextField fx:id="password" prefHeight="38.0" prefWidth="328.0" promptText="password" visible="false">
-                  <StackPane.margin>
-                     <Insets top="20.0" />
-                  </StackPane.margin>
-               </TextField>
-                  <PasswordField fx:id="hiddenPassword" prefHeight="38.0" prefWidth="328.0" promptText="Password">
-                  <font>
-                     <Font size="18.0" />
-                  </font>
-                  <StackPane.margin>
-                     <Insets top="20.0" />
-                  </StackPane.margin>
-               </PasswordField>
-                  <CheckBox fx:id="showPassword" mnemonicParsing="false" onAction="#changeVisibility" StackPane.alignment="CENTER_RIGHT">
-                      <StackPane.margin>
-                          <Insets right="5.0" top="20.0" />
-                      </StackPane.margin>
-                  </CheckBox>
-              </StackPane>
-              <Button onAction="#loginHandler" prefHeight="40.0" prefWidth="250.0" style="-fx-background-radius: 5px;" text="Login">
+
+            <!-- Campo Password -->
+            <StackPane prefHeight="0.0" prefWidth="240.0">
+                <TextField fx:id="password" prefHeight="38.0" prefWidth="328.0" promptText="Password" visible="false">
+                <StackPane.margin>
+                   <Insets top="20.0" />
+                </StackPane.margin>
+             </TextField>
+                <PasswordField fx:id="hiddenPassword" prefHeight="38.0" prefWidth="328.0" promptText="Password">
+                <font>
+                   <Font size="18.0" />
+                </font>
+                <StackPane.margin>
+                   <Insets top="20.0" />
+                </StackPane.margin>
+             </PasswordField>
+                <CheckBox fx:id="showPassword" mnemonicParsing="false" onAction="#changeVisibility" StackPane.alignment="CENTER_RIGHT">
+                    <StackPane.margin>
+                        <Insets right="5.0" top="20.0" />
+                    </StackPane.margin>
+                </CheckBox>
+            </StackPane>
+
+            <!-- Pulsante Login -->
+            <Button onAction="#loginHandler" prefHeight="40.0" prefWidth="250.0" style="-fx-background-radius: 5px;" text="Login">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font>
@@ -74,7 +83,9 @@
                   <Insets top="30.0" />
                </VBox.margin>
             </Button>
-              <Button mnemonicParsing="false" onAction="#createAccount" prefHeight="40.0" prefWidth="250.0" style="-fx-background-radius: 5px;" text="Create Account">
+
+            <!-- Pulsante Crea Account -->
+            <Button mnemonicParsing="false" onAction="#createAccount" prefHeight="40.0" prefWidth="250.0" style="-fx-background-radius: 5px;" text="Create Account">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font>
