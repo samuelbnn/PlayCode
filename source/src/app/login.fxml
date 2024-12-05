@@ -1,73 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" style="-fx-background-color: #ff9900ff;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AccountManager">
-   <children>
-      <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true" preserveRatio="true" />
-      <BorderPane layoutX="516.0" layoutY="328.0" prefHeight="542.0" prefWidth="850.0" style="-fx-background-color: white;">
-         <right>
-            <AnchorPane prefHeight="542.0" prefWidth="435.0" BorderPane.alignment="CENTER">
-               <children>
-                  <TextField fx:id="username" layoutX="128.0" layoutY="180.0" prefHeight="50.0" prefWidth="220.0" promptText="Username" style="-fx-background-color: trasparent; -fx-border-color: orange; -fx-border-width: 0px 0px 5px 0px;">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </TextField>
-                  <PasswordField fx:id="password" layoutX="128.0" layoutY="281.0" prefHeight="50.0" prefWidth="220.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: orange; -fx-border-width: 0px 0px 5px 0px;">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </PasswordField>
-                  <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="37.0" layoutY="175.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@img/username.jpg" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="63.0" fitWidth="63.0" layoutX="36.0" layoutY="276.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@img/password.png" />
-                     </image>
-                  </ImageView>
-                  <Button fx:id="login" layoutX="151.0" layoutY="390.0" mnemonicParsing="false" onAction="#loginHandler" prefHeight="44.0" prefWidth="175.0" text="Login">
-                     <font>
-                        <Font name="System Bold Italic" size="14.0" />
-                     </font>
-                  </Button>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="128.0" layoutY="79.0" prefHeight="53.0" prefWidth="221.0" style="-fx-font-family: Allan;" text="Accedi" textAlignment="JUSTIFY">
-                     <font>
-                        <Font name="Constantia" size="36.0" />
-                     </font>
-                  </Label>
-                  <Hyperlink layoutX="269.0" layoutY="445.0" onAction="#goto_register" prefHeight="23.0" prefWidth="64.0" text="Registrati" />
-                  <Label layoutX="151.0" layoutY="448.0" prefHeight="17.0" prefWidth="130.0" text="Se non hai un account," />
-                  <TextField fx:id="errorField" layoutX="165.0" layoutY="342.0" alignment="CENTER_RIGHT" editable="false" style="-fx-background-color: #ffc1bd; -fx-border-width: 2; -fx-border-style: solid; -fx-border-color: #e60000; -fx-border-radius: 4; -fx-alignment: center-left;" text="ERROR" visible="false"/>
-                  <CheckBox fx:id="showPassword" layoutX="351.0" layoutY="298.0" mnemonicParsing="false" onAction="#changeVisibility" prefHeight="18.0" prefWidth="19.0" />
-               </children>
-            </AnchorPane>
-         </right>
-         <center>
-            <AnchorPane prefHeight="542.0" prefWidth="388.0" style="-fx-background-color: #6d9eebff;" BorderPane.alignment="CENTER">
-               <children>
-                  <ImageView fitHeight="362.0" fitWidth="412.0" layoutX="17.0" layoutY="109.0" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </AnchorPane>
-         </center>
-      </BorderPane>
-      <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="516.0" layoutY="76.0" prefHeight="178.0" prefWidth="864.0" stylesheets="@style.css" text="PLAY" textAlignment="CENTER">
-         <font>
-            <Font name="Ink Free" size="90.0" />
-         </font>
-      </Label>
-   </children>
-</AnchorPane>
+<VBox alignment="CENTER" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #ff9900ff;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AccountManager">
+   <GridPane prefHeight="610.0" prefWidth="1920.0">
+     <columnConstraints>
+       <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         <ColumnConstraints fillWidth="false" halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+     </columnConstraints>
+     <rowConstraints>
+       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+     </rowConstraints>
+      <children>
+          <VBox alignment="CENTER" depthTest="DISABLE" maxWidth="488.0" prefHeight="610.0" prefWidth="488.0" spacing="20" style="-fx-background-color: white; -fx-padding: 80px;" GridPane.columnIndex="1">
+            <Label prefHeight="60.0" prefWidth="132.0" text="PLAY">
+               <font>
+                  <Font name="Consolas Bold" size="60.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="-40.0" />
+               </VBox.margin>
+            </Label>
+              <TextField fx:id="errorField" alignment="CENTER_RIGHT" editable="false" style="-fx-background-color: #ffc1bd; -fx-border-width: 2; -fx-border-style: solid; -fx-border-color: #e60000; -fx-border-radius: 4; -fx-alignment: center-left;" text="ERROR" visible="false">
+                  <font>
+                      <Font name="System Bold" size="12.0" />
+                  </font>
+            </TextField>
+              <TextField fx:id="username" prefHeight="38.0" prefWidth="328.0" promptText="Username">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="-10.0" />
+               </VBox.margin>
+            </TextField>
+              <StackPane prefHeight="0.0" prefWidth="240.0">
+                  <TextField fx:id="password" prefHeight="38.0" prefWidth="328.0" promptText="password" visible="false">
+                  <StackPane.margin>
+                     <Insets top="20.0" />
+                  </StackPane.margin>
+               </TextField>
+                  <PasswordField fx:id="hiddenPassword" prefHeight="38.0" prefWidth="328.0" promptText="Password">
+                  <font>
+                     <Font size="18.0" />
+                  </font>
+                  <StackPane.margin>
+                     <Insets top="20.0" />
+                  </StackPane.margin>
+               </PasswordField>
+                  <CheckBox fx:id="showPassword" mnemonicParsing="false" onAction="#changeVisibility" StackPane.alignment="CENTER_RIGHT">
+                      <StackPane.margin>
+                          <Insets right="5.0" top="20.0" />
+                      </StackPane.margin>
+                  </CheckBox>
+              </StackPane>
+              <Button onAction="#loginHandler" prefHeight="40.0" prefWidth="250.0" style="-fx-background-radius: 5px;" text="Login">
+               <font>
+                  <Font name="System Bold Italic" size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </Button>
+              <Button mnemonicParsing="false" onAction="#createAccount" prefHeight="40.0" prefWidth="250.0" style="-fx-background-radius: 5px;" text="Create Account">
+               <font>
+                  <Font name="System Bold Italic" size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+          </VBox>
+         <VBox alignment="CENTER" prefHeight="610.0" prefWidth="483.0" style="-fx-background-color: #6d9eebff;">
+            <children>
+               <ImageView fitHeight="295.0" fitWidth="250.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
+            </children>
+         </VBox>
+      </children>
+   </GridPane>
+</VBox>

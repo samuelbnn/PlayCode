@@ -22,20 +22,9 @@ public class Controller
     @FXML
     private PasswordField password; 
     
-    //Pagina per accedere ad un account
     public void goto_login(ActionEvent event) throws IOException 
     {
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    //Pagina per la creazione di un'account
-    public void goto_register(ActionEvent event) throws IOException 
-    {
-        Parent root = FXMLLoader.load(getClass().getResource("register.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
