@@ -1,5 +1,3 @@
-
-
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -26,7 +24,6 @@ public class Encryptor
     {
         Encryptor encryptor = new Encryptor();
 
-        String password = "monkey123";
         String hashedPas = "cc25c0f861a83f5efadc6e1ba9d1269e";
 
         Scanner scanner = new Scanner(System.in);
@@ -43,5 +40,6 @@ public class Encryptor
         {
             System.out.println("Wrong!");
         }
+        scanner.close();
     }
 }

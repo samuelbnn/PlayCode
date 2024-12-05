@@ -1,5 +1,3 @@
-
-
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,7 +7,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
@@ -44,49 +41,4 @@ public class Controller
         stage.setScene(scene);
         stage.show();
     }
-
-  // //region AccountManager
-  // private AccountManager accountManager = new AccountManager();
-
-  // @FXML
-  // private void handleCreateAccount() 
-  // {
-  //     String username = "";
-  //     String password = "";        
-  //     username = username.toString();
-  //     password = password.toString();
-  //     if (accountManager.createAccount(username, password)) 
-  //     {
-  //         showAlert(Alert.AlertType.INFORMATION, "Account creato con successo!");
-  //     } 
-  //     else 
-  //     {
-  //         showAlert(Alert.AlertType.ERROR, "L'username esiste già.");
-  //     }
-  // }
-
-  // @FXML
-  // private void handleLogin() 
-  // {
-  //     String username = "";
-  //     String password = "";  
-  //     username = username.toString();
-  //     password = password.toString();
-  //     if (accountManager.login(username, password)) 
-  //     {
-  //         showAlert(Alert.AlertType.INFORMATION, "Login avvenuto con successo!");
-  //     } 
-  //     else 
-  //     {
-  //         showAlert(Alert.AlertType.ERROR, "Credenziali errate.");
-  //     }
-  // }
-
-  // private void showAlert(Alert.AlertType alertType, String message) 
-  // {
-  //     Alert alert = new Alert(alertType);
-  //     alert.setContentText(message);
-  //     alert.showAndWait();
-  // }
-  // //endregion
 }
