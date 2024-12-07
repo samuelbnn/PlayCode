@@ -2,30 +2,74 @@
 
 Applicazione Java-FX
 
-All'avvio dell'applicazione l'utente si Registra o Accede inserendo username e password che verranno scritti o letti su file.
+Architettura PLAY
 
-Una volta superato il login si presentano le tipologie degli esercizi in una schermata.
+Si avvia l’applicazione:
 
-Ogni tipologia di esercizio ha diversi livelli di difficoltà.
+-l’utente deve far accesso all’applicazione con una
+semplice autenticazione
 
-In anteprima si mostra per ogni tipologia a che punto è arrivato l'utente loggato tramite una barra di avanzamento e il grado del livello.
+-Si accede a un’interfaccia in cui si vedono i diversi tipi di
+esercizi, volti all’insegnamento della programmazione,
+raggruppati per tipologia e grado.
 
-L'utente sceglie il livello e si apre una schermata con i pulsati "Avvia" per iniziare il livello, "Annulla" per tornare indietro.
+-l’applicazione visualizza una barra di avanzamento di ogni
+esercizio a seconda del livello raggiunto.
 
-Oltre ai pulsanti si mostra una breve descrizione dell'esercizio.
+-l’utente attiva un esercizio e gioca utilizzando il mouse o la
+tastiera a seconda dell’esercizio scelto.
 
-Parte l'esercizio che mostrerà un blocco di codice, il quesito e sotto dei pulsanti per la risposta.
+Workflow PLAY
+1. L’utente si autentica (tramite username e password si
+legge il file se ne è in possesso) o crea l’utenza con il
+pulsante dedicato, si scrive il dato su file
+2. L’utente accede alla videata iniziale, griglia divisa per
+tipologia di esercizio con le immagini degli esercizi e
+indicazione sul grado di apprendimento raggiunto.
+3. L’utente clicca sull’icona o la descrizione e visualizza una
+breve descrizione dell’esercizio, Quando ha letto se
+preme ok accede all’esercizio, altrimenti torna al punto 2
+con annulla.
+4. L’utente preme il pulsante inizia e svolge l’esercizio. Alla
+fine se supera l’esercizio, se ne mostra uno simile fino al
+raggiungimento di n successi. Se supera gli n esercizi si
+passa al grado di difficoltà successivo se esiste.
+5. In ogni momento l’utente può sospendere l’esercizio in
+esecuzione con il pulsante esci dall’esercizio, se
+l’esercizio non è ancora stato concluso sarà considerato
+come un fallimento, altrimenti sarà valutato. Si torna a 2.
+6. A fine partita il risultato viene visualizzato su una
+maschera e contestualmente salvato (su file). Sul file si
+salvano nome utente, numero e nome esercizio, se
+superato o fallito il tentativo, e grado raggiunto
+7. L’utente può fare logout o chiudere l’applicazione in ogni
+momento e il sistema dovrà salvare i dati relativi al login
+su di un file.
 
-Se si supera il livello verrà mostrato un altro esercizio con dati diversi.
+Gli esercizi da presentare sono scelti dai gruppi, ma ci sono
+alcuni vincoli OBBLIGATORI:
 
-Fallire l'esercizio comporterà la rigenerazione dello stesso esercizio con dati diversi.
+-Almeno un esercizio per ogni componente del gruppo
 
-In ogni caso l'utente dovrà completare X livelli simili ma con diversi dati per superare il blocco di esercizi con lo stesso grado di difficoltà.
+-Ogni esercizio deve considerare un ambito diverso di
+comprensione del linguaggio di programmazione (es.
+lettura del codice, l’ordine delle istruzioni, capacità di
+individuare gli errori, scrittura del codice di esercizi, uso e
+comprensione del polimorfismo e dell’ereditarietà,
+valutazione del codice)
 
-Superati X esercizi si passa nella stessa tipologia ad esercizi più complessi e cosi via fino alla fine dei "gradi di difficolta".
+-In ogni esercizio è formato da almeno 3 esercizi diversi
+per grado di difficoltà (gli esercizi per lo stesso grado
+sono simili tra loro, es. stessa struttura ma valori diversi)
+Gli esercizi possono essere progettati anche con Chatgpt, nella consegna va indicato il link della conversazione con chat.
 
-Se l'utente nel mezzo dell'esercizio decide di abbandonare, l'esercizio verrà valutato come fallimento.
+PLAY memorizza esercizi,risultati parziali e utenti sul filesystem.
 
-Alla fine del blocco di esercizi dallo stesso grado di difficolta, verrà visualizzata una schermata con i risultati.
+Scelta libera del formato dei dati e le librerie per fare il parsing.
 
-Tutte queste informazioni verranno salvate su file o db.
+Necessari controlli di consistenza sui dati.
+
+Strategia libera per la gestione degli errori, purchè sia documentata.
+
+[Opzionale] Uso del database.
+
