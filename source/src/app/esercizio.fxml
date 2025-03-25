@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1"
+            fx:controller="app.TrovaErroreController" prefHeight="600.0" prefWidth="800.0">
+
+    <children>
+        <!-- Titolo -->
+        <Label layoutX="30" layoutY="30" text="Trova l'Errore" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+
+        <!-- Traccia -->
+        <TextArea layoutX="30" layoutY="80" prefWidth="740" prefHeight="150" wrapText="true"
+                  editable="false" text="int x = 5\nif (x > 3)\n    System.out.println(\"Maggiore di 3\")\n  else\n    System.out.println(\"Minore o uguale a 3\");" />
+
+        <!-- Risposte -->
+        <VBox layoutX="30" layoutY="250" spacing="15">
+            <RadioButton text="Manca una parentesi graffa dopo l'if" fx:id="opt1" toggleGroup="$toggleGroup" />
+            <RadioButton text="Il confronto > 3 è errato" fx:id="opt2" toggleGroup="$toggleGroup" />
+            <RadioButton text="System.out.println ha la sintassi sbagliata" fx:id="opt3" toggleGroup="$toggleGroup" />
+        </VBox>
+
+        <!-- Bottone verifica -->
+        <Button layoutX="30" layoutY="430" text="Verifica" onAction="#verificaRisposta" />
+
+        <!-- Messaggio risultato -->
+        <Label fx:id="resultLabel" layoutX="30" layoutY="480" style="-fx-font-size: 16px; -fx-text-fill: green;" text="" />
+
+    </children>
+</AnchorPane>

@@ -1,3 +1,5 @@
+package app;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -85,6 +87,7 @@ public class AccountManager
             {
                 System.out.println("Login effettuato con successo!");
                 showMessage("Login riuscito! Benvenuto, " + user + "!", true);
+                Session.setCurrentUser(user);
 
                 // Esegui il reindirizzamento dopo 2.5 secondi
                 new Thread(() -> {
@@ -153,7 +156,8 @@ public class AccountManager
                     Platform.runLater(() -> {
                         try 
                         {
-                            goto_login(event); // Naviga al login dopo 2.5 secondi
+                            Session.setCurrentUser(user); // salva l'utente
+                            goto_menu(event);             // vai subito al menu
                         } 
                         catch (IOException e) 
                         {
