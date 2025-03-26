@@ -1,3 +1,5 @@
+package app;
+
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,12 +24,12 @@ public class Controller
     @FXML
     private PasswordField password; 
     
-    public void goto_login(ActionEvent event) throws IOException 
-    {
+    @FXML
+    public void goto_login(ActionEvent event) throws IOException {
+        System.out.println("CLICK SU PLAY RICEVUTO!");
         Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
         stage.show();
     }
 }

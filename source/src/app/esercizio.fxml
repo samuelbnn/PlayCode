@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/20.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="app.TrovaErroreController"
+            prefWidth="800" prefHeight="600">
+
+    <children>
+        <ChoiceBox fx:id="livelloChoiceBox" layoutX="650" layoutY="20" prefWidth="120"/>
+        <!-- Titolo -->
+        <Label fx:id="titoloLabel" layoutX="30" layoutY="20"
+               style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+
+        <!-- Livello -->
+        <Label fx:id="livelloLabel" layoutX="30" layoutY="60"
+               style="-fx-font-size: 16px;" />
+
+        <!-- Codice -->
+        <TextArea fx:id="codiceArea" layoutX="30" layoutY="90" prefWidth="740" prefHeight="150"
+                  wrapText="true" editable="false" />
+
+        <!-- Domanda -->
+        <Label fx:id="consegnaLabel" layoutX="30" layoutY="260"
+               style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+
+        <!-- Risposte -->
+        <VBox layoutX="30" layoutY="290" spacing="10">
+            <RadioButton fx:id="risposta1" />
+            <RadioButton fx:id="risposta2" />
+            <RadioButton fx:id="risposta3" />
+        </VBox>
+
+        <!-- Feedback -->
+        <Label fx:id="feedbackLabel" layoutX="30" layoutY="430"
+               style="-fx-font-size: 16px;" />
+
+        <!-- Pulsante Conferma -->
+        <Button fx:id="confermaButton" text="Conferma"
+                layoutX="30" layoutY="470"
+                onAction="#confermaRisposta" />
+
+        <!-- Pulsante Torna al menu -->
+        <Button fx:id="tornaMenuButton" text="Torna al Menu"
+                layoutX="130" layoutY="470" visible="false"
+                onAction="#tornaAlMenu" />
+
+    </children>
+</AnchorPane>

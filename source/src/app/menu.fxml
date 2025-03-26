@@ -1,17 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<AnchorPane fx:id="root" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #ff9900ff;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MenuController">
-    <!-- Header: Nome utente in alto -->
-    <HBox alignment="CENTER" layoutY="14.0" spacing="10" style="-fx-background-color: #f0f0f0; -fx-padding: 10;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="14.0">
-        <Text fx:id="userNameLabel" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Benvenuto, Username!" />
-    </HBox>
-     <Button layoutX="1115.0" layoutY="649.0" onAction="#openWindow4" style="-fx-font-size: 16px; -fx-pref-width: 200px;" text="Finestra 4" />
-     <Button layoutX="577.0" layoutY="429.0" onAction="#openWindow1" prefWidth="630.0" style="-fx-font-size: 16px; -fx-pref-width: 200px;" text="Finestra 1" />
-     <Button layoutX="1115.0" layoutY="429.0" onAction="#openWindow2" style="-fx-font-size: 16px; -fx-pref-width: 200px;" text="Finestra 2" />
-     <Button layoutX="577.0" layoutY="649.0" onAction="#openWindow3" style="-fx-font-size: 16px; -fx-pref-width: 200px;" text="Finestra 3" />
-</AnchorPane>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="app.MenuController" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #ff9900ff;">
+
+    <!-- HEADER CON BENVENUTO -->
+    <top>
+        <HBox spacing="20" alignment="CENTER_LEFT" style="-fx-background-color: #fff3cd;">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20" />
+            </padding>
+            <Label fx:id="userNameLabel" text="Benvenuto!" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+        </HBox>
+    </top>
+
+    <!-- CENTRO: GRID DI ESERCIZI -->
+    <center>
+        <GridPane hgap="30" vgap="30" alignment="CENTER">
+            <children>
+                <Button text="Leggi il Codice" onAction="#apriLeggiIlCodice" prefWidth="250" prefHeight="100" styleClass="play_button" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <Button text="Scrittura con Output" onAction="#apriScritturaOutput" prefWidth="250" prefHeight="100" styleClass="play_button" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <Button text="Trova l'Errore" onAction="#apriTrovaErrore" prefWidth="250" prefHeight="100" styleClass="play_button" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <Button text="Completa il Codice" onAction="#apriCompletaCodice" prefWidth="250" prefHeight="100" styleClass="play_button" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <Button text="Linked List" onAction="#apriLinkedList" prefWidth="250" prefHeight="100" styleClass="play_button" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <Button text="Static or Not" onAction="#apriStatic" prefWidth="250" prefHeight="100" styleClass="play_button" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            </children>
+        </GridPane>
+    </center>
+
+    <!-- FOOTER CON LOGOUT -->
+    <bottom>
+        <HBox alignment="CENTER_RIGHT">
+            <padding>
+                <Insets top="10" right="20" bottom="10" left="20" />
+            </padding>
+            <Button text="Logout" onAction="#logout" />
+        </HBox>
+    </bottom>
+
+</BorderPane>

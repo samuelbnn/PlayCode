@@ -1,10 +1,20 @@
+package app;
+
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.text.Text;
+import javafx.scene.control.Button;
+import javafx.scene.Scene;
+import javafx.scene.Parent;
+import javafx.scene.Node;
+import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
+import java.io.IOException;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Label;
+
 
 public class MenuController {
-
+    /*
     @FXML
     private Text userNameLabel;
 
@@ -14,30 +24,68 @@ public class MenuController {
         // Ottieni il nome dell'utente dalla sessione di login, qui lo settiamo come esempio
         currentUserName = "NomeUtente";  // Puoi settarlo tramite la sessione o passarlo da un'altra schermata
         userNameLabel.setText("Benvenuto, " + currentUserName + "!");
+    }*/
+    @FXML
+    private Label userNameLabel;
+
+    public void initialize() {
+        String currentUserName = Session.getCurrentUser(); // ✅ prende il nome salvato
+        userNameLabel.setText("Benvenuto, " + currentUserName + "!");
     }
 
     // Metodi per le finestre cliccabili
     @FXML
-    private void openWindow1(ActionEvent event) {
-        System.out.println("Finestra 1 cliccata");
-        // Aggiungi la logica per aprire la finestra 1
+    private void apriLeggiIlCodice(ActionEvent event) {
+        System.out.println("Apertura esercizio: Leggi il Codice");
+        // carica esercizio.fxml o una schermata dedicata
     }
 
     @FXML
-    private void openWindow2(ActionEvent event) {
-        System.out.println("Finestra 2 cliccata");
-        // Aggiungi la logica per aprire la finestra 2
+    private void apriScritturaOutput(ActionEvent event) {
+        System.out.println("Apertura esercizio: Scrittura con Output");
     }
 
     @FXML
-    private void openWindow3(ActionEvent event) {
-        System.out.println("Finestra 3 cliccata");
-        // Aggiungi la logica per aprire la finestra 3
+    private void apriTrovaErrore(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("esercizio.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
-    private void openWindow4(ActionEvent event) {
-        System.out.println("Finestra 4 cliccata");
-        // Aggiungi la logica per aprire la finestra 4
+    private void apriCompletaCodice(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("completa.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+    
+
+    @FXML
+    private void apriLinkedList(ActionEvent event) {
+        System.out.println("Apertura esercizio: Linked List");
+    }
+
+    @FXML
+    private void apriStatic(ActionEvent event) {
+        System.out.println("Apertura esercizio: Static or Not");
+    }
+
+    @FXML
+    private void logout(ActionEvent event) {
+        try {
+            Session.setCurrentUser(null); // ✅ resetta l’utente
+            Parent root = FXMLLoader.load(getClass().getResource("homepage.fxml")); // oppure "login.fxml"
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

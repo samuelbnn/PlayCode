@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1"
+            fx:controller="app.CompletaCodiceController" prefHeight="600.0" prefWidth="800.0">
+
+    <children>
+        <Label layoutX="30" layoutY="30" text="Completa il Codice" style="-fx-font-size: 24px; -fx-font-weight: bold;" fx:id="titoloLabel"/>
+
+        <TextArea layoutX="30" layoutY="80" prefWidth="740" prefHeight="150" wrapText="true"
+                  editable="false" fx:id="codiceArea"/>
+
+        <Label layoutX="30" layoutY="240" fx:id="consegnaLabel" style="-fx-font-size: 16px;" />
+
+        <VBox layoutX="30" layoutY="270" spacing="15">
+            <RadioButton text="Risposta 1" fx:id="risposta1" toggleGroup="$toggleGroup"/>
+            <RadioButton text="Risposta 2" fx:id="risposta2" toggleGroup="$toggleGroup"/>
+            <RadioButton text="Risposta 3" fx:id="risposta3" toggleGroup="$toggleGroup"/>
+        </VBox>
+
+        <Button layoutX="30" layoutY="430" text="Conferma" fx:id="confermaButton" onAction="#confermaRisposta"/>
+        <Button layoutX="150" layoutY="430" text="Menu" fx:id="tornaMenuButton" onAction="#tornaAlMenu" visible="false"/>
+
+        <Label fx:id="feedbackLabel" layoutX="30" layoutY="480" style="-fx-font-size: 16px; -fx-text-fill: green;" text="" />
+        <Label fx:id="livelloLabel" layoutX="600" layoutY="30" style="-fx-font-size: 14px;" />
+    </children>
+</AnchorPane>
