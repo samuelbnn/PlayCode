@@ -1,4 +1,3 @@
-
 package app;
 
 import javafx.event.ActionEvent;
@@ -16,7 +15,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class TrovaErroreController {
+public class CompletaCodiceController {
 
     @FXML private Label titoloLabel;
     @FXML private Label livelloLabel;
@@ -28,14 +27,12 @@ public class TrovaErroreController {
     @FXML private Button confermaButton;
     @FXML private Button tornaMenuButton;
     @FXML private Label feedbackLabel;
-    @FXML private ChoiceBox<String> livelloChoiceBox;
 
     private ToggleGroup rispostaGroup = new ToggleGroup();
     private int punteggio = 0;
-
+    private String livelloCorrente = "Principiante";
     private final Map<String, List<Esercizio>> eserciziPerLivello = new LinkedHashMap<>();
     private final Map<String, List<Esercizio>> mostratiPerLivello = new HashMap<>();
-    private String livelloCorrente = "Principiante";
     private Esercizio esercizioCorrente;
 
     public void initialize() {
@@ -44,38 +41,59 @@ public class TrovaErroreController {
         risposta3.setToggleGroup(rispostaGroup);
         feedbackLabel.setVisible(false);
         tornaMenuButton.setVisible(false);
-        livelloChoiceBox.setVisible(false);
-        livelloChoiceBox.setManaged(false);
-
-        caricaDomande();
+        caricaEsercizi();
         mostraDomandaCasuale();
     }
 
-    private void caricaDomande() {
+    private void caricaEsercizi() {
         eserciziPerLivello.put("Principiante", new ArrayList<>(List.of(
-            new Esercizio("Trova l'errore", "Principiante", "System.out.println(\"Hello\")", "Cosa manca?", new String[]{"Punto e virgola", "Parentesi graffa", "Dichiarazione variabile"}, 0),
-            new Esercizio("Trova l'errore", "Principiante", "if (x > 5)\n    System.out.println(\"Grande\")\nelse\n    System.out.println(\"Piccolo\");", "Individua l'errore sintattico", new String[]{"Manca una graffa", "Errore di tipo", "Variabile non inizializzata"}, 0),
-            new Esercizio("Trova l'errore", "Principiante", "System.ou.println(\"Errore\");", "Cosa c'è che non va?", new String[]{"Errore di battitura: 'ou'", "System non definito", "Manca il punto e virgola"}, 0),
-            new Esercizio("Trova l'errore", "Principiante", "public static void main {\n    System.out.println(\"Ciao\");\n}", "Qual è l'errore?", new String[]{"Mancano le parentesi tonde", "Manca il return", "main non è static"}, 0),
-            new Esercizio("Trova l'errore", "Principiante", "int numero = \"dieci\";", "Dove sta l'errore?", new String[]{"Tipo incompatibile", "String non definita", "Uso scorretto di = "}, 0),
-            new Esercizio("Trova l'errore", "Principiante", "String nome;\nSystem.out.println(nome);", "Cosa succede?", new String[]{"Variabile non inizializzata", "String non importato", "System.err non usato"}, 0)
+            new Esercizio("Completa il codice", "Principiante", "public int somma(int a, int b) {\n    // manca il return\n}",
+                "Completa la funzione per restituire la somma di a e b",
+                new String[]{"return a + b;", "System.out.println(a + b);", "a + b;"}, 0),
+            new Esercizio("Completa il codice", "Principiante", "for(int i = 0; i < 5; i++) {\n    // manca la stampa\n}",
+                "Completa il ciclo per stampare i",
+                new String[]{"System.out.println(i);", "return i;", "i + 1;"}, 0),
+            new Esercizio("Completa il codice", "Principiante", "System.out.println(_____);",
+                "Completa la stampa del messaggio 'Ciao mondo'",
+                new String[]{"\"Ciao mondo\"", "System.out", "print(\"Ciao mondo\")"}, 0),
+            new Esercizio("Completa il codice", "Principiante", "if (x > 0) {\n    _____\n}",
+                "Stampa 'positivo' se x è maggiore di 0",
+                new String[]{"System.out.println(\"positivo\");", "return x;", "continue;"}, 0),
+            new Esercizio("Completa il codice", "Principiante", "int numero;\n_____\n",
+                "Assegna 10 alla variabile numero",
+                new String[]{"numero = 10;", "numero == 10;", "10 -> numero;"}, 0)
         )));
 
         eserciziPerLivello.put("Intermedio", new ArrayList<>(List.of(
-            new Esercizio("Trova l'errore", "Intermedio", "if(x = 10) {\n  System.out.println(\"x\");\n}", "Errore logico?", new String[]{"Uso di '=' invece di '=='", "x è già definito", "System non importato"}, 0),
-            new Esercizio("Trova l'errore", "Intermedio", "boolean valido = true;\nif(valido == false);\n  System.out.println(\"Non valido\");", "Cosa c'è che non va?", new String[]{"If con ; inutile", "La variabile non esiste", "Manca else"}, 0),
-            new Esercizio("Trova l'errore", "Intermedio", "for(int i = 0; i > 10; i++) {\n  System.out.println(i);\n}", "Ciclo non entra mai, perché?", new String[]{"Condizione errata", "Inizializzazione sbagliata", "i non definito"}, 0),
-            new Esercizio("Trova l'errore", "Intermedio", "int[] nums = new int[3];\nnums[3] = 5;", "Che problema c'è?", new String[]{"IndexOutOfBounds", "Errore di sintassi", "Array nullo"}, 0),
-            new Esercizio("Trova l'errore", "Intermedio", "String s = null;\nSystem.out.println(s.length());", "Cosa succede?", new String[]{"NullPointerException", "String non importata", "Metodo sbagliato"}, 0)
+            new Esercizio("Completa il codice", "Intermedio", "if(nome.equals(\"Mario\")) {\n    // manca azione\n}",
+                "Aggiungi il messaggio di benvenuto",
+                new String[]{"System.out.println(\"Benvenuto Mario\");", "break;", "continue;"}, 0),
+            new Esercizio("Completa il codice", "Intermedio", "int somma = 0;\nfor (int i = 0; i < 5; i++) {\n    _____\n}",
+                "Aggiungi i alla somma",
+                new String[]{"somma += i;", "i += somma;", "return i;"}, 0),
+            new Esercizio("Completa il codice", "Intermedio", "String parola = \"ciao\";\nif (_____) {\n    System.out.println(\"ok\");\n}",
+                "Controlla che parola sia uguale a 'ciao'",
+                new String[]{"parola.equals(\"ciao\")", "parola == \"ciao\"", "parola = \"ciao\""}, 0)
         )));
+
+        eserciziPerLivello.put("Avanzato", new ArrayList<>(List.of(
+            new Esercizio("Completa il codice", "Avanzato", "int[] numeri = {1, 2, 3};\nfor(int i = 0; i < numeri.length; i++) {\n    // manca il controllo\n}",
+                "Mostra solo i numeri maggiori di 1",
+                new String[]{"if(numeri[i] > 1) System.out.println(numeri[i]);", "numeri[i]++;", "continue;"}, 0),
+            new Esercizio("Completa il codice", "Avanzato", "public int fattoriale(int n) {\n    if (n == 0) return 1;\n    else _____\n}",
+                "Completa la ricorsione per il fattoriale",
+                new String[]{"return n * fattoriale(n - 1);", "return n + fattoriale(n);", "n--;"}, 0),
+            new Esercizio("Completa il codice", "Avanzato", "int[] numeri = {1,2,3,4};\nfor (int n : numeri) {\n    if (n % 2 == 0) {\n        _____\n    }\n}",
+                "Stampa solo i numeri pari",
+                new String[]{"System.out.println(n);", "return n;", "continue;"}, 0)
+        )));
+
+        eserciziPerLivello.forEach((livello, lista) -> mostratiPerLivello.put(livello, new ArrayList<>()));
     }
 
     private void mostraDomandaCasuale() {
-        List<Esercizio> tutti = eserciziPerLivello.get(livelloCorrente);
-        List<Esercizio> mostrati = mostratiPerLivello.getOrDefault(livelloCorrente, new ArrayList<>());
-
-        List<Esercizio> disponibili = new ArrayList<>(tutti);
-        disponibili.removeAll(mostrati);
+        List<Esercizio> disponibili = new ArrayList<>(eserciziPerLivello.get(livelloCorrente));
+        disponibili.removeAll(mostratiPerLivello.get(livelloCorrente));
 
         if (disponibili.isEmpty()) {
             avanzaLivello();
@@ -84,20 +102,15 @@ public class TrovaErroreController {
 
         Collections.shuffle(disponibili);
         esercizioCorrente = disponibili.get(0);
-        mostrati.add(esercizioCorrente);
-        mostratiPerLivello.put(livelloCorrente, mostrati);
+        mostratiPerLivello.get(livelloCorrente).add(esercizioCorrente);
 
-        aggiornaUI(esercizioCorrente);
-    }
-
-    private void aggiornaUI(Esercizio es) {
-        titoloLabel.setText(es.titolo);
-        livelloLabel.setText("Livello: " + es.livello);
-        codiceArea.setText(es.codice);
-        consegnaLabel.setText(es.domanda);
-        risposta1.setText(es.risposte[0]);
-        risposta2.setText(es.risposte[1]);
-        risposta3.setText(es.risposte[2]);
+        titoloLabel.setText(esercizioCorrente.titolo);
+        livelloLabel.setText("Livello: " + esercizioCorrente.livello);
+        codiceArea.setText(esercizioCorrente.codice);
+        consegnaLabel.setText(esercizioCorrente.domanda);
+        risposta1.setText(esercizioCorrente.risposte[0]);
+        risposta2.setText(esercizioCorrente.risposte[1]);
+        risposta3.setText(esercizioCorrente.risposte[2]);
         rispostaGroup.selectToggle(null);
         feedbackLabel.setVisible(false);
     }
@@ -106,9 +119,7 @@ public class TrovaErroreController {
     private void confermaRisposta(ActionEvent event) {
         RadioButton selezionata = (RadioButton) rispostaGroup.getSelectedToggle();
         if (selezionata == null) return;
-
         int scelta = selezionata == risposta1 ? 0 : selezionata == risposta2 ? 1 : 2;
-
         if (scelta == esercizioCorrente.indiceCorretta) {
             feedbackLabel.setText("Corretto!");
             feedbackLabel.setStyle("-fx-text-fill: green;");
@@ -117,7 +128,6 @@ public class TrovaErroreController {
             feedbackLabel.setText("Sbagliato!");
             feedbackLabel.setStyle("-fx-text-fill: red;");
         }
-
         feedbackLabel.setVisible(true);
         confermaButton.setText("Avanti");
         confermaButton.setOnAction(e -> {
@@ -129,6 +139,7 @@ public class TrovaErroreController {
 
     private void avanzaLivello() {
         if (livelloCorrente.equals("Principiante")) livelloCorrente = "Intermedio";
+        else if (livelloCorrente.equals("Intermedio")) livelloCorrente = "Avanzato";
         else {
             feedbackLabel.setText("Hai completato tutti i livelli! Punteggio: " + punteggio);
             feedbackLabel.setStyle("-fx-text-fill: blue;");
@@ -138,7 +149,6 @@ public class TrovaErroreController {
             salvaRisultato();
             return;
         }
-
         mostraDomandaCasuale();
     }
 
@@ -146,7 +156,7 @@ public class TrovaErroreController {
         try (PrintWriter writer = new PrintWriter(new FileWriter("risultati.csv", true))) {
             String utente = Session.getCurrentUser();
             String data = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            writer.printf("%s,%s,%d,%s\n", utente, "Trova l'errore", punteggio, data);
+            writer.printf("%s,%s,%d,%s\n", utente, "Completa il Codice", punteggio, data);
         } catch (IOException e) {
             System.err.println("Errore nel salvataggio: " + e.getMessage());
         }

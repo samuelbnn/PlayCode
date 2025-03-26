@@ -58,9 +58,13 @@ public class MenuController {
     }
 
     @FXML
-    private void apriCompletaCodice(ActionEvent event) {
-        System.out.println("Apertura esercizio: Completa il Codice");
+    private void apriCompletaCodice(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("completa.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
+    
 
     @FXML
     private void apriLinkedList(ActionEvent event) {
