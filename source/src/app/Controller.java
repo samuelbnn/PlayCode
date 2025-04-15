@@ -11,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Screen;
+import javafx.geometry.Rectangle2D;
 
 public class Controller
 {
@@ -23,13 +25,28 @@ public class Controller
     private TextField username;
     @FXML
     private PasswordField password; 
-    
+
     @FXML
     public void goto_login(ActionEvent event) throws IOException {
         System.out.println("CLICK SU PLAY RICEVUTO!");
-        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+        Parent root = loader.load();
+
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+
+        // Ottieni la dimensione dello schermo
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        stage.setX(screenBounds.getMinX());
+        stage.setY(screenBounds.getMinY());
+        stage.setWidth(screenBounds.getWidth());
+        stage.setHeight(screenBounds.getHeight());
+
+        // Imposta la scena DOPO aver settato dimensioni
+        stage.setScene(scene);
+        stage.setResizable(false); // per bloccare il ridimensionamento
         stage.show();
     }
+
 }

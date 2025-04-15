@@ -11,28 +11,29 @@ import javafx.fxml.FXMLLoader;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 
 public class MenuController {
-    /*
-    @FXML
-    private Text userNameLabel;
 
-    private String currentUserName;
-
-    public void initialize() {
-        // Ottieni il nome dell'utente dalla sessione di login, qui lo settiamo come esempio
-        currentUserName = "NomeUtente";  // Puoi settarlo tramite la sessione o passarlo da un'altra schermata
-        userNameLabel.setText("Benvenuto, " + currentUserName + "!");
-    }*/
     @FXML
     private Label userNameLabel;
-
+    
+    @FXML
     public void initialize() {
-        String currentUserName = Session.getCurrentUser(); // ✅ prende il nome salvato
-        userNameLabel.setText("Benvenuto, " + currentUserName + "!");
+        String username = Session.getCurrentUser(); // otteniamo l'utente loggato
+        if (username != null && !username.isEmpty()) {
+            userNameLabel.setText("Benvenuto, " + username + "!");
+        } else {
+            userNameLabel.setText("Benvenuto!");
+        }
     }
-
+    
     // Metodi per le finestre cliccabili
     @FXML
     private void apriLeggiIlCodice(ActionEvent event) {
@@ -79,7 +80,7 @@ public class MenuController {
     @FXML
     private void logout(ActionEvent event) {
         try {
-            Session.setCurrentUser(null); // ✅ resetta l’utente
+            Session.setCurrentUser(null); 
             Parent root = FXMLLoader.load(getClass().getResource("homepage.fxml")); // oppure "login.fxml"
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));

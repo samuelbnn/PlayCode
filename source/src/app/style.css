@@ -1,31 +1,187 @@
-#play_button
-{
-    -fx-padding: 8 15 15 15;
-    -fx-background-insets: 0,0 0 5 0,0 0 6 0,0 0 7 0;
+/* ---------------------- GENERALI ---------------------- */
+.homepage-root {
+    -fx-background-color: #F8F9FA;
+}
+
+.root {
+    -fx-padding: 40 60 40 60;
+    -fx-spacing: 20;
+    -fx-background-color: #f8f9fa;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+/* ---------------------- PLAY BUTTON ---------------------- */
+.play-button {
+    -fx-padding: 12 20 12 20;
     -fx-background-radius: 15;
+    -fx-background-insets: 0;
     -fx-background-color:
-            linear-gradient(from 0% 93% to 0% 100%,#2c82d3 0%,#379cfa 100%),
-            #2c82d3,
-            #379cfa,
-            radial-gradient(center 50% 50%, radius 100%,#379cfa,#2c82d3);
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.75),4,0,0,1);
+        linear-gradient(from 0% 0% to 0% 100%, #2ecc71, #27ae60),
+        #2ecc71;
+
     -fx-font-weight: bold;
-    -fx-font-size: 1.1em;
-    -fx-font-family: 'Allan';
     -fx-font-size: 24px;
+    -fx-font-family: 'Allan';
     -fx-text-fill: white;
+
+    /* Effetto più leggero */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 4, 0.2, 0, 2);
 }
 
-#play_button:hover {
+.play-button:hover {
     -fx-background-color:
-            linear-gradient(from 0% 93% to 0% 100%, #2c82d3 0%, #379cfa 100%),
-            #379cfa,
-            #379cfa,
-            radial-gradient(center 50% 50%, radius 100%, #379cfa, #2c82d3);
+        linear-gradient(from 0% 0% to 0% 100%, #27ae60, #2ecc71),
+        #27ae60;
 }
 
-#play_button:pressed
-{
-    -fx-padding: 10 15 13 15;
-    -fx-background-insets: 2 0 0 0,2 0 3 0,2 0 4 0,2 0 5 0;
+.play-button:pressed {
+    -fx-translate-y: 2;
+    -fx-effect: none;
 }
+
+/* ---------------------- HEADER ---------------------- */
+.header {
+    -fx-background-color: transparent;
+    -fx-padding: 20 20 10 20;
+}
+
+/* ---------------------- LIVELLI ---------------------- */
+.level-buttons {
+    -fx-max-width: 600px;
+    -fx-alignment: center_left;
+}
+
+.livello-btn {
+    -fx-pref-width: 200px;
+    -fx-font-size: 14px;
+    -fx-padding: 8 0;
+    -fx-border-color: #ccc;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-background-color: white;
+    -fx-text-fill: #2D3E50;
+}
+
+.level-buttons .button:first-child {
+    -fx-border-radius: 5 0 0 5;
+    -fx-background-radius: 5 0 0 5;
+}
+
+.level-buttons .button:last-child {
+    -fx-border-radius: 0 5 5 0;
+    -fx-background-radius: 0 5 5 0;
+}
+
+.button.selected {
+    -fx-background-color: #3498DB;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* ---------------------- PROGRESS BAR ---------------------- */
+.progress-bar {
+    -fx-accent: #2ECC71; /* verde logo */
+    -fx-control-inner-background: transparent;
+    -fx-background-color: #e0e0e0;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-border-color: transparent;
+    -fx-background-radius: 8;
+    -fx-pref-height: 10px;
+}
+
+.progress-bar .bar {
+    -fx-background-color: #2ECC71;
+    -fx-background-insets: 0;
+    -fx-background-radius: 5;
+}
+
+.progress-bar .track {
+    -fx-background-color: #e0e0e0;
+    -fx-background-radius: 5;
+    -fx-padding: 2;
+}
+
+/* ---------------------- CONTENUTO CENTRALE ---------------------- */
+.contenitore-centrale {
+    -fx-max-width: 600px;
+    -fx-pref-width: 600px;
+    -fx-alignment: center;
+    -fx-spacing: 20;
+    -fx-padding: 20;
+    -fx-background-color: transparent; /* oppure white se vuoi sfondo bianco */
+}
+
+.titolo {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2D3E50;
+}
+
+.consegna {
+    -fx-font-size: 14px;
+    -fx-text-fill: #2D3E50;
+    -fx-padding: 6 0 6 0;
+}
+
+.feedback {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.codice-area {
+    -fx-font-family: "Courier New";
+    -fx-font-size: 16px;
+    -fx-background-color: #f4f4f4;
+    -fx-padding: 10;
+    -fx-background-radius: 6;
+    -fx-border-color: transparent;
+    -fx-effect: none;
+}
+
+.text-area {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-insets: 0;
+    -fx-box-shadow: none;
+    -fx-effect: none;
+    -fx-padding: 10;
+    -fx-font-size: 13px;
+    -fx-font-family: "Consolas", monospace;
+}
+
+/* ---------------------- BOTTONI AZIONE ---------------------- */
+.btn-conferma {
+    -fx-background-color: #2ECC71;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 20;
+    -fx-background-radius: 6;
+}
+
+.btn-neutro {
+    -fx-background-color: #E0E0E0;
+    -fx-text-fill: #333;
+    -fx-font-weight: normal;
+    -fx-padding: 8 20;
+    -fx-background-radius: 6;
+}
+
+.menu-button {
+    -fx-background-color: linear-gradient(to bottom, #3498DB, #2980B9);
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-padding: 12 24;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0.2, 0, 2);
+    -fx-cursor: hand;
+}
+
+.menu-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #2980B9, #2471A3);
+}
+
+

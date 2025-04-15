@@ -8,9 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.scene.Node;
-import java.io.IOException;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -21,71 +19,53 @@ public class CompletaCodiceController {
     @FXML private Label livelloLabel;
     @FXML private TextArea codiceArea;
     @FXML private Label consegnaLabel;
-    @FXML private RadioButton risposta1;
-    @FXML private RadioButton risposta2;
-    @FXML private RadioButton risposta3;
-    @FXML private Button confermaButton;
-    @FXML private Button tornaMenuButton;
+    @FXML private TextField campoRisposta;
+    @FXML private Button btnConferma;
+    @FXML private Button btnEsci;
     @FXML private Label feedbackLabel;
+    @FXML private ProgressBar progressBar;
+    @FXML private Button btnPrincipiante;
+    @FXML private Button btnIntermedio;
+    @FXML private Button btnAvanzato;
 
-    private ToggleGroup rispostaGroup = new ToggleGroup();
+    private int successiConsecutivi = 0;
     private int punteggio = 0;
+    private final int nSuccessiPerLivello = 3;
     private String livelloCorrente = "Principiante";
     private final Map<String, List<Esercizio>> eserciziPerLivello = new LinkedHashMap<>();
     private final Map<String, List<Esercizio>> mostratiPerLivello = new HashMap<>();
     private Esercizio esercizioCorrente;
 
     public void initialize() {
-        risposta1.setToggleGroup(rispostaGroup);
-        risposta2.setToggleGroup(rispostaGroup);
-        risposta3.setToggleGroup(rispostaGroup);
         feedbackLabel.setVisible(false);
-        tornaMenuButton.setVisible(false);
+        campoRisposta.setDisable(false);
+        btnConferma.setDisable(false);
         caricaEsercizi();
+        caricaProgresso();
+        aggiornaStileLivelli();
+        progressBar.setProgress(0.0);
         mostraDomandaCasuale();
     }
 
     private void caricaEsercizi() {
         eserciziPerLivello.put("Principiante", new ArrayList<>(List.of(
-            new Esercizio("Completa il codice", "Principiante", "public int somma(int a, int b) {\n    // manca il return\n}",
-                "Completa la funzione per restituire la somma di a e b",
-                new String[]{"return a + b;", "System.out.println(a + b);", "a + b;"}, 0),
-            new Esercizio("Completa il codice", "Principiante", "for(int i = 0; i < 5; i++) {\n    // manca la stampa\n}",
-                "Completa il ciclo per stampare i",
-                new String[]{"System.out.println(i);", "return i;", "i + 1;"}, 0),
-            new Esercizio("Completa il codice", "Principiante", "System.out.println(_____);",
-                "Completa la stampa del messaggio 'Ciao mondo'",
-                new String[]{"\"Ciao mondo\"", "System.out", "print(\"Ciao mondo\")"}, 0),
-            new Esercizio("Completa il codice", "Principiante", "if (x > 0) {\n    _____\n}",
-                "Stampa 'positivo' se x è maggiore di 0",
-                new String[]{"System.out.println(\"positivo\");", "return x;", "continue;"}, 0),
-            new Esercizio("Completa il codice", "Principiante", "int numero;\n_____\n",
-                "Assegna 10 alla variabile numero",
-                new String[]{"numero = 10;", "numero == 10;", "10 -> numero;"}, 0)
+            new Esercizio("Completa il codice", "Principiante", "public int somma(int a, int b) {\\n    // manca il return\\n}", "Completa la funzione per restituire la somma di a e b", "return a + b;"),
+            new Esercizio("Completa il codice", "Principiante", "for(int i = 0; i < 5; i++) {\\n    // manca la stampa\\n}", "Completa il ciclo per stampare i", "System.out.println(i);"),
+            new Esercizio("Completa il codice", "Principiante", "System.out.println(_____);", "Completa la stampa del messaggio 'Ciao mondo'", "\"Ciao mondo\""),
+            new Esercizio("Completa il codice", "Principiante", "if (x > 0) {\\n    _____\\n}", "Stampa 'positivo' se x è maggiore di 0", "System.out.println(\"positivo\");"),
+            new Esercizio("Completa il codice", "Principiante", "int numero;\\n_____", "Assegna 10 alla variabile numero", "numero = 10;")
         )));
 
         eserciziPerLivello.put("Intermedio", new ArrayList<>(List.of(
-            new Esercizio("Completa il codice", "Intermedio", "if(nome.equals(\"Mario\")) {\n    // manca azione\n}",
-                "Aggiungi il messaggio di benvenuto",
-                new String[]{"System.out.println(\"Benvenuto Mario\");", "break;", "continue;"}, 0),
-            new Esercizio("Completa il codice", "Intermedio", "int somma = 0;\nfor (int i = 0; i < 5; i++) {\n    _____\n}",
-                "Aggiungi i alla somma",
-                new String[]{"somma += i;", "i += somma;", "return i;"}, 0),
-            new Esercizio("Completa il codice", "Intermedio", "String parola = \"ciao\";\nif (_____) {\n    System.out.println(\"ok\");\n}",
-                "Controlla che parola sia uguale a 'ciao'",
-                new String[]{"parola.equals(\"ciao\")", "parola == \"ciao\"", "parola = \"ciao\""}, 0)
+            new Esercizio("Completa il codice", "Intermedio", "if(nome.equals(\\\"Mario\\\")) {\\n    // manca azione\\n}", "Aggiungi il messaggio di benvenuto", "System.out.println(\"Benvenuto Mario\");"),
+            new Esercizio("Completa il codice", "Intermedio", "int somma = 0;\\nfor (int i = 0; i < 5; i++) {\\n    _____\\n}", "Aggiungi i alla somma", "somma += i;"),
+            new Esercizio("Completa il codice", "Intermedio", "String parola = \\\"ciao\\\";\\nif (_____) {\\n    System.out.println(\\\"ok\\\");\\n}", "Controlla che parola sia uguale a 'ciao'", "parola.equals(\"ciao\")")
         )));
 
         eserciziPerLivello.put("Avanzato", new ArrayList<>(List.of(
-            new Esercizio("Completa il codice", "Avanzato", "int[] numeri = {1, 2, 3};\nfor(int i = 0; i < numeri.length; i++) {\n    // manca il controllo\n}",
-                "Mostra solo i numeri maggiori di 1",
-                new String[]{"if(numeri[i] > 1) System.out.println(numeri[i]);", "numeri[i]++;", "continue;"}, 0),
-            new Esercizio("Completa il codice", "Avanzato", "public int fattoriale(int n) {\n    if (n == 0) return 1;\n    else _____\n}",
-                "Completa la ricorsione per il fattoriale",
-                new String[]{"return n * fattoriale(n - 1);", "return n + fattoriale(n);", "n--;"}, 0),
-            new Esercizio("Completa il codice", "Avanzato", "int[] numeri = {1,2,3,4};\nfor (int n : numeri) {\n    if (n % 2 == 0) {\n        _____\n    }\n}",
-                "Stampa solo i numeri pari",
-                new String[]{"System.out.println(n);", "return n;", "continue;"}, 0)
+            new Esercizio("Completa il codice", "Avanzato", "int[] numeri = {1, 2, 3};\\nfor(int i = 0; i < numeri.length; i++) {\\n    // manca il controllo\\n}", "Mostra solo i numeri maggiori di 1", "if(numeri[i] > 1) System.out.println(numeri[i]);"),
+            new Esercizio("Completa il codice", "Avanzato", "public int fattoriale(int n) {\\n    if (n == 0) return 1;\\n    else _____\\n}", "Completa la ricorsione per il fattoriale", "return n * fattoriale(n - 1);"),
+            new Esercizio("Completa il codice", "Avanzato", "int[] numeri = {1,2,3,4};\\nfor (int n : numeri) {\\n    if (n % 2 == 0) {\\n        _____\\n    }\\n}", "Stampa solo i numeri pari", "System.out.println(n);")
         )));
 
         eserciziPerLivello.forEach((livello, lista) -> mostratiPerLivello.put(livello, new ArrayList<>()));
@@ -105,50 +85,69 @@ public class CompletaCodiceController {
         mostratiPerLivello.get(livelloCorrente).add(esercizioCorrente);
 
         titoloLabel.setText(esercizioCorrente.titolo);
-        livelloLabel.setText("Livello: " + esercizioCorrente.livello);
-        codiceArea.setText(esercizioCorrente.codice);
+        //livelloLabel.setText("Livello: " + esercizioCorrente.livello);
+        codiceArea.setText(esercizioCorrente.codice.replace("\\n", "\n"));
         consegnaLabel.setText(esercizioCorrente.domanda);
-        risposta1.setText(esercizioCorrente.risposte[0]);
-        risposta2.setText(esercizioCorrente.risposte[1]);
-        risposta3.setText(esercizioCorrente.risposte[2]);
-        rispostaGroup.selectToggle(null);
+        campoRisposta.setText("");
         feedbackLabel.setVisible(false);
     }
 
     @FXML
     private void confermaRisposta(ActionEvent event) {
-        RadioButton selezionata = (RadioButton) rispostaGroup.getSelectedToggle();
-        if (selezionata == null) return;
-        int scelta = selezionata == risposta1 ? 0 : selezionata == risposta2 ? 1 : 2;
-        if (scelta == esercizioCorrente.indiceCorretta) {
+        String rispostaUtente = campoRisposta.getText().replaceAll("\\s+", "").trim();
+        String rispostaCorretta = esercizioCorrente.rispostaCorretta.replaceAll("\\s+", "").trim();
+
+        if (rispostaUtente.isEmpty()) {
+            feedbackLabel.setText("Inserisci una risposta prima di confermare.");
+            feedbackLabel.setStyle("-fx-text-fill: orange;");
+            feedbackLabel.setVisible(true);
+            return;
+        }
+
+        if (rispostaUtente.equalsIgnoreCase(rispostaCorretta)) {
             feedbackLabel.setText("Corretto!");
             feedbackLabel.setStyle("-fx-text-fill: green;");
+            successiConsecutivi++;
             punteggio++;
-        } else {
-            feedbackLabel.setText("Sbagliato!");
-            feedbackLabel.setStyle("-fx-text-fill: red;");
-        }
-        feedbackLabel.setVisible(true);
-        confermaButton.setText("Avanti");
-        confermaButton.setOnAction(e -> {
-            confermaButton.setText("Conferma");
-            confermaButton.setOnAction(this::confermaRisposta);
             mostraDomandaCasuale();
-        });
+        } else {
+            feedbackLabel.setText("Sbagliato! Riprova.");
+            feedbackLabel.setStyle("-fx-text-fill: red;");
+            successiConsecutivi = 0;
+        }
+
+        feedbackLabel.setVisible(true);
+        aggiornaProgressBar();
+
+        if (successiConsecutivi >= nSuccessiPerLivello) {
+            avanzaLivello();
+        }
+    }
+
+    private void aggiornaProgressBar() {
+        double progress = (double) successiConsecutivi / nSuccessiPerLivello;
+        progressBar.setProgress(progress);
     }
 
     private void avanzaLivello() {
-        if (livelloCorrente.equals("Principiante")) livelloCorrente = "Intermedio";
-        else if (livelloCorrente.equals("Intermedio")) livelloCorrente = "Avanzato";
-        else {
-            feedbackLabel.setText("Hai completato tutti i livelli! Punteggio: " + punteggio);
-            feedbackLabel.setStyle("-fx-text-fill: blue;");
-            feedbackLabel.setVisible(true);
-            confermaButton.setDisable(true);
-            tornaMenuButton.setVisible(true);
-            salvaRisultato();
-            return;
+        successiConsecutivi = 0;
+        aggiornaProgressBar();
+
+        switch (livelloCorrente) {
+            case "Principiante" -> livelloCorrente = "Intermedio";
+            case "Intermedio" -> livelloCorrente = "Avanzato";
+            case "Avanzato" -> {
+                feedbackLabel.setText("Hai completato tutti i livelli! Punteggio: " + punteggio);
+                feedbackLabel.setStyle("-fx-text-fill: blue;");
+                feedbackLabel.setVisible(true);
+                btnConferma.setDisable(true);
+                salvaRisultato();
+                aggiornaStileLivelli();
+                return;
+            }
         }
+        aggiornaStileLivelli();
+        mostratiPerLivello.get(livelloCorrente).clear();
         mostraDomandaCasuale();
     }
 
@@ -162,12 +161,97 @@ public class CompletaCodiceController {
         }
     }
 
+    private void salvaProgresso() {
+        String utente = Session.getCurrentUser();
+        File file = new File("progressi.csv");
+        List<String> righeAggiornate = new ArrayList<>();
+    
+        // Leggi tutte le righe esistenti e tieni solo quelle NON dell'utente corrente per questo esercizio
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String riga;
+            while ((riga = reader.readLine()) != null) {
+                if (!riga.startsWith(utente + ",Completa il Codice")) {
+                    righeAggiornate.add(riga);
+                }
+            }
+        } catch (IOException e) {
+            // Il file potrebbe non esistere ancora: lo creeremo sotto
+        }
+    
+        // Aggiungi la nuova riga aggiornata
+        righeAggiornate.add(String.format("%s,%s,%s,%d", utente, "Completa il Codice", livelloCorrente, successiConsecutivi));
+    
+        // Sovrascrivi il file
+        try (PrintWriter writer = new PrintWriter(new FileWriter(file))) {
+            for (String r : righeAggiornate) {
+                writer.println(r);
+            }
+        } catch (IOException e) {
+            System.err.println("Errore nel salvataggio del progresso: " + e.getMessage());
+        }
+    }
+    
+
+    private void caricaProgresso() {
+        String utente = Session.getCurrentUser();
+        try (Scanner scanner = new Scanner(new File("progressi.csv"))) {
+            while (scanner.hasNextLine()) {
+                String[] parts = scanner.nextLine().split(",");
+                if (parts.length == 4 && parts[0].equals(utente) && parts[1].equals("Completa il Codice")) {
+                    livelloCorrente = parts[2];
+                    successiConsecutivi = Integer.parseInt(parts[3]);
+                    aggiornaProgressBar();
+                    return;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Nessun progresso precedente trovato per l'utente " + utente);
+        }
+    }
+
     @FXML
     private void tornaAlMenu(ActionEvent event) throws IOException {
+        salvaProgresso();
         Parent root = FXMLLoader.load(getClass().getResource("menu.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
+    }
+
+    @FXML
+    private void vaiALivelloPrincipiante(ActionEvent event) {
+        livelloCorrente = "Principiante";
+        successiConsecutivi = 0;
+        aggiornaStileLivelli();
+        mostraDomandaCasuale();
+    }
+
+    @FXML
+    private void vaiALivelloIntermedio(ActionEvent event) {
+        livelloCorrente = "Intermedio";
+        successiConsecutivi = 0;
+        aggiornaStileLivelli();
+        mostraDomandaCasuale();
+    }
+
+    @FXML
+    private void vaiALivelloAvanzato(ActionEvent event) {
+        livelloCorrente = "Avanzato";
+        successiConsecutivi = 0;
+        aggiornaStileLivelli();
+        mostraDomandaCasuale();
+    }
+
+    private void aggiornaStileLivelli() {
+        btnPrincipiante.getStyleClass().remove("selected");
+        btnIntermedio.getStyleClass().remove("selected");
+        btnAvanzato.getStyleClass().remove("selected");
+
+        switch (livelloCorrente) {
+            case "Principiante" -> btnPrincipiante.getStyleClass().add("selected");
+            case "Intermedio" -> btnIntermedio.getStyleClass().add("selected");
+            case "Avanzato" -> btnAvanzato.getStyleClass().add("selected");
+        }
     }
 
     static class Esercizio {
@@ -175,16 +259,14 @@ public class CompletaCodiceController {
         String livello;
         String codice;
         String domanda;
-        String[] risposte;
-        int indiceCorretta;
+        String rispostaCorretta;
 
-        public Esercizio(String titolo, String livello, String codice, String domanda, String[] risposte, int indiceCorretta) {
+        public Esercizio(String titolo, String livello, String codice, String domanda, String rispostaCorretta) {
             this.titolo = titolo;
             this.livello = livello;
             this.codice = codice;
             this.domanda = domanda;
-            this.risposte = risposte;
-            this.indiceCorretta = indiceCorretta;
+            this.rispostaCorretta = rispostaCorretta;
         }
 
         @Override

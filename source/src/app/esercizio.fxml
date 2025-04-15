@@ -1,51 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/20.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="app.TrovaErroreController"
-            prefWidth="800" prefHeight="600">
+<BorderPane fx:controller="app.TrovaErroreController"
+            xmlns:fx="http://javafx.com/fxml"
+            xmlns="http://javafx.com/javafx/8"
+            stylesheets="@style.css"
+            prefWidth="1000" prefHeight="720">
 
-    <children>
-        <ChoiceBox fx:id="livelloChoiceBox" layoutX="650" layoutY="20" prefWidth="120"/>
-        <!-- Titolo -->
-        <Label fx:id="titoloLabel" layoutX="30" layoutY="20"
-               style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+    <!-- CONTENUTO CENTRALE -->
+    <center>
+        <VBox fx:id="contenitoreCentrale" alignment="CENTER" spacing="20" styleClass="contenitore-centrale">
+            
+            <!-- Logo -->
+            <ImageView fx:id="logo" fitHeight="120" fitWidth="120" preserveRatio="true">
+                <image><Image url="@img/logo.png"/></image>
+            </ImageView>
+            
+            <!-- Pulsanti livello -->
+            <HBox spacing="0" alignment="CENTER" styleClass="level-buttons">
+                <Button fx:id="btnPrincipiante" text="Principiante" onAction="#vaiALivelloPrincipiante" styleClass="livello-btn"/>
+                <Button fx:id="btnIntermedio" text="Intermedio" onAction="#vaiALivelloIntermedio" styleClass="livello-btn"/>
+                <Button fx:id="btnAvanzato" text="Avanzato" onAction="#vaiALivelloAvanzato" styleClass="livello-btn"/>
+            </HBox>
 
-        <!-- Livello -->
-        <Label fx:id="livelloLabel" layoutX="30" layoutY="60"
-               style="-fx-font-size: 16px;" />
+            <!-- Barra di progresso -->
+            <ProgressBar fx:id="progressBar" styleClass="progress-bar" prefWidth="600"/>
 
-        <!-- Codice -->
-        <TextArea fx:id="codiceArea" layoutX="30" layoutY="90" prefWidth="740" prefHeight="150"
-                  wrapText="true" editable="false" />
+            <!-- Titolo -->
+            <Label fx:id="titoloLabel" styleClass="titolo"/>
 
-        <!-- Domanda -->
-        <Label fx:id="consegnaLabel" layoutX="30" layoutY="260"
-               style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+            <!-- Codice -->
+            <TextArea fx:id="codiceArea" editable="false" wrapText="true" styleClass="codice-area"/>
 
-        <!-- Risposte -->
-        <VBox layoutX="30" layoutY="290" spacing="10">
-            <RadioButton fx:id="risposta1" />
-            <RadioButton fx:id="risposta2" />
-            <RadioButton fx:id="risposta3" />
+            <!-- Consegna -->
+            <Label fx:id="consegnaLabel" wrapText="true" styleClass="consegna"/>
+
+            <!-- Scelte -->
+            <VBox spacing="10" alignment="CENTER_LEFT">
+                <RadioButton fx:id="risposta1" wrapText="true"/>
+                <RadioButton fx:id="risposta2" wrapText="true"/>
+                <RadioButton fx:id="risposta3" wrapText="true"/>
+            </VBox>
+
+            <!-- Feedback -->
+            <Label fx:id="feedbackLabel" styleClass="feedback"/>
+
+            <!-- Bottoni azione -->
+            <HBox spacing="20" alignment="CENTER">
+                <Button fx:id="btnConferma" text="Conferma" onAction="#confermaRisposta" styleClass="btn-conferma"/>
+                <Button fx:id="btnEsci" text="Esci" onAction="#tornaAlMenu" styleClass="btn-neutro"/>
+            </HBox>
         </VBox>
-
-        <!-- Feedback -->
-        <Label fx:id="feedbackLabel" layoutX="30" layoutY="430"
-               style="-fx-font-size: 16px;" />
-
-        <!-- Pulsante Conferma -->
-        <Button fx:id="confermaButton" text="Conferma"
-                layoutX="30" layoutY="470"
-                onAction="#confermaRisposta" />
-
-        <!-- Pulsante Torna al menu -->
-        <Button fx:id="tornaMenuButton" text="Torna al Menu"
-                layoutX="130" layoutY="470" visible="false"
-                onAction="#tornaAlMenu" />
-
-    </children>
-</AnchorPane>
+    </center>
+</BorderPane>

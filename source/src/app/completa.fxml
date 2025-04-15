@@ -1,29 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1"
-            fx:controller="app.CompletaCodiceController" prefHeight="600.0" prefWidth="800.0">
+<BorderPane fx:controller="app.CompletaCodiceController"
+            xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml"
+            stylesheets="@style.css"
+            prefWidth="1000" prefHeight="720"> <!-- Spazio totale per rispettare il layout -->
 
-    <children>
-        <Label layoutX="30" layoutY="30" text="Completa il Codice" style="-fx-font-size: 24px; -fx-font-weight: bold;" fx:id="titoloLabel"/>
+    <center>
+        <VBox fx:id="contenitoreCentrale" styleClass="contenitore-centrale" alignment="CENTER" spacing="20">
+            
+            <!-- Logo -->
+            <ImageView fx:id="logo" fitHeight="200" fitWidth="200" preserveRatio="true">
+                <image><Image url="@img/logo.png"/></image>
+            </ImageView>
 
-        <TextArea layoutX="30" layoutY="80" prefWidth="740" prefHeight="150" wrapText="true"
-                  editable="false" fx:id="codiceArea"/>
+            <!-- Pulsanti livello -->
+            <HBox spacing="0" alignment="CENTER" styleClass="level-buttons">
+                <Button fx:id="btnPrincipiante" text="Principiante" onAction="#vaiALivelloPrincipiante" styleClass="livello-btn"/>
+                <Button fx:id="btnIntermedio" text="Intermedio" onAction="#vaiALivelloIntermedio" styleClass="livello-btn"/>
+                <Button fx:id="btnAvanzato" text="Avanzato" onAction="#vaiALivelloAvanzato" styleClass="livello-btn"/>
+            </HBox>
 
-        <Label layoutX="30" layoutY="240" fx:id="consegnaLabel" style="-fx-font-size: 16px;" />
+            <!-- Barra di progresso -->
+            <ProgressBar fx:id="progressBar" styleClass="progress-bar" prefWidth="600"/>
 
-        <VBox layoutX="30" layoutY="270" spacing="15">
-            <RadioButton text="Risposta 1" fx:id="risposta1" toggleGroup="$toggleGroup"/>
-            <RadioButton text="Risposta 2" fx:id="risposta2" toggleGroup="$toggleGroup"/>
-            <RadioButton text="Risposta 3" fx:id="risposta3" toggleGroup="$toggleGroup"/>
+            <!-- Titolo -->
+            <Label fx:id="titoloLabel" styleClass="titolo"/>
+
+            <!-- Codice -->
+            <TextArea fx:id="codiceArea" editable="false" wrapText="true" styleClass="codice-area"/>
+
+            <!-- Consegna -->
+            <Label fx:id="consegnaLabel" wrapText="true" styleClass="consegna"/>
+
+            <!-- Campo risposta -->
+            <TextField fx:id="campoRisposta" promptText="Scrivi la tua risposta qui..."/>
+
+            <!-- Feedback -->
+            <Label fx:id="feedbackLabel" styleClass="feedback"/>
+
+            <!-- Bottoni -->
+            <HBox spacing="20" alignment="CENTER">
+                <Button fx:id="btnConferma" text="Conferma" onAction="#confermaRisposta" styleClass="btn-conferma"/>
+                <Button fx:id="btnEsci" text="Esci" onAction="#tornaAlMenu" styleClass="btn-neutro"/>
+            </HBox>
         </VBox>
+    </center>
 
-        <Button layoutX="30" layoutY="430" text="Conferma" fx:id="confermaButton" onAction="#confermaRisposta"/>
-        <Button layoutX="150" layoutY="430" text="Menu" fx:id="tornaMenuButton" onAction="#tornaAlMenu" visible="false"/>
-
-        <Label fx:id="feedbackLabel" layoutX="30" layoutY="480" style="-fx-font-size: 16px; -fx-text-fill: green;" text="" />
-        <Label fx:id="livelloLabel" layoutX="600" layoutY="30" style="-fx-font-size: 14px;" />
-    </children>
-</AnchorPane>
+</BorderPane>
