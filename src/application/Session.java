@@ -1,5 +1,4 @@
-package app;
-
+package application;
 public class Session {
     private static String currentUser;
 

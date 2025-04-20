@@ -1,5 +1,4 @@
-package app;
-
+package application;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 import javafx.scene.control.Button;
@@ -49,7 +48,7 @@ public class MenuController {
     @FXML
     private void apriTrovaErrore(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("esercizio.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("fxml/esercizio.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
@@ -60,7 +59,7 @@ public class MenuController {
 
     @FXML
     private void apriCompletaCodice(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("completa.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("fxml/completa.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
@@ -81,7 +80,7 @@ public class MenuController {
     private void logout(ActionEvent event) {
         try {
             Session.setCurrentUser(null); 
-            Parent root = FXMLLoader.load(getClass().getResource("homepage.fxml")); // oppure "login.fxml"
+            Parent root = FXMLLoader.load(getClass().getResource("fxml/homepage.fxml")); // oppure "login.fxml"
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();

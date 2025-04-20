@@ -1,5 +1,4 @@
-package app;
-
+package application;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,7 +29,7 @@ public class Controller
     public void goto_login(ActionEvent event) throws IOException {
         System.out.println("CLICK SU PLAY RICEVUTO!");
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/login.fxml"));
         Parent root = loader.load();
 
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();

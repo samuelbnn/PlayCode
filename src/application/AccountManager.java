@@ -1,5 +1,4 @@
-package app;
-
+package application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -244,12 +243,12 @@ public class AccountManager
 
     public void goto_login(ActionEvent event) throws IOException 
     {
-        navigateTo("login.fxml", event);
+        navigateTo("fxml/login.fxml", event);
     }
 
     public void goto_menu(ActionEvent event) throws IOException 
     {
-        navigateTo("menu.fxml", event);
+        navigateTo("fxml/menu.fxml", event);
     }
 
     private void navigateTo(String fxmlFile, ActionEvent event) throws IOException 

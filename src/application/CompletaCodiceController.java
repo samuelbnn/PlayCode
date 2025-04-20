@@ -1,5 +1,4 @@
-package app;
-
+package application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -212,7 +211,7 @@ public class CompletaCodiceController {
     @FXML
     private void tornaAlMenu(ActionEvent event) throws IOException {
         salvaProgresso();
-        Parent root = FXMLLoader.load(getClass().getResource("menu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("fxml/menu.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();

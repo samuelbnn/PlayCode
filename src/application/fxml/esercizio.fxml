@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
 
-<BorderPane fx:controller="app.CompletaCodiceController"
-            xmlns="http://javafx.com/javafx/8"
+<BorderPane fx:controller="application.TrovaErroreController"
             xmlns:fx="http://javafx.com/fxml"
+            xmlns="http://javafx.com/javafx/8"
             stylesheets="@style.css"
-            prefWidth="1000" prefHeight="720"> <!-- Spazio totale per rispettare il layout -->
+            prefWidth="1000" prefHeight="720">
 
+    <!-- CONTENUTO CENTRALE -->
     <center>
-        <VBox fx:id="contenitoreCentrale" styleClass="contenitore-centrale" alignment="CENTER" spacing="20">
+        <VBox fx:id="contenitoreCentrale" alignment="CENTER" spacing="20" styleClass="contenitore-centrale">
             
             <!-- Logo -->
-            <ImageView fx:id="logo" fitHeight="200" fitWidth="200" preserveRatio="true">
+            <ImageView fx:id="logo" fitHeight="120" fitWidth="120" preserveRatio="true">
                 <image><Image url="@img/logo.png"/></image>
             </ImageView>
-
+            
             <!-- Pulsanti livello -->
             <HBox spacing="0" alignment="CENTER" styleClass="level-buttons">
                 <Button fx:id="btnPrincipiante" text="Principiante" onAction="#vaiALivelloPrincipiante" styleClass="livello-btn"/>
@@ -38,18 +40,21 @@
             <!-- Consegna -->
             <Label fx:id="consegnaLabel" wrapText="true" styleClass="consegna"/>
 
-            <!-- Campo risposta -->
-            <TextField fx:id="campoRisposta" promptText="Scrivi la tua risposta qui..."/>
+            <!-- Scelte -->
+            <VBox spacing="10" alignment="CENTER_LEFT">
+                <RadioButton fx:id="risposta1" wrapText="true"/>
+                <RadioButton fx:id="risposta2" wrapText="true"/>
+                <RadioButton fx:id="risposta3" wrapText="true"/>
+            </VBox>
 
             <!-- Feedback -->
             <Label fx:id="feedbackLabel" styleClass="feedback"/>
 
-            <!-- Bottoni -->
+            <!-- Bottoni azione -->
             <HBox spacing="20" alignment="CENTER">
                 <Button fx:id="btnConferma" text="Conferma" onAction="#confermaRisposta" styleClass="btn-conferma"/>
                 <Button fx:id="btnEsci" text="Esci" onAction="#tornaAlMenu" styleClass="btn-neutro"/>
             </HBox>
         </VBox>
     </center>
-
 </BorderPane>

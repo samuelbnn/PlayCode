@@ -1,5 +1,4 @@
-package app;
-
+package application;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,7 +13,7 @@ public class App extends Application
         try
         {
             System.out.println("Carico schermata iniziale...");
-            Parent root = FXMLLoader.load(getClass().getResource("homepage.fxml")); // ✅ parte da homepage
+            Parent root = FXMLLoader.load(getClass().getResource("fxml/homepage.fxml"));
             System.out.println("FXML caricato!");
 
             Scene scene = new Scene(root);

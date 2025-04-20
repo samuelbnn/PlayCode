@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane prefHeight="720" prefWidth="1000" style="-fx-background-color: #f8f9fa;" stylesheets="@style.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="application.Controller">
+    
+    <VBox alignment="CENTER" spacing="30" stylesheets="@style.css">
+        <!-- Logo -->
+        <ImageView fx:id="logo" fitHeight="400" fitWidth="400" preserveRatio="true">
+            <image>
+                <Image url="@img/logo.png" />
+            </image>
+        </ImageView>
+
+        <!-- Pulsante PLAY -->
+        <Button fx:id="play_button" onAction="#goto_login" prefHeight="60" prefWidth="300" styleClass="play-button" text="PLAY" />
+    </VBox>
+</StackPane>
