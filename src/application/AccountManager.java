@@ -30,7 +30,7 @@ public class AccountManager
     @FXML
     private TextField messageField;
 
-    private final File file = new File("accounts.csv");
+    private final File file = new File("src/saves/accounts.csv");
     private final HashMap<String, String> loginInfo = new HashMap<>();
     private final Encryptor encryptor = new Encryptor();
 

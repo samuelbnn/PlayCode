@@ -151,7 +151,7 @@ public class CompletaCodiceController {
     }
 
     private void salvaRisultato() {
-        try (PrintWriter writer = new PrintWriter(new FileWriter("risultati.csv", true))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter("src/saves/risultati.csv", true))) {
             String utente = Session.getCurrentUser();
             String data = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
             writer.printf("%s,%s,%d,%s\n", utente, "Completa il Codice", punteggio, data);
@@ -162,7 +162,7 @@ public class CompletaCodiceController {
 
     private void salvaProgresso() {
         String utente = Session.getCurrentUser();
-        File file = new File("progressi.csv");
+        File file = new File("src/saves/progressi.csv");
         List<String> righeAggiornate = new ArrayList<>();
     
         // Leggi tutte le righe esistenti e tieni solo quelle NON dell'utente corrente per questo esercizio
@@ -193,7 +193,7 @@ public class CompletaCodiceController {
 
     private void caricaProgresso() {
         String utente = Session.getCurrentUser();
-        try (Scanner scanner = new Scanner(new File("progressi.csv"))) {
+        try (Scanner scanner = new Scanner(new File("src/saves/progressi.csv"))) {
             while (scanner.hasNextLine()) {
                 String[] parts = scanner.nextLine().split(",");
                 if (parts.length == 4 && parts[0].equals(utente) && parts[1].equals("Completa il Codice")) {
