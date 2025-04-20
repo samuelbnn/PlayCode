@@ -2,7 +2,7 @@
 
 Applicazione Java-FX
 
-Architettura PLAY
+Architettura PlayCode
 
 Si avvia l’applicazione:
 
@@ -19,7 +19,7 @@ esercizio a seconda del livello raggiunto.
 -l’utente attiva un esercizio e gioca utilizzando il mouse o la
 tastiera a seconda dell’esercizio scelto.
 
-Workflow PLAY
+Workflow PlayCode
 1. L’utente si autentica (tramite username e password si
 legge il file se ne è in possesso) o crea l’utenza con il
 pulsante dedicato, si scrive il dato su file
@@ -63,7 +63,7 @@ per grado di difficoltà (gli esercizi per lo stesso grado
 sono simili tra loro, es. stessa struttura ma valori diversi)
 Gli esercizi possono essere progettati anche con Chatgpt, nella consegna va indicato il link della conversazione con chat.
 
-PLAY memorizza esercizi,risultati parziali e utenti sul filesystem.
+PlayCode memorizza esercizi,risultati parziali e utenti sul filesystem.
 
 Scelta libera del formato dei dati e le librerie per fare il parsing.
 
