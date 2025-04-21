@@ -51,7 +51,7 @@ public class MenuController
     {
         try 
         {
-            Parent root = FXMLLoader.load(getClass().getResource(Costanti.PATH_FXML_TROVAERRORE));
+            Parent root = FXMLLoader.load(App.class.getResource(Costanti.PATH_FXML_TROVAERRORE));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
@@ -65,7 +65,7 @@ public class MenuController
     @FXML
     private void apriCompletaCodice(ActionEvent event) throws IOException 
     {
-        Parent root = FXMLLoader.load(getClass().getResource(Costanti.PATH_FXML_COMPLETACODICE));
+        Parent root = FXMLLoader.load(App.class.getResource(Costanti.PATH_FXML_COMPLETACODICE));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
@@ -92,7 +92,7 @@ public class MenuController
         try 
         {
             Session.setCurrentUser(null); 
-            Parent root = FXMLLoader.load(getClass().getResource(Costanti.PATH_FXML_HOMEPAGE)); // oppure "login.fxml"
+            Parent root = FXMLLoader.load(App.class.getResource(Costanti.PATH_FXML_HOMEPAGE)); // oppure "login.fxml"
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();

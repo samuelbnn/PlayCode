@@ -254,7 +254,7 @@ public class AccountManager
 
     private void navigateTo(String fxmlFile, ActionEvent event) throws IOException 
     {
-        Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
+        Parent root = FXMLLoader.load(App.class.getResource(fxmlFile));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();

@@ -244,7 +244,7 @@ public class CompletaCodiceController
     private void tornaAlMenu(ActionEvent event) throws IOException 
     {
         salvaProgresso();
-        Parent root = FXMLLoader.load(getClass().getResource(Costanti.PATH_FXML_MENU));
+        Parent root = FXMLLoader.load(App.class.getResource(Costanti.PATH_FXML_MENU));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();

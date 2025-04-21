@@ -29,12 +29,14 @@
                    style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2D3E50;"/>
 
             <GridPane hgap="30" vgap="30" alignment="CENTER">
-                <Button text="Leggi il Codice" onAction="#apriLeggiIlCodice" prefWidth="250" prefHeight="100" styleClass="menu-button" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <Button text="Leggi il Codice" onAction="#apriLeggiCodice" prefWidth="250" prefHeight="100" styleClass="menu-button" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
                 <Button text="Scrittura con Output" onAction="#apriScritturaOutput" prefWidth="250" prefHeight="100" styleClass="menu-button" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                
                 <Button text="Trova l'Errore" onAction="#apriTrovaErrore" prefWidth="250" prefHeight="100" styleClass="menu-button" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
                 <Button text="Completa il Codice" onAction="#apriCompletaCodice" prefWidth="250" prefHeight="100" styleClass="menu-button" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
                 <Button text="Linked List" onAction="#apriLinkedList" prefWidth="250" prefHeight="100" styleClass="menu-button" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                <Button text="Static or Not" onAction="#apriStatic" prefWidth="250" prefHeight="100" styleClass="menu-button" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <Button text="Static or Not" onAction="#apriStaticCode" prefWidth="250" prefHeight="100" styleClass="menu-button" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
             </GridPane>
         </VBox>
     </center>

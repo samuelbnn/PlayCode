@@ -16,9 +16,6 @@ import javafx.geometry.Rectangle2D;
 
 public class Controller
 {
-    private Stage stage;
-    private Scene scene;
-    
     @FXML
     private Button login;
     @FXML
@@ -31,8 +28,7 @@ public class Controller
     {
         System.out.println("CLICK SU PLAY RICEVUTO!");
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(Costanti.PATH_FXML_LOGIN));
-        Parent root = loader.load();
+        Parent root = FXMLLoader.load(App.class.getResource(Costanti.PATH_FXML_LOGIN));
 
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
