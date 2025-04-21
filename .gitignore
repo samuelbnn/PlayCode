@@ -21,3 +21,5 @@ bin/saves/risultati.csv
 bin/saves/progressi.csv
 bin/saves/accounts.csv
 bin/application/Costanti.class
+bin/application/fxml/trovaErrore.fxml
+bin/application/fxml/completaCodice.fxml

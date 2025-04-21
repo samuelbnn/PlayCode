@@ -14,9 +14,8 @@ public class App extends Application
         try
         {
             System.out.println("Carico schermata iniziale...");
-            Parent root = FXMLLoader.load(getClass().getResource("fxml/homepage.fxml"));
+            Parent root = FXMLLoader.load(App.class.getResource(Costanti.PATH_FXML_HOMEPAGE));
             System.out.println("FXML caricato!");
-
             Scene scene = new Scene(root);
             primaryStage.setTitle("Play");
             primaryStage.setScene(scene);

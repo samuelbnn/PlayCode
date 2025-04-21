@@ -260,7 +260,7 @@ public class TrovaErroreController
     private void tornaAlMenu(ActionEvent event) throws IOException 
     {
         salvaProgresso();
-        Parent root = FXMLLoader.load(getClass().getResource("fxml/menu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource(Costanti.PATH_FXML_MENU));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();

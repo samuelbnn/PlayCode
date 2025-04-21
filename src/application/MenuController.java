@@ -19,7 +19,7 @@ public class MenuController
     @FXML
     public void initialize() 
     {
-        String username = Session.getCurrentUser(); // otteniamo l'utente loggato
+        String username = Session.getCurrentUser(); //otteniamo l'utente loggato
         if (username != null && !username.isEmpty()) 
         {
             userNameLabel.setText("Benvenuto, " + username + "!");
@@ -30,26 +30,28 @@ public class MenuController
         }
     }
     
-    // Metodi per le finestre cliccabili
+    //Metodi per le finestre cliccabili
     @FXML
-    private void apriLeggiIlCodice(ActionEvent event) 
+    private void apriLeggiCodice(ActionEvent event) 
     {
         System.out.println("Apertura esercizio: Leggi il Codice");
-        // carica esercizio.fxml o una schermata dedicata
+        //carica leggiCodice.fxml
     }
 
     @FXML
     private void apriScritturaOutput(ActionEvent event) 
     {
         System.out.println("Apertura esercizio: Scrittura con Output");
+        //carica scritturaOutput.fxml
     }
+
 
     @FXML
     private void apriTrovaErrore(ActionEvent event) 
     {
         try 
         {
-            Parent root = FXMLLoader.load(getClass().getResource("fxml/esercizio.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource(Costanti.PATH_FXML_TROVAERRORE));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
@@ -63,7 +65,7 @@ public class MenuController
     @FXML
     private void apriCompletaCodice(ActionEvent event) throws IOException 
     {
-        Parent root = FXMLLoader.load(getClass().getResource("fxml/completa.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource(Costanti.PATH_FXML_COMPLETACODICE));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
@@ -74,12 +76,14 @@ public class MenuController
     private void apriLinkedList(ActionEvent event) 
     {
         System.out.println("Apertura esercizio: Linked List");
+        //carica linkedList.fxml
     }
 
     @FXML
-    private void apriStatic(ActionEvent event) 
+    private void apriStaticCode(ActionEvent event) 
     {
-        System.out.println("Apertura esercizio: Static or Not");
+        System.out.println("Apertura esercizio: Static Code");
+        //carica staticCode.fxml
     }
 
     @FXML
@@ -88,7 +92,7 @@ public class MenuController
         try 
         {
             Session.setCurrentUser(null); 
-            Parent root = FXMLLoader.load(getClass().getResource("fxml/homepage.fxml")); // oppure "login.fxml"
+            Parent root = FXMLLoader.load(getClass().getResource(Costanti.PATH_FXML_HOMEPAGE)); // oppure "login.fxml"
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();

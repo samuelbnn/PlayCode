@@ -244,12 +244,12 @@ public class AccountManager
 
     public void goto_login(ActionEvent event) throws IOException 
     {
-        navigateTo("fxml/login.fxml", event);
+        navigateTo(Costanti.PATH_FXML_LOGIN, event);
     }
 
     public void goto_menu(ActionEvent event) throws IOException 
     {
-        navigateTo("fxml/menu.fxml", event);
+        navigateTo(Costanti.PATH_FXML_MENU, event);
     }
 
     private void navigateTo(String fxmlFile, ActionEvent event) throws IOException 

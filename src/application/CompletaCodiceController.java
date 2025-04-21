@@ -244,7 +244,7 @@ public class CompletaCodiceController
     private void tornaAlMenu(ActionEvent event) throws IOException 
     {
         salvaProgresso();
-        Parent root = FXMLLoader.load(getClass().getResource("fxml/menu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource(Costanti.PATH_FXML_MENU));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
@@ -312,8 +312,10 @@ public class CompletaCodiceController
         public boolean equals(Object o) 
         {
             if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+            if (o == null || getClass() != o.getClass()) 
+                return false;
             Esercizio esercizio = (Esercizio) o;
+            
             return Objects.equals(codice, esercizio.codice);
         }
 

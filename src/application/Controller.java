@@ -31,7 +31,7 @@ public class Controller
     {
         System.out.println("CLICK SU PLAY RICEVUTO!");
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/login.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Costanti.PATH_FXML_LOGIN));
         Parent root = loader.load();
 
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
