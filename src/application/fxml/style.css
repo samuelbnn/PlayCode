@@ -11,7 +11,7 @@
 }
 
 /* ---------------------- PLAY BUTTON ---------------------- */
-.play-button {
+.button {
     -fx-padding: 12 20 12 20;
     -fx-background-radius: 15;
     -fx-background-insets: 0;
@@ -28,13 +28,13 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 4, 0.2, 0, 2);
 }
 
-.play-button:hover {
+.button:hover {
     -fx-background-color:
         linear-gradient(from 0% 0% to 0% 100%, #27ae60, #2ecc71),
         #27ae60;
 }
 
-.play-button:pressed {
+.button:pressed {
     -fx-translate-y: 2;
     -fx-effect: none;
 }

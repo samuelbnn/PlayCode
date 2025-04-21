@@ -17,6 +17,6 @@
         </ImageView>
 
         <!-- Pulsante PLAY -->
-        <Button fx:id="play_button" onAction="#goto_login" prefHeight="60" prefWidth="300" styleClass="play-button" text="PLAY" />
+        <Button fx:id="play_button" onAction="#goto_login" prefHeight="60" prefWidth="300" styleClass="button" text="PLAY" />
     </VBox>
 </StackPane>

@@ -1,31 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane xmlns="http://javafx.com/javafx/20.0.1"
-           xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="application.AccountManager"
-           style="-fx-background-color: #2D3E50;">
+<StackPane style="-fx-background-color: #2D3E50;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@style.css" fx:controller="application.AccountManager">
     
     <!-- Contenitore centrale -->
-    <GridPane maxWidth="1000" maxHeight="700">
+    <GridPane maxHeight="700" maxWidth="1000">
         <columnConstraints>
-            <ColumnConstraints hgrow="ALWAYS"/>
-            <ColumnConstraints hgrow="ALWAYS"/>
+            <ColumnConstraints hgrow="ALWAYS" />
+            <ColumnConstraints hgrow="ALWAYS" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints vgrow="ALWAYS"/>
+            <RowConstraints vgrow="ALWAYS" />
         </rowConstraints>
 
         <!-- Colonna sinistra: logo -->
-        <VBox alignment="CENTER" spacing="20" style="-fx-background-color: #3498DB;" GridPane.columnIndex="0">
-            <ImageView fitWidth="250" fitHeight="250" preserveRatio="true">
+        <VBox alignment="CENTER" prefHeight="448.0" prefWidth="293.0" spacing="20" style="-fx-background-color: #3498DB;" GridPane.columnIndex="0">
+            <ImageView fitHeight="250" fitWidth="250" preserveRatio="true">
                 <image>
-                    <Image url="@img/logo.png"/>
+                    <Image url="@img/logo.png" />
                 </image>
             </ImageView>
         </VBox>
@@ -34,64 +40,44 @@
         <VBox alignment="CENTER" spacing="20" style="-fx-background-color: white; -fx-padding: 60;" GridPane.columnIndex="1">
 
             <!-- Titolo -->
-            <Label text="PLAY">
+            <Label text="PlayCode">
                 <font>
-                    <Font name="Consolas Bold" size="60"/>
+                    <Font name="Montserrat" size="60" />
                 </font>
             </Label>
 
             <!-- Messaggio dinamico -->
-            <TextField fx:id="messageField"
-                       promptText="Messaggio"
-                       editable="false"
-                       visible="false"
-                       style="-fx-background-color: transparent; -fx-border-color: #2D3E50; -fx-border-width: 2; -fx-text-fill: #2D3E50; -fx-alignment: center;"
-                       alignment="CENTER"/>
+            <TextField fx:id="messageField" alignment="CENTER" editable="false" promptText="Messaggio" style="-fx-background-color: transparent; -fx-border-color: #2D3E50; -fx-border-width: 2; -fx-text-fill: #2D3E50; -fx-alignment: center;" visible="false" />
 
             <!-- Username -->
-            <TextField fx:id="username"
-                       prefWidth="328"
-                       promptText="Username">
+            <TextField fx:id="username" prefWidth="328" promptText="Username">
                 <font>
-                    <Font size="18"/>
+                    <Font size="18" />
                 </font>
             </TextField>
 
-            <!-- Password + toggle -->
+            <!-- Password -->
             <StackPane prefWidth="328">
-                <PasswordField fx:id="hiddenPassword"
-                               prefWidth="328"
-                               promptText="Password">
+                <PasswordField fx:id="hiddenPassword" prefWidth="328" promptText="Password">
                     <font>
-                        <Font size="18"/>
+                        <Font size="18" />
                     </font>
                 </PasswordField>
 
-                <TextField fx:id="password"
-                           prefWidth="328"
-                           promptText="Password"
-                           visible="false"/>
+                <TextField fx:id="password" prefWidth="328" promptText="Password" visible="false"/>
 
-                <CheckBox fx:id="showPassword"
-                          onAction="#changeVisibility"
-                          StackPane.alignment="CENTER_RIGHT">
+                <CheckBox fx:id="showPassword" onAction="#changeVisibility" StackPane.alignment="CENTER_RIGHT">
                     <StackPane.margin>
-                        <Insets right="5"/>
+                        <Insets right="5" />
                     </StackPane.margin>
                 </CheckBox>
             </StackPane>
 
             <!-- Pulsante Login -->
-            <Button text="Login"
-                    onAction="#loginHandler"
-                    prefWidth="250"
-                    styleClass="btn-conferma"/>
+            <Button onAction="#loginHandler" prefWidth="250" styleClass="button" text="Login" />
 
             <!-- Crea account -->
-            <Button text="Create Account"
-                    onAction="#createAccount"
-                    prefWidth="250"
-                    styleClass="btn-neutro"/>
+            <Button onAction="#createAccount" prefWidth="250" styleClass="button" text="Create Account" />
         </VBox>
     </GridPane>
 </StackPane>
