@@ -1,12 +1,16 @@
 package application;
-public class Session {
+
+public class Session 
+{
     private static String currentUser;
 
-    public static void setCurrentUser(String username) {
+    public static void setCurrentUser(String username) 
+    {
         currentUser = username;
     }
 
-    public static String getCurrentUser() {
+    public static String getCurrentUser() 
+    {
         return currentUser;
     }
 }

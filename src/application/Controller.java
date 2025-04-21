@@ -1,4 +1,5 @@
 package application;
+
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,7 +27,8 @@ public class Controller
     private PasswordField password; 
 
     @FXML
-    public void goto_login(ActionEvent event) throws IOException {
+    public void goto_login(ActionEvent event) throws IOException 
+    {
         System.out.println("CLICK SU PLAY RICEVUTO!");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/login.fxml"));
@@ -47,5 +49,4 @@ public class Controller
         stage.setResizable(false); // per bloccare il ridimensionamento
         stage.show();
     }
-
 }

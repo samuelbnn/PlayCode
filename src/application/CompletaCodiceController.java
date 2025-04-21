@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class CompletaCodiceController {
-
+public class CompletaCodiceController 
+{
     @FXML private Label titoloLabel;
     @FXML private Label livelloLabel;
     @FXML private TextArea codiceArea;
@@ -35,7 +35,8 @@ public class CompletaCodiceController {
     private final Map<String, List<Esercizio>> mostratiPerLivello = new HashMap<>();
     private Esercizio esercizioCorrente;
 
-    public void initialize() {
+    public void initialize() 
+    {
         feedbackLabel.setVisible(false);
         campoRisposta.setDisable(false);
         btnConferma.setDisable(false);
@@ -46,7 +47,8 @@ public class CompletaCodiceController {
         mostraDomandaCasuale();
     }
 
-    private void caricaEsercizi() {
+    private void caricaEsercizi() 
+    {
         eserciziPerLivello.put("Principiante", new ArrayList<>(List.of(
             new Esercizio("Completa il codice", "Principiante", "public int somma(int a, int b) {\\n    // manca il return\\n}", "Completa la funzione per restituire la somma di a e b", "return a + b;"),
             new Esercizio("Completa il codice", "Principiante", "for(int i = 0; i < 5; i++) {\\n    // manca la stampa\\n}", "Completa il ciclo per stampare i", "System.out.println(i);"),
@@ -70,11 +72,13 @@ public class CompletaCodiceController {
         eserciziPerLivello.forEach((livello, lista) -> mostratiPerLivello.put(livello, new ArrayList<>()));
     }
 
-    private void mostraDomandaCasuale() {
+    private void mostraDomandaCasuale() 
+    {
         List<Esercizio> disponibili = new ArrayList<>(eserciziPerLivello.get(livelloCorrente));
         disponibili.removeAll(mostratiPerLivello.get(livelloCorrente));
 
-        if (disponibili.isEmpty()) {
+        if (disponibili.isEmpty()) 
+        {
             avanzaLivello();
             return;
         }
@@ -92,24 +96,29 @@ public class CompletaCodiceController {
     }
 
     @FXML
-    private void confermaRisposta(ActionEvent event) {
+    private void confermaRisposta(ActionEvent event) 
+    {
         String rispostaUtente = campoRisposta.getText().replaceAll("\\s+", "").trim();
         String rispostaCorretta = esercizioCorrente.rispostaCorretta.replaceAll("\\s+", "").trim();
 
-        if (rispostaUtente.isEmpty()) {
+        if (rispostaUtente.isEmpty()) 
+        {
             feedbackLabel.setText("Inserisci una risposta prima di confermare.");
             feedbackLabel.setStyle("-fx-text-fill: orange;");
             feedbackLabel.setVisible(true);
             return;
         }
 
-        if (rispostaUtente.equalsIgnoreCase(rispostaCorretta)) {
+        if (rispostaUtente.equalsIgnoreCase(rispostaCorretta)) 
+        {
             feedbackLabel.setText("Corretto!");
             feedbackLabel.setStyle("-fx-text-fill: green;");
             successiConsecutivi++;
             punteggio++;
             mostraDomandaCasuale();
-        } else {
+        } 
+        else 
+        {
             feedbackLabel.setText("Sbagliato! Riprova.");
             feedbackLabel.setStyle("-fx-text-fill: red;");
             successiConsecutivi = 0;
@@ -118,21 +127,25 @@ public class CompletaCodiceController {
         feedbackLabel.setVisible(true);
         aggiornaProgressBar();
 
-        if (successiConsecutivi >= nSuccessiPerLivello) {
+        if(successiConsecutivi >= nSuccessiPerLivello) 
+        {
             avanzaLivello();
         }
     }
 
-    private void aggiornaProgressBar() {
+    private void aggiornaProgressBar() 
+    {
         double progress = (double) successiConsecutivi / nSuccessiPerLivello;
         progressBar.setProgress(progress);
     }
 
-    private void avanzaLivello() {
+    private void avanzaLivello() 
+    {
         successiConsecutivi = 0;
         aggiornaProgressBar();
 
-        switch (livelloCorrente) {
+        switch (livelloCorrente) 
+        {
             case "Principiante" -> livelloCorrente = "Intermedio";
             case "Intermedio" -> livelloCorrente = "Avanzato";
             case "Avanzato" -> {
@@ -150,30 +163,40 @@ public class CompletaCodiceController {
         mostraDomandaCasuale();
     }
 
-    private void salvaRisultato() {
-        try (PrintWriter writer = new PrintWriter(new FileWriter("src/saves/risultati.csv", true))) {
+    private void salvaRisultato() 
+    {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(Costanti.PATH_FILE_RISULTATI, true))) 
+        {
             String utente = Session.getCurrentUser();
             String data = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
             writer.printf("%s,%s,%d,%s\n", utente, "Completa il Codice", punteggio, data);
-        } catch (IOException e) {
+        } 
+        catch (IOException e) 
+        {
             System.err.println("Errore nel salvataggio: " + e.getMessage());
         }
     }
 
-    private void salvaProgresso() {
+    private void salvaProgresso() 
+    {
         String utente = Session.getCurrentUser();
-        File file = new File("src/saves/progressi.csv");
+        File file = new File(Costanti.PATH_FILE_PROGRESSI);
         List<String> righeAggiornate = new ArrayList<>();
     
         // Leggi tutte le righe esistenti e tieni solo quelle NON dell'utente corrente per questo esercizio
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) 
+        {
             String riga;
-            while ((riga = reader.readLine()) != null) {
-                if (!riga.startsWith(utente + ",Completa il Codice")) {
+            while ((riga = reader.readLine()) != null) 
+            {
+                if (!riga.startsWith(utente + ",Completa il Codice")) 
+                {
                     righeAggiornate.add(riga);
                 }
             }
-        } catch (IOException e) {
+        } 
+        catch (IOException e) 
+        {
             // Il file potrebbe non esistere ancora: lo creeremo sotto
         }
     
@@ -181,35 +204,45 @@ public class CompletaCodiceController {
         righeAggiornate.add(String.format("%s,%s,%s,%d", utente, "Completa il Codice", livelloCorrente, successiConsecutivi));
     
         // Sovrascrivi il file
-        try (PrintWriter writer = new PrintWriter(new FileWriter(file))) {
-            for (String r : righeAggiornate) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(file))) 
+        {
+            for (String r : righeAggiornate) 
+            {
                 writer.println(r);
             }
-        } catch (IOException e) {
+        } 
+        catch (IOException e) 
+        {
             System.err.println("Errore nel salvataggio del progresso: " + e.getMessage());
         }
     }
     
-
-    private void caricaProgresso() {
+    private void caricaProgresso() 
+    {
         String utente = Session.getCurrentUser();
-        try (Scanner scanner = new Scanner(new File("src/saves/progressi.csv"))) {
-            while (scanner.hasNextLine()) {
+        try (Scanner scanner = new Scanner(new File(Costanti.PATH_FILE_PROGRESSI))) 
+        {
+            while (scanner.hasNextLine()) 
+            {
                 String[] parts = scanner.nextLine().split(",");
-                if (parts.length == 4 && parts[0].equals(utente) && parts[1].equals("Completa il Codice")) {
+                if (parts.length == 4 && parts[0].equals(utente) && parts[1].equals("Completa il Codice")) 
+                {
                     livelloCorrente = parts[2];
                     successiConsecutivi = Integer.parseInt(parts[3]);
                     aggiornaProgressBar();
                     return;
                 }
             }
-        } catch (IOException e) {
+        } 
+        catch (IOException e) 
+        {
             System.out.println("Nessun progresso precedente trovato per l'utente " + utente);
         }
     }
 
     @FXML
-    private void tornaAlMenu(ActionEvent event) throws IOException {
+    private void tornaAlMenu(ActionEvent event) throws IOException 
+    {
         salvaProgresso();
         Parent root = FXMLLoader.load(getClass().getResource("fxml/menu.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -218,7 +251,8 @@ public class CompletaCodiceController {
     }
 
     @FXML
-    private void vaiALivelloPrincipiante(ActionEvent event) {
+    private void vaiALivelloPrincipiante(ActionEvent event) 
+    {
         livelloCorrente = "Principiante";
         successiConsecutivi = 0;
         aggiornaStileLivelli();
@@ -226,7 +260,8 @@ public class CompletaCodiceController {
     }
 
     @FXML
-    private void vaiALivelloIntermedio(ActionEvent event) {
+    private void vaiALivelloIntermedio(ActionEvent event) 
+    {
         livelloCorrente = "Intermedio";
         successiConsecutivi = 0;
         aggiornaStileLivelli();
@@ -234,33 +269,38 @@ public class CompletaCodiceController {
     }
 
     @FXML
-    private void vaiALivelloAvanzato(ActionEvent event) {
+    private void vaiALivelloAvanzato(ActionEvent event) 
+    {
         livelloCorrente = "Avanzato";
         successiConsecutivi = 0;
         aggiornaStileLivelli();
         mostraDomandaCasuale();
     }
 
-    private void aggiornaStileLivelli() {
+    private void aggiornaStileLivelli() 
+    {
         btnPrincipiante.getStyleClass().remove("selected");
         btnIntermedio.getStyleClass().remove("selected");
         btnAvanzato.getStyleClass().remove("selected");
 
-        switch (livelloCorrente) {
+        switch (livelloCorrente) 
+        {
             case "Principiante" -> btnPrincipiante.getStyleClass().add("selected");
             case "Intermedio" -> btnIntermedio.getStyleClass().add("selected");
             case "Avanzato" -> btnAvanzato.getStyleClass().add("selected");
         }
     }
 
-    static class Esercizio {
+    static class Esercizio 
+    {
         String titolo;
         String livello;
         String codice;
         String domanda;
         String rispostaCorretta;
 
-        public Esercizio(String titolo, String livello, String codice, String domanda, String rispostaCorretta) {
+        public Esercizio(String titolo, String livello, String codice, String domanda, String rispostaCorretta) 
+        {
             this.titolo = titolo;
             this.livello = livello;
             this.codice = codice;
@@ -269,7 +309,8 @@ public class CompletaCodiceController {
         }
 
         @Override
-        public boolean equals(Object o) {
+        public boolean equals(Object o) 
+        {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             Esercizio esercizio = (Esercizio) o;
@@ -277,7 +318,8 @@ public class CompletaCodiceController {
         }
 
         @Override
-        public int hashCode() {
+        public int hashCode() 
+        {
             return Objects.hash(codice);
         }
     }

@@ -20,3 +20,4 @@ bin/application/MenuController.class
 bin/saves/risultati.csv
 bin/saves/progressi.csv
 bin/saves/accounts.csv
+bin/application/Costanti.class

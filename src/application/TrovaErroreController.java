@@ -1,4 +1,5 @@
 package application;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,14 +8,13 @@ import javafx.scene.Scene;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class TrovaErroreController {
-
+public class TrovaErroreController 
+{
     @FXML private Label titoloLabel;
     @FXML private Label livelloLabel;
     @FXML private TextArea codiceArea;
@@ -40,7 +40,8 @@ public class TrovaErroreController {
     private final Map<String, List<Esercizio>> mostratiPerLivello = new HashMap<>();
 
     @FXML
-    public void initialize() {
+    public void initialize() 
+    {
         gruppoRisposte = new ToggleGroup();
         risposta1.setToggleGroup(gruppoRisposte);
         risposta2.setToggleGroup(gruppoRisposte);
@@ -53,7 +54,8 @@ public class TrovaErroreController {
         aggiornaProgressBar();
     }
 
-    private void caricaDomande() {
+    private void caricaDomande() 
+    {
         eserciziPerLivello.put("Principiante", List.of(
             new Esercizio("Trova l'errore", "Principiante", "System.out.println(\"Hello\")", "Cosa manca?", new String[]{"Punto e virgola", "Parentesi graffa", "Dichiarazione variabile"}, 0),
             new Esercizio("Trova l'errore", "Principiante", "if (x > 5)\n    System.out.println(\"Grande\")\nelse\n    System.out.println(\"Piccolo\");", "Individua l'errore sintattico", new String[]{"Manca una graffa", "Errore di tipo", "Variabile non inizializzata"}, 0),
@@ -82,11 +84,13 @@ public class TrovaErroreController {
         eserciziPerLivello.forEach((livello, lista) -> mostratiPerLivello.put(livello, new ArrayList<>()));
     }
 
-    private void mostraDomandaCasuale() {
+    private void mostraDomandaCasuale() 
+    {
         List<Esercizio> disponibili = new ArrayList<>(eserciziPerLivello.get(livelloCorrente));
         disponibili.removeAll(mostratiPerLivello.get(livelloCorrente));
 
-        if (disponibili.isEmpty()) {
+        if (disponibili.isEmpty()) 
+        {
             avanzaLivello();
             return;
         }
@@ -107,26 +111,35 @@ public class TrovaErroreController {
     }
 
     @FXML
-    private void confermaRisposta(ActionEvent event) {
+    private void confermaRisposta(ActionEvent event) 
+    {
         RadioButton selezionata = (RadioButton) gruppoRisposte.getSelectedToggle();
-        if (selezionata == null) return;
+
+        if (selezionata == null) 
+            return;
 
         int scelta = selezionata == risposta1 ? 0 : selezionata == risposta2 ? 1 : 2;
 
-        if (scelta == esercizioCorrente.indiceCorretta) {
+        if (scelta == esercizioCorrente.indiceCorretta) 
+        {
             feedbackLabel.setText("Corretto!");
             feedbackLabel.setStyle("-fx-text-fill: green;");
             punteggio++;
             successiConsecutivi++;
             aggiornaProgressBar();
         
-            if (successiConsecutivi >= nSuccessiPerLivello) {
+            if (successiConsecutivi >= nSuccessiPerLivello) 
+            {
                 avanzaLivello(); // 👉 passa al livello successivo!
-            } else {
+            } 
+            else 
+            {
                 mostraDomandaCasuale(); // 👉 rimani nello stesso livello
             }
 
-        } else {
+        } 
+        else 
+        {
             feedbackLabel.setText("Sbagliato!");
             feedbackLabel.setStyle("-fx-text-fill: red;");
             successiConsecutivi = 0;
@@ -136,16 +149,19 @@ public class TrovaErroreController {
         feedbackLabel.setVisible(true);
     }
 
-    private void aggiornaProgressBar() {
+    private void aggiornaProgressBar() 
+    {
         double progress = (double) successiConsecutivi / nSuccessiPerLivello;
         progressBar.setProgress(progress);
     }
 
-    private void avanzaLivello() {
+    private void avanzaLivello() 
+    {
         successiConsecutivi = 0;
         aggiornaProgressBar();
 
-        switch (livelloCorrente) {
+        switch (livelloCorrente) 
+        {
             case "Principiante" -> livelloCorrente = "Intermedio";
             case "Intermedio" -> livelloCorrente = "Avanzato";
             case "Avanzato" -> {
@@ -163,30 +179,40 @@ public class TrovaErroreController {
         mostraDomandaCasuale();
     }
 
-    private void salvaRisultato() {
-        try (PrintWriter writer = new PrintWriter(new FileWriter("src/saves/risultati.csv", true))) {
+    private void salvaRisultato() 
+    {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(Costanti.PATH_FILE_RISULTATI, true))) 
+        {
             String utente = Session.getCurrentUser();
             String data = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
             writer.printf("%s,%s,%d,%s\n", utente, "Trova l'errore", punteggio, data);
-        } catch (IOException e) {
+        } 
+        catch (IOException e) 
+        {
             e.printStackTrace();
         }
     }
 
-    private void salvaProgresso() {
+    private void salvaProgresso() 
+    {
         String utente = Session.getCurrentUser();
-        File file = new File("src/saves/progressi.csv");
+        File file = new File(Costanti.PATH_FILE_PROGRESSI);
         List<String> righeAggiornate = new ArrayList<>();
     
         // Leggi tutte le righe esistenti e tieni solo quelle NON dell'utente corrente per questo esercizio
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) 
+        {
             String riga;
-            while ((riga = reader.readLine()) != null) {
-                if (!riga.startsWith(utente + ",Trova l'errore")) {
+            while ((riga = reader.readLine()) != null) 
+            {
+                if (!riga.startsWith(utente + ",Trova l'errore")) 
+                {
                     righeAggiornate.add(riga);
                 }
             }
-        } catch (IOException e) {
+        } 
+        catch (IOException e) 
+        {
             // Il file potrebbe non esistere ancora: lo creeremo sotto
         }
     
@@ -194,34 +220,45 @@ public class TrovaErroreController {
         righeAggiornate.add(String.format("%s,%s,%s,%d", utente, "Trova l'errore", livelloCorrente, successiConsecutivi));
     
         // Sovrascrivi il file
-        try (PrintWriter writer = new PrintWriter(new FileWriter(file))) {
-            for (String r : righeAggiornate) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(file))) 
+        {
+            for (String r : righeAggiornate) 
+            {
                 writer.println(r);
             }
-        } catch (IOException e) {
+        } 
+        catch (IOException e) 
+        {
             System.err.println("Errore nel salvataggio del progresso: " + e.getMessage());
         }
     }
 
-    private void caricaProgresso() {
+    private void caricaProgresso() 
+    {
         String utente = Session.getCurrentUser();
-        try (Scanner scanner = new Scanner(new File("src/saves/progressi.csv"))) {
-            while (scanner.hasNextLine()) {
+        try (Scanner scanner = new Scanner(new File(Costanti.PATH_FILE_PROGRESSI))) 
+        {
+            while (scanner.hasNextLine()) 
+            {
                 String[] parts = scanner.nextLine().split(",");
-                if (parts.length == 4 && parts[0].equals(utente) && parts[1].equals("Trova l'errore")) {
+                if (parts.length == 4 && parts[0].equals(utente) && parts[1].equals("Trova l'errore")) 
+                {
                     livelloCorrente = parts[2];
                     successiConsecutivi = Integer.parseInt(parts[3]);
                     aggiornaProgressBar();
                     return;
                 }
             }
-        } catch (IOException e) {
+        } 
+        catch (IOException e) 
+        {
             System.out.println("Nessun progresso precedente trovato per l'utente " + utente);
         }
     }
 
     @FXML
-    private void tornaAlMenu(ActionEvent event) throws IOException {
+    private void tornaAlMenu(ActionEvent event) throws IOException 
+    {
         salvaProgresso();
         Parent root = FXMLLoader.load(getClass().getResource("fxml/menu.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -230,7 +267,8 @@ public class TrovaErroreController {
     }
 
     @FXML
-    private void vaiALivelloPrincipiante(ActionEvent event) {
+    private void vaiALivelloPrincipiante(ActionEvent event) 
+    {
         livelloCorrente = "Principiante";
         successiConsecutivi = 0;
         aggiornaStileLivelli();
@@ -238,7 +276,8 @@ public class TrovaErroreController {
     }
 
     @FXML
-    private void vaiALivelloIntermedio(ActionEvent event) {
+    private void vaiALivelloIntermedio(ActionEvent event) 
+    {
         livelloCorrente = "Intermedio";
         successiConsecutivi = 0;
         aggiornaStileLivelli();
@@ -246,26 +285,30 @@ public class TrovaErroreController {
     }
 
     @FXML
-    private void vaiALivelloAvanzato(ActionEvent event) {
+    private void vaiALivelloAvanzato(ActionEvent event) 
+    {
         livelloCorrente = "Avanzato";
         successiConsecutivi = 0;
         aggiornaStileLivelli();
         mostraDomandaCasuale();
     }
 
-    private void aggiornaStileLivelli() {
+    private void aggiornaStileLivelli() 
+    {
         btnPrincipiante.getStyleClass().remove("selected");
         btnIntermedio.getStyleClass().remove("selected");
         btnAvanzato.getStyleClass().remove("selected");
 
-        switch (livelloCorrente) {
+        switch (livelloCorrente) 
+        {
             case "Principiante" -> btnPrincipiante.getStyleClass().add("selected");
             case "Intermedio" -> btnIntermedio.getStyleClass().add("selected");
             case "Avanzato" -> btnAvanzato.getStyleClass().add("selected");
         }
     }
 
-    static class Esercizio {
+    static class Esercizio 
+    {
         String titolo;
         String livello;
         String codice;
@@ -273,7 +316,8 @@ public class TrovaErroreController {
         String[] risposte;
         int indiceCorretta;
 
-        public Esercizio(String titolo, String livello, String codice, String domanda, String[] risposte, int indiceCorretta) {
+        public Esercizio(String titolo, String livello, String codice, String domanda, String[] risposte, int indiceCorretta) 
+        {
             this.titolo = titolo;
             this.livello = livello;
             this.codice = codice;
@@ -283,15 +327,19 @@ public class TrovaErroreController {
         }
 
         @Override
-        public boolean equals(Object o) {
+        public boolean equals(Object o) 
+        {
             if (this == o) return true;
-            if (!(o instanceof Esercizio)) return false;
+            if (!(o instanceof Esercizio)) 
+                return false;
             Esercizio that = (Esercizio) o;
+
             return Objects.equals(codice, that.codice);
         }
 
         @Override
-        public int hashCode() {
+        public int hashCode() 
+        {
             return Objects.hash(codice);
         }
     }

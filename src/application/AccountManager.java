@@ -1,4 +1,5 @@
 package application;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,7 +31,7 @@ public class AccountManager
     @FXML
     private TextField messageField;
 
-    private final File file = new File("src/saves/accounts.csv");
+    private final File file = new File(Costanti.PATH_FILE_ACCOUNTS);
     private final HashMap<String, String> loginInfo = new HashMap<>();
     private final Encryptor encryptor = new Encryptor();
 
