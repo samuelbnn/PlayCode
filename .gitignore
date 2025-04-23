@@ -25,3 +25,4 @@ bin/application/fxml/trovaErrore.fxml
 bin/application/fxml/completaCodice.fxml
 src/saves/accounts.csv
 src/saves/accounts.csv
+bin/application/LoginController.class
