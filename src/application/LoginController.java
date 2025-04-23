@@ -14,7 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Screen;
 import javafx.geometry.Rectangle2D;
 
-public class Controller
+public class LoginController
 {
     @FXML
     private Button login;

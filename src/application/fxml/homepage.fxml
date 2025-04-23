@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane prefHeight="720" prefWidth="1000" style="-fx-background-color: #f8f9fa;" stylesheets="@style.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="application.Controller">
+<StackPane prefHeight="720" prefWidth="1000" style="-fx-background-color: #f8f9fa;" stylesheets="@style.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="application.LoginController">
     
     <VBox alignment="CENTER" spacing="30" stylesheets="@style.css">
         <!-- Logo -->
