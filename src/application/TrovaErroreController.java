@@ -100,12 +100,18 @@ public class TrovaErroreController
         mostratiPerLivello.get(livelloCorrente).add(esercizioCorrente);
 
         titoloLabel.setText(esercizioCorrente.titolo);
-        //livelloLabel.setText("Livello: " + esercizioCorrente.livello);
         codiceArea.setText(esercizioCorrente.codice);
         consegnaLabel.setText(esercizioCorrente.domanda);
-        risposta1.setText(esercizioCorrente.risposte[0]);
-        risposta2.setText(esercizioCorrente.risposte[1]);
-        risposta3.setText(esercizioCorrente.risposte[2]);
+
+        // Mescola le risposte
+        List<String> risposteMischiate = new ArrayList<>(List.of(esercizioCorrente.risposte));
+        Collections.shuffle(risposteMischiate);
+
+        // Imposta le risposte mescolate sui RadioButton
+        risposta1.setText(risposteMischiate.get(0));
+        risposta2.setText(risposteMischiate.get(1));
+        risposta3.setText(risposteMischiate.get(2));
+
         gruppoRisposte.selectToggle(null);
         feedbackLabel.setVisible(false);
     }
@@ -114,13 +120,13 @@ public class TrovaErroreController
     private void confermaRisposta(ActionEvent event) 
     {
         RadioButton selezionata = (RadioButton) gruppoRisposte.getSelectedToggle();
-
+    
         if (selezionata == null) 
             return;
-
-        int scelta = selezionata == risposta1 ? 0 : selezionata == risposta2 ? 1 : 2;
-
-        if (scelta == esercizioCorrente.indiceCorretta) 
+    
+        // Confronta il testo del RadioButton selezionato con la risposta corretta
+        String rispostaSelezionata = selezionata.getText();
+        if (rispostaSelezionata.equals(esercizioCorrente.risposte[esercizioCorrente.indiceCorretta])) 
         {
             feedbackLabel.setText("Corretto!");
             feedbackLabel.setStyle("-fx-text-fill: green;");
@@ -136,7 +142,7 @@ public class TrovaErroreController
             {
                 mostraDomandaCasuale(); // 👉 rimani nello stesso livello
             }
-
+        
         } 
         else 
         {
@@ -145,7 +151,7 @@ public class TrovaErroreController
             successiConsecutivi = 0;
             aggiornaProgressBar();
         }
-
+    
         feedbackLabel.setVisible(true);
     }
 

@@ -26,3 +26,6 @@ bin/application/fxml/completaCodice.fxml
 src/saves/accounts.csv
 src/saves/accounts.csv
 bin/application/LoginController.class
+src/saves/accounts.csv
+src/saves/progressi.csv
+src/saves/risultati.csv

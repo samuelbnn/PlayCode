@@ -1,3 +1,10 @@
+/* ---------------------- IMPORT FONT ---------------------- */
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/application/fxml/font/Montserrat-MediumItalic.ttf');
+}
+
 /* ---------------------- GENERALI ---------------------- */
 .homepage-root {
     -fx-background-color: #F8F9FA;
@@ -7,7 +14,7 @@
     -fx-padding: 40 60 40 60;
     -fx-spacing: 20;
     -fx-background-color: #f8f9fa;
-    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-family: 'Montserrat';
 }
 
 /* ---------------------- PLAY BUTTON ---------------------- */
@@ -21,7 +28,7 @@
 
     -fx-font-weight: bold;
     -fx-font-size: 24px;
-    -fx-font-family: 'Monserrat';
+    -fx-font-family: 'Montserrat';
     -fx-text-fill: white;
 
     /* Effetto più leggero */
