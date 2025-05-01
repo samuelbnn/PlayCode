@@ -88,30 +88,30 @@ public class TrovaErroreController
     {
         List<Esercizio> disponibili = new ArrayList<>(eserciziPerLivello.get(livelloCorrente));
         disponibili.removeAll(mostratiPerLivello.get(livelloCorrente));
-
+    
         if (disponibili.isEmpty()) 
         {
             avanzaLivello();
             return;
         }
-
+    
         Collections.shuffle(disponibili);
         esercizioCorrente = disponibili.get(0);
         mostratiPerLivello.get(livelloCorrente).add(esercizioCorrente);
-
+    
         titoloLabel.setText(esercizioCorrente.titolo);
         codiceArea.setText(esercizioCorrente.codice);
         consegnaLabel.setText(esercizioCorrente.domanda);
-
+    
         // Mescola le risposte
         List<String> risposteMischiate = new ArrayList<>(List.of(esercizioCorrente.risposte));
         Collections.shuffle(risposteMischiate);
-
+    
         // Imposta le risposte mescolate sui RadioButton
         risposta1.setText(risposteMischiate.get(0));
         risposta2.setText(risposteMischiate.get(1));
         risposta3.setText(risposteMischiate.get(2));
-
+    
         gruppoRisposte.selectToggle(null);
         feedbackLabel.setVisible(false);
     }
@@ -120,39 +120,49 @@ public class TrovaErroreController
     private void confermaRisposta(ActionEvent event) 
     {
         RadioButton selezionata = (RadioButton) gruppoRisposte.getSelectedToggle();
-    
+
         if (selezionata == null) 
+        {
+            feedbackLabel.setText("Seleziona una risposta!");
+            feedbackLabel.setStyle("-fx-text-fill: red;");
+            feedbackLabel.setVisible(true);
             return;
-    
-        // Confronta il testo del RadioButton selezionato con la risposta corretta
+        }
+
         String rispostaSelezionata = selezionata.getText();
-        if (rispostaSelezionata.equals(esercizioCorrente.risposte[esercizioCorrente.indiceCorretta])) 
+        Esercizio domanda = esercizioCorrente;
+
+        if (rispostaSelezionata.equals(domanda.risposte[domanda.indiceCorretta])) 
         {
             feedbackLabel.setText("Corretto!");
             feedbackLabel.setStyle("-fx-text-fill: green;");
-            punteggio++;
-            successiConsecutivi++;
-            aggiornaProgressBar();
-        
-            if (successiConsecutivi >= nSuccessiPerLivello) 
-            {
-                avanzaLivello(); // 👉 passa al livello successivo!
-            } 
-            else 
-            {
-                mostraDomandaCasuale(); // 👉 rimani nello stesso livello
-            }
-        
+            feedbackLabel.setVisible(true);
+
+            // Cambia il bordo del box del codice a verde
+            codiceArea.setStyle("-fx-border-color: green; -fx-border-width: 2;");
+
+            // Aspetta 2 secondi prima di passare alla domanda successiva
+            new Thread(() -> {
+                try {
+                    Thread.sleep(2000); // 2 secondi
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                javafx.application.Platform.runLater(() -> {
+                    codiceArea.setStyle(""); // Resetta lo stile del bordo
+                    mostraDomandaCasuale();
+                });
+            }).start();
         } 
         else 
         {
-            feedbackLabel.setText("Sbagliato!");
+            feedbackLabel.setText("Sbagliato! Riprova.");
             feedbackLabel.setStyle("-fx-text-fill: red;");
-            successiConsecutivi = 0;
-            aggiornaProgressBar();
+            feedbackLabel.setVisible(true);
+
+            // Cambia il bordo del box del codice a rosso
+            codiceArea.setStyle("-fx-border-color: red; -fx-border-width: 2;");
         }
-    
-        feedbackLabel.setVisible(true);
     }
 
     private void aggiornaProgressBar() 
@@ -310,43 +320,6 @@ public class TrovaErroreController
             case "Principiante" -> btnPrincipiante.getStyleClass().add("selected");
             case "Intermedio" -> btnIntermedio.getStyleClass().add("selected");
             case "Avanzato" -> btnAvanzato.getStyleClass().add("selected");
-        }
-    }
-
-    static class Esercizio 
-    {
-        String titolo;
-        String livello;
-        String codice;
-        String domanda;
-        String[] risposte;
-        int indiceCorretta;
-
-        public Esercizio(String titolo, String livello, String codice, String domanda, String[] risposte, int indiceCorretta) 
-        {
-            this.titolo = titolo;
-            this.livello = livello;
-            this.codice = codice;
-            this.domanda = domanda;
-            this.risposte = risposte;
-            this.indiceCorretta = indiceCorretta;
-        }
-
-        @Override
-        public boolean equals(Object o) 
-        {
-            if (this == o) return true;
-            if (!(o instanceof Esercizio)) 
-                return false;
-            Esercizio that = (Esercizio) o;
-
-            return Objects.equals(codice, that.codice);
-        }
-
-        @Override
-        public int hashCode() 
-        {
-            return Objects.hash(codice);
         }
     }
 }
