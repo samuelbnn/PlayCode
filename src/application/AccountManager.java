@@ -89,15 +89,14 @@ public class AccountManager
                 showMessage("Login riuscito! Benvenuto, " + user + "!", true);
                 Session.setCurrentUser(user);
 
-                // Esegui il reindirizzamento dopo 2.5 secondi
                 new Thread(() -> {
                     try 
                     {
-                        Thread.sleep(2500);  // 2.5 secondi di attesa
+                        Thread.sleep(2000);  // 2.0 secondi di attesa
                         Platform.runLater(() -> {
                             try 
                             {
-                                goto_menu(event); // Naviga al menu dopo 2.5 secondi
+                                goto_menu(event);
                             } 
                             catch (IOException e) 
                             {
@@ -148,11 +147,10 @@ public class AccountManager
             System.out.println("Account creato con successo!");
             showMessage("Account creato con successo!", true);
 
-            // Esegui il reindirizzamento dopo 2.5 secondi
             new Thread(() -> {
                 try 
                 {
-                    Thread.sleep(2500);  // 2.5 secondi di attesa
+                    Thread.sleep(2000);  // 2.0 secondi di attesa
                     Platform.runLater(() -> {
                         try 
                         {
@@ -226,12 +224,11 @@ public class AccountManager
                 messageField.setStyle("-fx-background-color: #f8d7da; -fx-text-fill: #721c24; -fx-border-color: #f5c6cb; -fx-border-radius: 4;");
             }
 
-            // Nascondi il messaggio dopo 2.5 secondi
             new Thread(() -> 
             {
                 try 
                 {
-                    Thread.sleep(2500);  // 2.5 secondi di attesa
+                    Thread.sleep(2000);  // 2.5 secondi di attesa
                     Platform.runLater(() -> messageField.setVisible(false)); // Nascondi il messaggio
                 } 
                 catch (InterruptedException e) 
