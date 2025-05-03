@@ -31,7 +31,6 @@
                         <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
                         <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
                         <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
-                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
                     </HBox>
                 </VBox>
                 <VBox alignment="CENTER">
@@ -42,13 +41,11 @@
                         <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
                         <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
                         <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
-                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
                     </HBox>
                 </VBox>
                 <VBox alignment="CENTER">
                     <Button fx:id="btnAvanzato" text="Avanzato" onAction="#vaiALivelloAvanzato" styleClass="livello-btn"/>
                     <HBox fx:id="taccheAvanzato" spacing="5" alignment="CENTER">
-                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
                         <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
                         <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
                         <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
@@ -69,9 +66,10 @@
 
             <!-- Scelte -->
             <VBox spacing="10" alignment="CENTER_LEFT">
-                <RadioButton fx:id="risposta1" wrapText="true"/>
-                <RadioButton fx:id="risposta2" wrapText="true"/>
-                <RadioButton fx:id="risposta3" wrapText="true"/>
+                <RadioButton fx:id="risposta1" wrapText="true" styleClass="styled-radio"/>
+                <RadioButton fx:id="risposta2" wrapText="true" styleClass="styled-radio"/>
+                <RadioButton fx:id="risposta3" wrapText="true" styleClass="styled-radio"/>
+                <RadioButton fx:id="risposta4" wrapText="true" styleClass="styled-radio"/>
             </VBox>
 
             <!-- Feedback -->

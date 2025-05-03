@@ -29,3 +29,10 @@ bin/application/LoginController.class
 src/saves/accounts.csv
 src/saves/progressi.csv
 src/saves/risultati.csv
+bin/application/Esercizio.class
+src/saves/progressi.csv
+src/saves/accounts.csv
+bin/application/fxml/linkedList.fxml
+bin/application/LinkedListController.class
+bin/application/MenuController$ProgressData.class
+bin/application/ProgressManager.class
