@@ -180,64 +180,31 @@ public class CompletaCodiceController
     private void salvaProgresso() 
     {
         String utente = Session.getCurrentUser();
-        File file = new File(Costanti.PATH_FILE_PROGRESSI);
-        List<String> righeAggiornate = new ArrayList<>();
-    
-        // Leggi tutte le righe esistenti e tieni solo quelle NON dell'utente corrente per questo esercizio
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) 
+        Map<String, List<String>> progressState = new HashMap<>();
+
+        // Initialize the progress state for all levels
+        progressState.put("Principiante", new ArrayList<>(Collections.nCopies(5, "")));
+        progressState.put("Intermedio", new ArrayList<>(Collections.nCopies(5, "")));
+        progressState.put("Avanzato", new ArrayList<>(Collections.nCopies(5, "")));
+
+        // Update the current level's progress state with green for completed tacche
+        List<String> statoCorrente = progressState.get(livelloCorrente);
+        for (int i = 0; i < successiConsecutivi; i++) 
         {
-            String riga;
-            while ((riga = reader.readLine()) != null) 
-            {
-                if (!riga.startsWith(utente + ",Completa il Codice")) 
-                {
-                    righeAggiornate.add(riga);
-                }
-            }
-        } 
-        catch (IOException e) 
-        {
-            // Il file potrebbe non esistere ancora: lo creeremo sotto
+            statoCorrente.set(i, "green");
         }
-    
-        // Aggiungi la nuova riga aggiornata
-        righeAggiornate.add(String.format("%s,%s,%s,%d", utente, "Completa il Codice", livelloCorrente, successiConsecutivi));
-    
-        // Sovrascrivi il file
-        try (PrintWriter writer = new PrintWriter(new FileWriter(file))) 
-        {
-            for (String r : righeAggiornate) 
-            {
-                writer.println(r);
-            }
-        } 
-        catch (IOException e) 
-        {
-            System.err.println("Errore nel salvataggio del progresso: " + e.getMessage());
-        }
+
+        // Save the progress to the file
+        ProgressManager.saveProgress(utente, "Completa il Codice", livelloCorrente, progressState);
     }
-    
+
     private void caricaProgresso() 
     {
         String utente = Session.getCurrentUser();
-        try (Scanner scanner = new Scanner(new File(Costanti.PATH_FILE_PROGRESSI))) 
-        {
-            while (scanner.hasNextLine()) 
-            {
-                String[] parts = scanner.nextLine().split(",");
-                if (parts.length == 4 && parts[0].equals(utente) && parts[1].equals("Completa il Codice")) 
-                {
-                    livelloCorrente = parts[2];
-                    successiConsecutivi = Integer.parseInt(parts[3]);
-                    aggiornaProgressBar();
-                    return;
-                }
-            }
-        } 
-        catch (IOException e) 
-        {
-            System.out.println("Nessun progresso precedente trovato per l'utente " + utente);
-        }
+        Map<String, List<String>> progressState = ProgressManager.loadProgress(utente, "Completa il Codice");
+        List<String> tacche = progressState.getOrDefault(livelloCorrente, new ArrayList<>());
+        successiConsecutivi = (int) tacche.stream().filter(t -> t.equals("green")).count();
+        aggiornaProgressBar();
     }
 
     @FXML

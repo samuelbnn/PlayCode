@@ -169,7 +169,7 @@ public class TrovaErroreController
         feedbackLabel.setStyle("-fx-text-fill: blue;");
         feedbackLabel.setVisible(true);
 
-        salvaProgresso(); // Salva i progressi al completamento del livello
+        salvaProgresso(); // Save progress only after completing the level
 
         switch (livelloCorrente) 
         {
@@ -186,6 +186,7 @@ public class TrovaErroreController
         }
 
         aggiornaStileLivelli();
+        mostratiPerLivello.get(livelloCorrente).clear();
         mostraDomandaCasuale();
     }
 
@@ -340,8 +341,34 @@ public class TrovaErroreController
 
     private void salvaProgresso() 
     {
-        String utente = Session.getCurrentUser();
-        ProgressManager.saveProgress(utente, "Trova l'errore", livelloCorrente, statoTacche);
+        if (livelliCompletati.contains(livelloCorrente)) 
+        {
+            String utente = Session.getCurrentUser();
+            Map<String, List<String>> simplifiedState = new HashMap<>();
+
+            // Convert styles to R (red) or G (green)
+            statoTacche.forEach((livello, tacche) -> {
+                List<String> simplifiedTacche = new ArrayList<>();
+                for (String tacca : tacche) 
+                {
+                    if (tacca.contains("green")) 
+                    {
+                        simplifiedTacche.add("G");
+                    } 
+                    else if (tacca.contains("red")) 
+                    {
+                        simplifiedTacche.add("R");
+                    } 
+                    else 
+                    {
+                        simplifiedTacche.add("");
+                    }
+                }
+                simplifiedState.put(livello, simplifiedTacche);
+            });
+
+            ProgressManager.saveProgress(utente, "Trova l'errore", livelloCorrente, simplifiedState);
+        }
     }
 
     private void caricaProgresso() 
@@ -349,10 +376,41 @@ public class TrovaErroreController
         String utente = Session.getCurrentUser();
         Map<String, List<String>> loadedProgress = ProgressManager.loadProgress(utente, "Trova l'errore");
 
-        // Ensure all levels are initialized
-        statoTacche.put("Principiante", loadedProgress.getOrDefault("Principiante", new ArrayList<>(Collections.nCopies(5, ""))));
-        statoTacche.put("Intermedio", loadedProgress.getOrDefault("Intermedio", new ArrayList<>(Collections.nCopies(5, ""))));
-        statoTacche.put("Avanzato", loadedProgress.getOrDefault("Avanzato", new ArrayList<>(Collections.nCopies(5, ""))));
+        // Convert R (red) or G (green) back to styles
+        statoTacche.put("Principiante", translateTacche(loadedProgress.getOrDefault("Principiante", new ArrayList<>()), 5));
+        statoTacche.put("Intermedio", translateTacche(loadedProgress.getOrDefault("Intermedio", new ArrayList<>()), 5));
+        statoTacche.put("Avanzato", translateTacche(loadedProgress.getOrDefault("Avanzato", new ArrayList<>()), 5));
+
+        // Debug: Print loaded progress for verification
+        System.out.println("Progress loaded for user: " + utente);
+        System.out.println("Principiante: " + statoTacche.get("Principiante"));
+        System.out.println("Intermedio: " + statoTacche.get("Intermedio"));
+        System.out.println("Avanzato: " + statoTacche.get("Avanzato"));
+    }
+
+    private List<String> translateTacche(List<String> tacche, int expectedSize) 
+    {
+        List<String> translatedTacche = new ArrayList<>();
+        for (String tacca : tacche) 
+        {
+            if ("G".equals(tacca)) 
+            {
+                translatedTacche.add("-fx-background-color: green;");
+            } 
+            else if ("R".equals(tacca)) 
+            {
+                translatedTacche.add("-fx-background-color: red;");
+            } 
+            else 
+            {
+                translatedTacche.add("");
+            }
+        }
+        while (translatedTacche.size() < expectedSize) 
+        {
+            translatedTacche.add(""); // Add empty entries if missing
+        }
+        return translatedTacche.subList(0, expectedSize); // Ensure the list is trimmed to the expected size
     }
 
     private boolean isProgressoValido(String[] parts, String utente) 
