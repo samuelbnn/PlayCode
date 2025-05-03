@@ -29,14 +29,32 @@
                    style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2D3E50;"/>
 
             <GridPane hgap="30" vgap="30" alignment="CENTER">
-                <Button text="Leggi il Codice" onAction="#apriLeggiCodice" prefWidth="250" prefHeight="100" styleClass="menu-button" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                <Button text="Scrittura con Output" onAction="#apriScritturaOutput" prefWidth="250" prefHeight="100" styleClass="menu-button" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <VBox alignment="CENTER" spacing="10" GridPane.rowIndex="0" GridPane.columnIndex="0">
+                    <Button text="Leggi il Codice" onAction="#apriLeggiCodice" prefWidth="250" prefHeight="100" styleClass="menu-button"/>
+                    <ProgressBar fx:id="progressBarLeggiCodice" prefWidth="250" progress="0.0"/>
+                </VBox>
+                <VBox alignment="CENTER" spacing="10" GridPane.rowIndex="0" GridPane.columnIndex="1">
+                    <Button text="Scrittura con Output" onAction="#apriScritturaOutput" prefWidth="250" prefHeight="100" styleClass="menu-button"/>
+                    <ProgressBar fx:id="progressBarScritturaOutput" prefWidth="250" progress="0.0"/>
+                </VBox>
                 
-                <Button text="Trova l'Errore" onAction="#apriTrovaErrore" prefWidth="250" prefHeight="100" styleClass="menu-button" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                <Button text="Completa il Codice" onAction="#apriCompletaCodice" prefWidth="250" prefHeight="100" styleClass="menu-button" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <VBox alignment="CENTER" spacing="10" GridPane.rowIndex="1" GridPane.columnIndex="0">
+                    <Button text="Trova l'Errore" onAction="#apriTrovaErrore" prefWidth="250" prefHeight="100" styleClass="menu-button"/>
+                    <ProgressBar fx:id="progressBarTrovaErrore" prefWidth="250" progress="0.0"/>
+                </VBox>
+                <VBox alignment="CENTER" spacing="10" GridPane.rowIndex="1" GridPane.columnIndex="1">
+                    <Button text="Completa il Codice" onAction="#apriCompletaCodice" prefWidth="250" prefHeight="100" styleClass="menu-button"/>
+                    <ProgressBar fx:id="progressBarCompletaCodice" prefWidth="250" progress="0.0"/>
+                </VBox>
 
-                <Button text="Linked List" onAction="#apriLinkedList" prefWidth="250" prefHeight="100" styleClass="menu-button" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                <Button text="Static or Not" onAction="#apriStaticCode" prefWidth="250" prefHeight="100" styleClass="menu-button" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <VBox alignment="CENTER" spacing="10" GridPane.rowIndex="2" GridPane.columnIndex="0">
+                    <Button text="Linked List" onAction="#apriLinkedList" prefWidth="250" prefHeight="100" styleClass="menu-button"/>
+                    <ProgressBar fx:id="progressBarLinkedList" prefWidth="250" progress="0.0"/>
+                </VBox>
+                <VBox alignment="CENTER" spacing="10" GridPane.rowIndex="2" GridPane.columnIndex="1">
+                    <Button text="Static or Not" onAction="#apriStaticCode" prefWidth="250" prefHeight="100" styleClass="menu-button"/>
+                    <ProgressBar fx:id="progressBarStaticCode" prefWidth="250" progress="0.0"/>
+                </VBox>
             </GridPane>
         </VBox>
     </center>

@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import java.io.*;
 import java.time.LocalDateTime;
@@ -25,7 +26,9 @@ public class TrovaErroreController
     @FXML private RadioButton risposta1;
     @FXML private RadioButton risposta2;
     @FXML private RadioButton risposta3;
-    @FXML private ProgressBar progressBar;
+    @FXML private HBox tacchePrincipiante;
+    @FXML private HBox taccheIntermedio;
+    @FXML private HBox taccheAvanzato;
     @FXML private Button btnPrincipiante;
     @FXML private Button btnIntermedio;
     @FXML private Button btnAvanzato;
@@ -38,6 +41,8 @@ public class TrovaErroreController
     private Esercizio esercizioCorrente;
     private final Map<String, List<Esercizio>> eserciziPerLivello = new LinkedHashMap<>();
     private final Map<String, List<Esercizio>> mostratiPerLivello = new HashMap<>();
+    private int correctAnswers = 0;
+    private int incorrectAnswers = 0;
 
     @FXML
     public void initialize() 
@@ -51,7 +56,7 @@ public class TrovaErroreController
         caricaProgresso(); 
         mostraDomandaCasuale();
         aggiornaStileLivelli();
-        aggiornaProgressBar();
+        resettaTacche(); // Inizializza le tacche
     }
 
     private void caricaDomande() 
@@ -116,6 +121,38 @@ public class TrovaErroreController
         feedbackLabel.setVisible(false);
     }
 
+    private void aggiornaColoreTacca(boolean rispostaCorretta) 
+    {
+        String colore = rispostaCorretta ? "green" : "red";
+
+        switch (livelloCorrente) 
+        {
+            case "Principiante" -> coloraTacca(tacchePrincipiante, colore);
+            case "Intermedio" -> coloraTacca(taccheIntermedio, colore);
+            case "Avanzato" -> coloraTacca(taccheAvanzato, colore);
+        }
+    }
+
+    private void coloraTacca(HBox tacche, String colore) 
+    {
+        for (Node tacca : tacche.getChildren()) 
+        {
+            // Colora solo la prima tacca non ancora colorata
+            if (tacca.getStyle().isEmpty()) 
+            {
+                tacca.setStyle("-fx-background-color: " + colore + ";");
+                break;
+            }
+        }
+    }
+
+    private void resettaTacche() 
+    {
+        tacchePrincipiante.getChildren().forEach(tacca -> tacca.setStyle(""));
+        taccheIntermedio.getChildren().forEach(tacca -> tacca.setStyle(""));
+        taccheAvanzato.getChildren().forEach(tacca -> tacca.setStyle(""));
+    }
+
     @FXML
     private void confermaRisposta(ActionEvent event) 
     {
@@ -138,18 +175,24 @@ public class TrovaErroreController
             feedbackLabel.setStyle("-fx-text-fill: green;");
             feedbackLabel.setVisible(true);
 
-            // Cambia il bordo del box del codice a verde
+            if (!domanda.isAnswered) // Colora la tacca solo alla prima risposta
+            {
+                correctAnswers++;
+                successiConsecutivi++;
+                aggiornaColoreTacca(true); // Colora tacca verde
+                domanda.isAnswered = true; // Segna la domanda come già risolta
+            }
+
             codiceArea.setStyle("-fx-border-color: green; -fx-border-width: 2;");
 
-            // Aspetta 2 secondi prima di passare alla domanda successiva
             new Thread(() -> {
                 try {
-                    Thread.sleep(2000); // 2 secondi
+                    Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 javafx.application.Platform.runLater(() -> {
-                    codiceArea.setStyle(""); // Resetta lo stile del bordo
+                    codiceArea.setStyle("");
                     mostraDomandaCasuale();
                 });
             }).start();
@@ -160,21 +203,21 @@ public class TrovaErroreController
             feedbackLabel.setStyle("-fx-text-fill: red;");
             feedbackLabel.setVisible(true);
 
-            // Cambia il bordo del box del codice a rosso
+            if (!domanda.isAnswered) // Colora la tacca solo alla prima risposta
+            {
+                incorrectAnswers++;
+                aggiornaColoreTacca(false); // Colora tacca rossa
+                domanda.isAnswered = true; // Segna la domanda come già risolta
+            }
+
             codiceArea.setStyle("-fx-border-color: red; -fx-border-width: 2;");
         }
-    }
-
-    private void aggiornaProgressBar() 
-    {
-        double progress = (double) successiConsecutivi / nSuccessiPerLivello;
-        progressBar.setProgress(progress);
     }
 
     private void avanzaLivello() 
     {
         successiConsecutivi = 0;
-        aggiornaProgressBar();
+        resettaTacche(); // Modificato per resettare le tacche
 
         switch (livelloCorrente) 
         {
@@ -261,7 +304,7 @@ public class TrovaErroreController
                 {
                     livelloCorrente = parts[2];
                     successiConsecutivi = Integer.parseInt(parts[3]);
-                    aggiornaProgressBar();
+                    resettaTacche(); // Modificato per resettare le tacche
                     return;
                 }
             }
@@ -276,7 +319,11 @@ public class TrovaErroreController
     private void tornaAlMenu(ActionEvent event) throws IOException 
     {
         salvaProgresso();
-        Parent root = FXMLLoader.load(App.class.getResource(Costanti.PATH_FXML_MENU));
+        FXMLLoader loader = new FXMLLoader(App.class.getResource(Costanti.PATH_FXML_MENU));
+        Parent root = loader.load();
+        MenuController menuController = loader.getController();
+        menuController.updateProgress("TrovaErrore", correctAnswers, incorrectAnswers);
+
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();

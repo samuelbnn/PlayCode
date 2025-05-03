@@ -22,14 +22,41 @@
             </ImageView>
             
             <!-- Pulsanti livello -->
-            <HBox spacing="0" alignment="CENTER" styleClass="level-buttons">
-                <Button fx:id="btnPrincipiante" text="Principiante" onAction="#vaiALivelloPrincipiante" styleClass="livello-btn"/>
-                <Button fx:id="btnIntermedio" text="Intermedio" onAction="#vaiALivelloIntermedio" styleClass="livello-btn"/>
-                <Button fx:id="btnAvanzato" text="Avanzato" onAction="#vaiALivelloAvanzato" styleClass="livello-btn"/>
+            <HBox spacing="20" alignment="CENTER" styleClass="level-buttons"> <!-- Aumentata la spaziatura -->
+                <VBox alignment="CENTER">
+                    <Button fx:id="btnPrincipiante" text="Principiante" onAction="#vaiALivelloPrincipiante" styleClass="livello-btn"/>
+                    <HBox fx:id="tacchePrincipiante" spacing="5" alignment="CENTER">
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                    </HBox>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Button fx:id="btnIntermedio" text="Intermedio" onAction="#vaiALivelloIntermedio" styleClass="livello-btn"/>
+                    <HBox fx:id="taccheIntermedio" spacing="5" alignment="CENTER">
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                    </HBox>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Button fx:id="btnAvanzato" text="Avanzato" onAction="#vaiALivelloAvanzato" styleClass="livello-btn"/>
+                    <HBox fx:id="taccheAvanzato" spacing="5" alignment="CENTER">
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                    </HBox>
+                </VBox>
             </HBox>
-
-            <!-- Barra di progresso -->
-            <ProgressBar fx:id="progressBar" styleClass="progress-bar" prefWidth="600"/>
 
             <!-- Titolo -->
             <Label fx:id="titoloLabel" styleClass="titolo"/>
