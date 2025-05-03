@@ -43,6 +43,8 @@ public class TrovaErroreController
     private final Map<String, List<Esercizio>> mostratiPerLivello = new HashMap<>();
     private int correctAnswers = 0;
     private int incorrectAnswers = 0;
+    private final Map<String, List<String>> statoTacche = new HashMap<>(); // Mappa per memorizzare lo stato delle tacche
+    private final Set<String> livelliCompletati = new HashSet<>(); // Traccia i livelli completati
 
     @FXML
     public void initialize() 
@@ -54,9 +56,17 @@ public class TrovaErroreController
 
         caricaDomande();
         caricaProgresso(); 
+        inizializzaStatoTacche(); // Inizializza lo stato delle tacche
         mostraDomandaCasuale();
         aggiornaStileLivelli();
-        resettaTacche(); // Inizializza le tacche
+        aggiornaTacche(); // Aggiorna la visualizzazione delle tacche per tutti i livelli
+    }
+
+    private void inizializzaStatoTacche() 
+    {
+        statoTacche.put("Principiante", new ArrayList<>(Collections.nCopies(6, "")));
+        statoTacche.put("Intermedio", new ArrayList<>(Collections.nCopies(6, "")));
+        statoTacche.put("Avanzato", new ArrayList<>(Collections.nCopies(6, "")));
     }
 
     private void caricaDomande() 
@@ -91,34 +101,67 @@ public class TrovaErroreController
 
     private void mostraDomandaCasuale() 
     {
-        List<Esercizio> disponibili = new ArrayList<>(eserciziPerLivello.get(livelloCorrente));
-        disponibili.removeAll(mostratiPerLivello.get(livelloCorrente));
-    
-        if (disponibili.isEmpty()) 
+        if (livelliCompletati.contains(livelloCorrente)) 
         {
-            avanzaLivello();
+            feedbackLabel.setText("Hai completato questo livello!");
+            feedbackLabel.setStyle("-fx-text-fill: blue;");
+            feedbackLabel.setVisible(true);
             return;
         }
-    
+
+        List<Esercizio> disponibili = new ArrayList<>(eserciziPerLivello.get(livelloCorrente));
+        disponibili.removeAll(mostratiPerLivello.get(livelloCorrente));
+        
+        if (disponibili.isEmpty()) 
+        {
+            completaLivello();
+            return;
+        }
+        
         Collections.shuffle(disponibili);
         esercizioCorrente = disponibili.get(0);
         mostratiPerLivello.get(livelloCorrente).add(esercizioCorrente);
-    
+        
         titoloLabel.setText(esercizioCorrente.titolo);
         codiceArea.setText(esercizioCorrente.codice);
         consegnaLabel.setText(esercizioCorrente.domanda);
-    
+        
         // Mescola le risposte
         List<String> risposteMischiate = new ArrayList<>(List.of(esercizioCorrente.risposte));
         Collections.shuffle(risposteMischiate);
-    
+        
         // Imposta le risposte mescolate sui RadioButton
         risposta1.setText(risposteMischiate.get(0));
         risposta2.setText(risposteMischiate.get(1));
         risposta3.setText(risposteMischiate.get(2));
-    
+        
         gruppoRisposte.selectToggle(null);
         feedbackLabel.setVisible(false);
+    }
+
+    private void completaLivello() 
+    {
+        livelliCompletati.add(livelloCorrente);
+        feedbackLabel.setText("Hai completato il livello " + livelloCorrente + "!");
+        feedbackLabel.setStyle("-fx-text-fill: blue;");
+        feedbackLabel.setVisible(true);
+
+        switch (livelloCorrente) 
+        {
+            case "Principiante" -> livelloCorrente = "Intermedio";
+            case "Intermedio" -> livelloCorrente = "Avanzato";
+            case "Avanzato" -> {
+                feedbackLabel.setText("Hai completato tutti i livelli! Complimenti!");
+                feedbackLabel.setStyle("-fx-text-fill: green;");
+                feedbackLabel.setVisible(true);
+                btnConferma.setDisable(true);
+                salvaRisultato();
+                return;
+            }
+        }
+
+        aggiornaStileLivelli();
+        mostraDomandaCasuale();
     }
 
     private void aggiornaColoreTacca(boolean rispostaCorretta) 
@@ -133,14 +176,32 @@ public class TrovaErroreController
         }
     }
 
+    private void aggiornaTacche() 
+    {
+        aggiornaVisualizzazioneTacche(tacchePrincipiante, statoTacche.get("Principiante"));
+        aggiornaVisualizzazioneTacche(taccheIntermedio, statoTacche.get("Intermedio"));
+        aggiornaVisualizzazioneTacche(taccheAvanzato, statoTacche.get("Avanzato"));
+    }
+
+    private void aggiornaVisualizzazioneTacche(HBox tacche, List<String> stato) 
+    {
+        for (int i = 0; i < tacche.getChildren().size(); i++) 
+        {
+            Node tacca = tacche.getChildren().get(i);
+            tacca.setStyle(stato.get(i));
+        }
+    }
+
     private void coloraTacca(HBox tacche, String colore) 
     {
-        for (Node tacca : tacche.getChildren()) 
+        List<String> statoCorrente = statoTacche.get(livelloCorrente);
+
+        for (int i = 0; i < tacche.getChildren().size(); i++) 
         {
-            // Colora solo la prima tacca non ancora colorata
-            if (tacca.getStyle().isEmpty()) 
+            if (statoCorrente.get(i).isEmpty()) 
             {
-                tacca.setStyle("-fx-background-color: " + colore + ";");
+                statoCorrente.set(i, "-fx-background-color: " + colore + ";");
+                tacche.getChildren().get(i).setStyle(statoCorrente.get(i));
                 break;
             }
         }
@@ -332,8 +393,15 @@ public class TrovaErroreController
     @FXML
     private void vaiALivelloPrincipiante(ActionEvent event) 
     {
+        if (livelliCompletati.contains("Principiante")) 
+        {
+            feedbackLabel.setText("Hai già completato il livello Principiante!");
+            feedbackLabel.setStyle("-fx-text-fill: blue;");
+            feedbackLabel.setVisible(true);
+            return;
+        }
+
         livelloCorrente = "Principiante";
-        successiConsecutivi = 0;
         aggiornaStileLivelli();
         mostraDomandaCasuale();
     }
@@ -341,8 +409,15 @@ public class TrovaErroreController
     @FXML
     private void vaiALivelloIntermedio(ActionEvent event) 
     {
+        if (livelliCompletati.contains("Intermedio")) 
+        {
+            feedbackLabel.setText("Hai già completato il livello Intermedio!");
+            feedbackLabel.setStyle("-fx-text-fill: blue;");
+            feedbackLabel.setVisible(true);
+            return;
+        }
+
         livelloCorrente = "Intermedio";
-        successiConsecutivi = 0;
         aggiornaStileLivelli();
         mostraDomandaCasuale();
     }
@@ -350,8 +425,15 @@ public class TrovaErroreController
     @FXML
     private void vaiALivelloAvanzato(ActionEvent event) 
     {
+        if (livelliCompletati.contains("Avanzato")) 
+        {
+            feedbackLabel.setText("Hai già completato il livello Avanzato!");
+            feedbackLabel.setStyle("-fx-text-fill: blue;");
+            feedbackLabel.setVisible(true);
+            return;
+        }
+
         livelloCorrente = "Avanzato";
-        successiConsecutivi = 0;
         aggiornaStileLivelli();
         mostraDomandaCasuale();
     }

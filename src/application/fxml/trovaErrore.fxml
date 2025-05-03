@@ -22,7 +22,7 @@
             </ImageView>
             
             <!-- Pulsanti livello -->
-            <HBox spacing="20" alignment="CENTER" styleClass="level-buttons"> <!-- Aumentata la spaziatura -->
+            <HBox spacing="20" alignment="CENTER" styleClass="level-buttons">
                 <VBox alignment="CENTER">
                     <Button fx:id="btnPrincipiante" text="Principiante" onAction="#vaiALivelloPrincipiante" styleClass="livello-btn"/>
                     <HBox fx:id="tacchePrincipiante" spacing="5" alignment="CENTER">
