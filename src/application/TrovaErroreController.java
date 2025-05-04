@@ -485,6 +485,14 @@ public class TrovaErroreController
     @FXML
     private void vaiALivelloIntermedio(ActionEvent event) 
     {
+        if (!livelliCompletati.contains("Principiante")) 
+        {
+            feedbackLabel.setText("Completa il livello Principiante prima di accedere a Intermedio!");
+            feedbackLabel.setStyle("-fx-text-fill: red;");
+            feedbackLabel.setVisible(true);
+            return;
+        }
+
         if (livelliCompletati.contains("Intermedio")) 
         {
             feedbackLabel.setText("Hai già completato il livello Intermedio!");
@@ -501,6 +509,14 @@ public class TrovaErroreController
     @FXML
     private void vaiALivelloAvanzato(ActionEvent event) 
     {
+        if (!livelliCompletati.contains("Intermedio")) 
+        {
+            feedbackLabel.setText("Completa il livello Intermedio prima di accedere a Avanzato!");
+            feedbackLabel.setStyle("-fx-text-fill: red;");
+            feedbackLabel.setVisible(true);
+            return;
+        }
+
         if (livelliCompletati.contains("Avanzato")) 
         {
             feedbackLabel.setText("Hai già completato il livello Avanzato!");
