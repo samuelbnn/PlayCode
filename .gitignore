@@ -36,3 +36,4 @@ bin/application/fxml/linkedList.fxml
 bin/application/LinkedListController.class
 bin/application/MenuController$ProgressData.class
 bin/application/ProgressManager.class
+bin/application/fxml/img/nome.png

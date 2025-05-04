@@ -39,12 +39,12 @@
         <!-- Colonna destra: form -->
         <VBox alignment="CENTER" spacing="20" style="-fx-background-color: white; -fx-padding: 60;" GridPane.columnIndex="1">
 
-            <!-- Titolo -->
-            <Label text="PlayCode">
-                <font>
-                    <Font name="Montserrat" size="60" />
-                </font>
-            </Label>
+            <!-- Box immagine -->
+            <ImageView fx:id="nome_image" fitHeight="300" fitWidth="300" preserveRatio="true">
+                <image>
+                    <Image url="@img/nome.png" />
+                </image>
+            </ImageView>
 
             <!-- Messaggio dinamico -->
             <TextField fx:id="messageField" alignment="CENTER" editable="false" promptText="Messaggio" style="-fx-background-color: transparent; -fx-border-color: #2D3E50; -fx-border-width: 2; -fx-text-fill: #2D3E50; -fx-alignment: center;" visible="false" />
