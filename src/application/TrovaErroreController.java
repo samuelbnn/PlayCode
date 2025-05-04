@@ -479,7 +479,6 @@ public class TrovaErroreController
 
         livelloCorrente = "Principiante";
         aggiornaStileLivelli();
-        mostraDomandaCasuale();
     }
 
     @FXML
@@ -503,7 +502,6 @@ public class TrovaErroreController
 
         livelloCorrente = "Intermedio";
         aggiornaStileLivelli();
-        mostraDomandaCasuale();
     }
 
     @FXML
@@ -527,7 +525,6 @@ public class TrovaErroreController
 
         livelloCorrente = "Avanzato";
         aggiornaStileLivelli();
-        mostraDomandaCasuale();
     }
 
     private void aggiornaStileLivelli() 
