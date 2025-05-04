@@ -5,17 +5,17 @@ import java.util.Objects;
 public class Esercizio 
 {
     String titolo;
-    String livello;
+    Enum grado;
     String codice;
     String domanda;
     String[] risposte;
     int indiceCorretta;
     public boolean isAnswered = false; // Nuovo campo per tracciare se la domanda è già stata risolta
 
-    public Esercizio(String titolo, String livello, String codice, String domanda, String[] risposte, int indiceCorretta) 
+    public Esercizio(String titolo, Enum grado, String codice, String domanda, String[] risposte, int indiceCorretta) 
     {
         this.titolo = titolo;
-        this.livello = livello;
+        this.grado = grado;
         this.codice = codice;
         this.domanda = domanda;
         this.risposte = risposte;

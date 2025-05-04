@@ -45,6 +45,10 @@ public class TrovaErroreController
     private final Map<String, List<String>> statoTacche = new HashMap<>(); // Mappa per memorizzare lo stato delle tacche
     private final Set<String> livelliCompletati = new HashSet<>(); // Traccia i livelli completati
 
+    private final String titolo= "Trova l'errore";
+    private enum Grado { PRINCIPIANTE, INTERMEDIO, AVANZATO }
+    private final List<String> score = List.of("R", "G", ""); // Colori per le tacche
+
     @FXML
     public void initialize() 
     {
@@ -95,27 +99,27 @@ public class TrovaErroreController
     private void caricaDomande() 
     {
         eserciziPerLivello.put("Principiante", List.of(
-            new Esercizio("Trova l'errore", "Principiante", "System.out.println(\"Hello\")", "Cosa manca?", new String[]{"Punto e virgola", "Parentesi graffa", "Dichiarazione variabile", "Parentesi quadra"}, 0),
-            new Esercizio("Trova l'errore", "Principiante", "if (x > 5)\n    System.out.println(\"Grande\")\nelse\n    System.out.println(\"Piccolo\");", "Individua l'errore sintattico", new String[]{"Manca una graffa", "Errore di tipo", "Variabile non inizializzata", "Manca il punto e virgola"}, 0),
-            new Esercizio("Trova l'errore", "Principiante", "System.ou.println(\"Errore\");", "Cosa c'è che non va?", new String[]{"Errore di battitura: 'ou'", "System non definito", "Manca il punto e virgola", "Errore di runtime"}, 0),
-            new Esercizio("Trova l'errore", "Principiante", "public static void main {\n    System.out.println(\"Ciao\");\n}", "Qual è l'errore?", new String[]{"Mancano le parentesi tonde", "Manca il return", "main non è static", "Errore di sintassi"}, 0),
-            new Esercizio("Trova l'errore", "Principiante", "int numero = \"dieci\";", "Dove sta l'errore?", new String[]{"Tipo incompatibile", "String non definita", "Uso scorretto di = ", "Errore di casting"}, 0)
+            new Esercizio(titolo, Grado.PRINCIPIANTE, "System.out.println(\"Hello\")", "Cosa manca?", new String[]{"Punto e virgola", "Parentesi graffa", "Dichiarazione variabile", "Parentesi quadra"}, 0),
+            new Esercizio(titolo, Grado.PRINCIPIANTE, "if (x > 5)\n    System.out.println(\"Grande\")\nelse\n    System.out.println(\"Piccolo\");", "Individua l'errore sintattico", new String[]{"Manca una graffa", "Errore di tipo", "Variabile non inizializzata", "Manca il punto e virgola"}, 0),
+            new Esercizio(titolo, Grado.PRINCIPIANTE, "System.ou.println(\"Errore\");", "Cosa c'è che non va?", new String[]{"Errore di battitura: 'ou'", "System non definito", "Manca il punto e virgola", "Errore di runtime"}, 0),
+            new Esercizio(titolo, Grado.PRINCIPIANTE, "public static void main {\n    System.out.println(\"Ciao\");\n}", "Qual è l'errore?", new String[]{"Mancano le parentesi tonde", "Manca il return", "main non è static", "Errore di sintassi"}, 0),
+            new Esercizio(titolo, Grado.PRINCIPIANTE, "int numero = \"dieci\";", "Dove sta l'errore?", new String[]{"Tipo incompatibile", "String non definita", "Uso scorretto di = ", "Errore di casting"}, 0)
         ));
 
         eserciziPerLivello.put("Intermedio", List.of(
-            new Esercizio("Trova l'errore", "Intermedio", "if(x = 10) {\n  System.out.println(\"x\");\n}", "Errore logico?", new String[]{"Uso di '=' invece di '=='", "x è già definito", "System non importato", "Errore di runtime"}, 0),
-            new Esercizio("Trova l'errore", "Intermedio", "boolean valido = true;\nif(valido == false);\n  System.out.println(\"Non valido\");", "Cosa c'è che non va?", new String[]{"If con ; inutile", "La variabile non esiste", "Manca else", "Errore di logica"}, 0),
-            new Esercizio("Trova l'errore", "Intermedio", "for(int i = 0; i > 10; i++) {\n  System.out.println(i);\n}", "Ciclo non entra mai, perché?", new String[]{"Condizione errata", "Inizializzazione sbagliata", "i non definito", "Errore di sintassi"}, 0),
-            new Esercizio("Trova l'errore", "Intermedio", "int[] nums = new int[3];\nnums[3] = 5;", "Che problema c'è?", new String[]{"IndexOutOfBounds", "Errore di sintassi", "Array nullo", "Errore di runtime"}, 0),
-            new Esercizio("Trova l'errore", "Intermedio", "String s = null;\nSystem.out.println(s.length());", "Cosa succede?", new String[]{"NullPointerException", "String non importata", "Metodo sbagliato", "Errore di runtime"}, 0)
+            new Esercizio(titolo, Grado.INTERMEDIO, "if(x = 10) {\n  System.out.println(\"x\");\n}", "Errore logico?", new String[]{"Uso di '=' invece di '=='", "x è già definito", "System non importato", "Errore di runtime"}, 0),
+            new Esercizio(titolo, Grado.INTERMEDIO, "boolean valido = true;\nif(valido == false);\n  System.out.println(\"Non valido\");", "Cosa c'è che non va?", new String[]{"If con ; inutile", "La variabile non esiste", "Manca else", "Errore di logica"}, 0),
+            new Esercizio(titolo, Grado.INTERMEDIO, "for(int i = 0; i > 10; i++) {\n  System.out.println(i);\n}", "Ciclo non entra mai, perché?", new String[]{"Condizione errata", "Inizializzazione sbagliata", "i non definito", "Errore di sintassi"}, 0),
+            new Esercizio(titolo, Grado.INTERMEDIO, "int[] nums = new int[3];\nnums[3] = 5;", "Che problema c'è?", new String[]{"IndexOutOfBounds", "Errore di sintassi", "Array nullo", "Errore di runtime"}, 0),
+            new Esercizio(titolo, Grado.INTERMEDIO, "String s = null;\nSystem.out.println(s.length());", "Cosa succede?", new String[]{"NullPointerException", "String non importata", "Metodo sbagliato", "Errore di runtime"}, 0)
         ));
 
         eserciziPerLivello.put("Avanzato", List.of(
-            new Esercizio("Trova l'errore", "Avanzato", "int[] arr = {1,2,3};\nfor(int i = 0; i <= arr.length; i++) {\n  System.out.println(arr[i]);\n}", "Cosa succede?", new String[]{"IndexOutOfBounds", "Errore di compilazione", "StackOverflow", "Errore di runtime"}, 0),
-            new Esercizio("Trova l'errore", "Avanzato", "while(true) {\n  int x = 5;\n  x++;\n}", "Qual è il problema?", new String[]{"Loop infinito", "x non definito", "Manca il break", "Errore di logica"}, 0),
-            new Esercizio("Trova l'errore", "Avanzato", "for(int i = 0; i < 5; i++)\n  break\n  System.out.println(i);", "Errore combinato?", new String[]{"Manca punto e virgola dopo break", "Ciclo sbagliato", "Variabile duplicata", "Errore di sintassi"}, 0),
-            new Esercizio("Trova l'errore", "Avanzato", "int x;\nif(x > 0) {\n  System.out.println(\"Positivo\");\n}", "Cosa accade?", new String[]{"Variabile non inizializzata", "Errore di logica", "Loop non chiuso", "Errore di runtime"}, 0),
-            new Esercizio("Trova l'errore", "Avanzato", "String[] parole = {\"ciao\", null, \"mondo\"};\nfor(String p : parole) {\n  System.out.println(p.toUpperCase());\n}", "Cosa può succedere?", new String[]{"NullPointerException", "IndexError", "ArrayIndexOutOfBounds", "Errore di runtime"}, 0)
+            new Esercizio(titolo, Grado.AVANZATO, "int[] arr = {1,2,3};\nfor(int i = 0; i <= arr.length; i++) {\n  System.out.println(arr[i]);\n}", "Cosa succede?", new String[]{"IndexOutOfBounds", "Errore di compilazione", "StackOverflow", "Errore di runtime"}, 0),
+            new Esercizio(titolo, Grado.AVANZATO, "while(true) {\n  int x = 5;\n  x++;\n}", "Qual è il problema?", new String[]{"Loop infinito", "x non definito", "Manca il break", "Errore di logica"}, 0),
+            new Esercizio(titolo, Grado.AVANZATO, "for(int i = 0; i < 5; i++)\n  break\n  System.out.println(i);", "Errore combinato?", new String[]{"Manca punto e virgola dopo break", "Ciclo sbagliato", "Variabile duplicata", "Errore di sintassi"}, 0),
+            new Esercizio(titolo, Grado.AVANZATO, "int x;\nif(x > 0) {\n  System.out.println(\"Positivo\");\n}", "Cosa accade?", new String[]{"Variabile non inizializzata", "Errore di logica", "Loop non chiuso", "Errore di runtime"}, 0),
+            new Esercizio(titolo, Grado.AVANZATO, "String[] parole = {\"ciao\", null, \"mondo\"};\nfor(String p : parole) {\n  System.out.println(p.toUpperCase());\n}", "Cosa può succedere?", new String[]{"NullPointerException", "IndexError", "ArrayIndexOutOfBounds", "Errore di runtime"}, 0)
         ));
 
         eserciziPerLivello.forEach((livello, lista) -> mostratiPerLivello.put(livello, new ArrayList<>()));
@@ -341,33 +345,23 @@ public class TrovaErroreController
 
     private void salvaProgresso() 
     {
-        if (livelliCompletati.contains(livelloCorrente)) 
+        String utente = Session.getCurrentUser();
+        StringBuilder progressData = new StringBuilder(utente);
+
+        // Append progress for "Trova l'errore"
+        progressData.append(", {\"Trova l'errore\"");
+        progressData.append(" [Principiante (").append(String.join(";", statoTacche.getOrDefault("Principiante", new ArrayList<>(Collections.nCopies(5, ""))))).append(")]");
+        progressData.append(" [Intermedio (").append(String.join(";", statoTacche.getOrDefault("Intermedio", new ArrayList<>(Collections.nCopies(5, ""))))).append(")]");
+        progressData.append(" [Avanzato (").append(String.join(";", statoTacche.getOrDefault("Avanzato", new ArrayList<>(Collections.nCopies(5, ""))))).append(")]");
+        progressData.append("}");
+
+        try (PrintWriter writer = new PrintWriter(new FileWriter(Costanti.PATH_FILE_PROGRESSI, false))) 
         {
-            String utente = Session.getCurrentUser();
-            Map<String, List<String>> simplifiedState = new HashMap<>();
-
-            // Convert styles to R (red) or G (green)
-            statoTacche.forEach((livello, tacche) -> {
-                List<String> simplifiedTacche = new ArrayList<>();
-                for (String tacca : tacche) 
-                {
-                    if (tacca.contains("green")) 
-                    {
-                        simplifiedTacche.add("G");
-                    } 
-                    else if (tacca.contains("red")) 
-                    {
-                        simplifiedTacche.add("R");
-                    } 
-                    else 
-                    {
-                        simplifiedTacche.add("");
-                    }
-                }
-                simplifiedState.put(livello, simplifiedTacche);
-            });
-
-            ProgressManager.saveProgress(utente, "Trova l'errore", livelloCorrente, simplifiedState);
+            writer.println(progressData.toString());
+        } 
+        catch (IOException e) 
+        {
+            e.printStackTrace();
         }
     }
 

@@ -37,3 +37,4 @@ bin/application/LinkedListController.class
 bin/application/MenuController$ProgressData.class
 bin/application/ProgressManager.class
 bin/application/fxml/img/nome.png
+bin/application/TrovaErroreController$Grado.class
