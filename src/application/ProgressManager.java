@@ -28,10 +28,10 @@ public class ProgressManager
             System.out.println("File non trovato, verrà creato un nuovo file.");
         }
 
-        // Add the updated progress line
-        String principianteState = String.join(";", progressState.getOrDefault("Principiante", Collections.emptyList()));
-        String intermedioState = String.join(";", progressState.getOrDefault("Intermedio", Collections.emptyList()));
-        String avanzatoState = String.join(";", progressState.getOrDefault("Avanzato", Collections.emptyList()));
+        // Convert progress state to R/G/empty
+        String principianteState = convertToRG(progressState.getOrDefault("Principiante", Collections.emptyList()));
+        String intermedioState = convertToRG(progressState.getOrDefault("Intermedio", Collections.emptyList()));
+        String avanzatoState = convertToRG(progressState.getOrDefault("Avanzato", Collections.emptyList()));
 
         updatedLines.add(String.format("%s,%s,%s,%s,%s,%s", 
             user, exercise, level, principianteState, intermedioState, avanzatoState));
@@ -87,5 +87,26 @@ public class ProgressManager
             tacche.add(""); // Add empty entries if missing
         }
         return tacche.subList(0, expectedSize); // Trim to the expected size
+    }
+
+    private static String convertToRG(List<String> tacche) 
+    {
+        StringBuilder result = new StringBuilder();
+        for (String tacca : tacche) 
+        {
+            if (tacca.contains("green")) 
+            {
+                result.append("G;");
+            } 
+            else if (tacca.contains("red")) 
+            {
+                result.append("R;");
+            } 
+            else 
+            {
+                result.append(";");
+            }
+        }
+        return result.toString().replaceAll(";$", ""); // Remove trailing semicolon
     }
 }

@@ -350,9 +350,9 @@ public class TrovaErroreController
 
         // Append progress for "Trova l'errore"
         progressData.append(", {\"Trova l'errore\"");
-        progressData.append(" [Principiante (").append(String.join(";", statoTacche.getOrDefault("Principiante", new ArrayList<>(Collections.nCopies(5, ""))))).append(")]");
-        progressData.append(" [Intermedio (").append(String.join(";", statoTacche.getOrDefault("Intermedio", new ArrayList<>(Collections.nCopies(5, ""))))).append(")]");
-        progressData.append(" [Avanzato (").append(String.join(";", statoTacche.getOrDefault("Avanzato", new ArrayList<>(Collections.nCopies(5, ""))))).append(")]");
+        progressData.append(" [Principiante (").append(String.join(";", convertToRG(statoTacche.getOrDefault("Principiante", new ArrayList<>())))).append(")]");
+        progressData.append(" [Intermedio (").append(String.join(";", convertToRG(statoTacche.getOrDefault("Intermedio", new ArrayList<>())))).append(")]");
+        progressData.append(" [Avanzato (").append(String.join(";", convertToRG(statoTacche.getOrDefault("Avanzato", new ArrayList<>())))).append(")]");
         progressData.append("}");
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(Costanti.PATH_FILE_PROGRESSI, false))) 
@@ -363,6 +363,27 @@ public class TrovaErroreController
         {
             e.printStackTrace();
         }
+    }
+
+    private List<String> convertToRG(List<String> tacche) 
+    {
+        List<String> result = new ArrayList<>();
+        for (String tacca : tacche) 
+        {
+            if (tacca.contains("green")) 
+            {
+                result.add("G");
+            } 
+            else if (tacca.contains("red")) 
+            {
+                result.add("R");
+            } 
+            else 
+            {
+                result.add("");
+            }
+        }
+        return result;
     }
 
     private void caricaProgresso() 
