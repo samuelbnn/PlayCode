@@ -410,20 +410,29 @@ public class TrovaErroreController
         statoTacche.put("Intermedio", translateTacche(loadedProgress.getOrDefault("Intermedio", new ArrayList<>()), 5));
         statoTacche.put("Avanzato", translateTacche(loadedProgress.getOrDefault("Avanzato", new ArrayList<>()), 5));
 
-        // Check if levels are completed based on at least one "G" or "R"
         if (loadedProgress.getOrDefault("Principiante", new ArrayList<>()).stream().anyMatch(t -> t.equals("G") || t.equals("R"))) 
         {
             livelliCompletati.add("Principiante");
-            livelloCorrente = "Intermedio"; // Automatically move to the next level
+            livelloCorrente = "Intermedio";
         }
         if (loadedProgress.getOrDefault("Intermedio", new ArrayList<>()).stream().anyMatch(t -> t.equals("G") || t.equals("R"))) 
         {
             livelliCompletati.add("Intermedio");
-            livelloCorrente = "Avanzato"; // Automatically move to the next level
+            livelloCorrente = "Avanzato";
         }
         if (loadedProgress.getOrDefault("Avanzato", new ArrayList<>()).stream().anyMatch(t -> t.equals("G") || t.equals("R"))) 
         {
             livelliCompletati.add("Avanzato");
+
+            // Show pop-up for completion
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Congratulazioni");
+            alert.setHeaderText(null);
+            alert.setContentText("Hai completato tutti i livelli!");
+            alert.showAndWait();
+
+            // Prevent entry into the "Avanzato" level
+            livelloCorrente = null;
             feedbackLabel.setText("Hai completato tutti i livelli! Complimenti!");
             feedbackLabel.setStyle("-fx-text-fill: green;");
             feedbackLabel.setVisible(true);
