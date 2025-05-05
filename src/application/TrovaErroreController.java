@@ -47,7 +47,6 @@ public class TrovaErroreController
 
     private final String titolo= "Trova l'errore";
     private enum Grado { PRINCIPIANTE, INTERMEDIO, AVANZATO }
-    private final List<String> score = List.of("R", "G", ""); // Colori per le tacche
 
     @FXML
     public void initialize() 
@@ -249,13 +248,6 @@ public class TrovaErroreController
         }
     }
 
-    private void resettaTacche() 
-    {
-        tacchePrincipiante.getChildren().forEach(tacca -> tacca.setStyle(""));
-        taccheIntermedio.getChildren().forEach(tacca -> tacca.setStyle(""));
-        taccheAvanzato.getChildren().forEach(tacca -> tacca.setStyle(""));
-    }
-
     @FXML
     private void confermaRisposta(ActionEvent event) 
     {
@@ -314,29 +306,6 @@ public class TrovaErroreController
 
             codiceArea.setStyle("-fx-border-color: red; -fx-border-width: 2;");
         }
-    }
-
-    private void avanzaLivello() 
-    {
-        resettaTacche(); // Modificato per resettare le tacche
-
-        switch (livelloCorrente) 
-        {
-            case "Principiante" -> livelloCorrente = "Intermedio";
-            case "Intermedio" -> livelloCorrente = "Avanzato";
-            case "Avanzato" -> {
-                feedbackLabel.setText("Hai completato tutti i livelli! Punteggio: " + punteggio);
-                feedbackLabel.setStyle("-fx-text-fill: blue;");
-                feedbackLabel.setVisible(true);
-                btnConferma.setDisable(true);
-                salvaRisultato();
-                return;
-            }
-        }
-
-        aggiornaStileLivelli();
-        mostratiPerLivello.get(livelloCorrente).clear();
-        mostraDomandaCasuale();
     }
 
     private void salvaRisultato() 
@@ -498,24 +467,6 @@ public class TrovaErroreController
         return parts.length >= 9 && parts[0].equals(utente) && parts[1].equals("Trova l'errore");
     }
 
-    private void caricaDatiProgresso(String[] parts) 
-    {
-        livelloCorrente = parts[2];
-        correctAnswers = Integer.parseInt(parts[3]);
-        incorrectAnswers = Integer.parseInt(parts[4]);
-
-        statoTacche.put("Principiante", normalizeTacche(parts[6], 5));
-        statoTacche.put("Intermedio", normalizeTacche(parts[7], 5));
-        statoTacche.put("Avanzato", normalizeTacche(parts[8], 5));
-    }
-
-    private void aggiornaLivelliCompletati() 
-    {
-        if (isLivelloCompletato("Principiante")) livelliCompletati.add("Principiante");
-        if (isLivelloCompletato("Intermedio")) livelliCompletati.add("Intermedio");
-        if (isLivelloCompletato("Avanzato")) livelliCompletati.add("Avanzato");
-    }
-
     private List<String> normalizeTacche(String taccheString, int expectedSize) 
     {
         List<String> tacche = new ArrayList<>(Arrays.asList(taccheString.split(";")));
@@ -524,12 +475,6 @@ public class TrovaErroreController
             tacche.add(""); // Aggiungi tacche vuote se mancano
         }
         return tacche.subList(0, expectedSize); // Troncamento se ci sono più tacche del previsto
-    }
-
-    private boolean isLivelloCompletato(String livello) 
-    {
-        List<String> tacche = statoTacche.get(livello);
-        return tacche != null && tacche.stream().allMatch(t -> t.contains("green"));
     }
 
     @FXML

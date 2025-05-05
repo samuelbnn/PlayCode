@@ -113,16 +113,6 @@ public class ProgressManager
         return progressState;
     }
 
-    private static List<String> normalizeTacche(String taccheString, int expectedSize) 
-    {
-        List<String> tacche = new ArrayList<>(Arrays.asList(taccheString.split(";")));
-        while (tacche.size() < expectedSize) 
-        {
-            tacche.add(""); // Add empty entries if missing
-        }
-        return tacche.subList(0, expectedSize); // Trim to the expected size
-    }
-
     private static String convertToRG(List<String> tacche) 
     {
         StringBuilder result = new StringBuilder();
