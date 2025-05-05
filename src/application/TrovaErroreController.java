@@ -135,6 +135,17 @@ public class TrovaErroreController
             return;
         }
 
+        // Check if all tacchette are filled with "G" or "R"
+        List<String> tacchette = statoTacche.getOrDefault(livelloCorrente, new ArrayList<>());
+        if (tacchette.stream().allMatch(t -> t.equals("G") || t.equals("R"))) 
+        {
+            feedbackLabel.setText("Hai già completato il livello!");
+            feedbackLabel.setStyle("-fx-text-fill: blue;");
+            feedbackLabel.setVisible(true);
+            livelliCompletati.add(livelloCorrente); // Mark the level as completed
+            return;
+        }
+
         List<Esercizio> disponibili = new ArrayList<>(eserciziPerLivello.get(livelloCorrente));
         disponibili.removeAll(mostratiPerLivello.get(livelloCorrente));
         
@@ -173,7 +184,8 @@ public class TrovaErroreController
         feedbackLabel.setStyle("-fx-text-fill: blue;");
         feedbackLabel.setVisible(true);
 
-        salvaProgresso(); // Save progress only after completing the level
+        // Save progress after completing the level
+        salvaProgresso();
 
         switch (livelloCorrente) 
         {
@@ -271,7 +283,6 @@ public class TrovaErroreController
                 correctAnswers++;
                 aggiornaColoreTacca(true); // Colora tacca verde
                 domanda.isAnswered = true; // Segna la domanda come già risolta
-                salvaProgresso(); // Salva il progresso dopo una risposta corretta
             }
 
             codiceArea.setStyle("-fx-border-color: green; -fx-border-width: 2;");
@@ -299,7 +310,6 @@ public class TrovaErroreController
                 incorrectAnswers++;
                 aggiornaColoreTacca(false); // Colora tacca rossa
                 domanda.isAnswered = true; // Segna la domanda come già risolta
-                salvaProgresso(); // Salva il progresso dopo una risposta errata
             }
 
             codiceArea.setStyle("-fx-border-color: red; -fx-border-width: 2;");
@@ -348,8 +358,8 @@ public class TrovaErroreController
         String utente = Session.getCurrentUser();
         StringBuilder progressData = new StringBuilder(utente);
 
-        // Append progress for "Trova l'errore"
-        progressData.append(", {\"Trova l'errore\"");
+        // Append progress for Trova l'errore without quotes around the exercise title
+        progressData.append(", {Trova l'errore");
         progressData.append(" [Principiante (").append(String.join(";", convertToRG(statoTacche.getOrDefault("Principiante", new ArrayList<>())))).append(")]");
         progressData.append(" [Intermedio (").append(String.join(";", convertToRG(statoTacche.getOrDefault("Intermedio", new ArrayList<>())))).append(")]");
         progressData.append(" [Avanzato (").append(String.join(";", convertToRG(statoTacche.getOrDefault("Avanzato", new ArrayList<>())))).append(")]");

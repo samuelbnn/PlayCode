@@ -2,6 +2,8 @@ package application;
 
 import java.io.*;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ProgressManager 
 {
@@ -33,8 +35,9 @@ public class ProgressManager
         String intermedioState = convertToRG(progressState.getOrDefault("Intermedio", Collections.emptyList()));
         String avanzatoState = convertToRG(progressState.getOrDefault("Avanzato", Collections.emptyList()));
 
-        updatedLines.add(String.format("%s,%s,%s,%s,%s,%s", 
-            user, exercise, level, principianteState, intermedioState, avanzatoState));
+        // Write the progress line without quotes around level names and remove unnecessary spaces
+        updatedLines.add(String.format("%s,%s,{%s[Principiante(%s)][Intermedio(%s)][Avanzato(%s)]}", 
+            user, exercise, exercise, principianteState, intermedioState, avanzatoState));
 
         // Write back to the file
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_PATH))) 
@@ -53,29 +56,60 @@ public class ProgressManager
     public static Map<String, List<String>> loadProgress(String user, String exercise) 
     {
         Map<String, List<String>> progressState = new HashMap<>();
-        try (Scanner scanner = new Scanner(new File(FILE_PATH))) 
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) 
         {
-            while (scanner.hasNextLine()) 
+            String line;
+            while ((line = reader.readLine()) != null) 
             {
-                String[] parts = scanner.nextLine().split(",");
-                if (parts.length >= 6 && parts[0].equals(user) && parts[1].equals(exercise)) 
+                // Adjust regex to correctly extract user, exercise, and progress
+                Pattern pattern = Pattern.compile("^([^,]+),\\s*\\{([^\\[]+?)\\s*\\[.*\\]\\}\\s*$");
+                Matcher matcher = pattern.matcher(line);
+                if (matcher.matches()) 
                 {
-                    progressState.put("Principiante", normalizeTacche(parts[3], 5));
-                    progressState.put("Intermedio", normalizeTacche(parts[4], 5));
-                    progressState.put("Avanzato", normalizeTacche(parts[5], 5));
-                    return progressState;
+                    String fileUser = matcher.group(1).trim();
+                    String fileExercise = matcher.group(2).trim(); // Extract only the exercise name
+                    if (fileUser.equals(user) && fileExercise.equals(exercise)) 
+                    {
+                        try 
+                        {
+                            // Extract progress data and parse it
+                            String progressData = line.substring(line.indexOf("[Principiante"), line.lastIndexOf("]") + 1);
+                            progressState = parseProgressi(progressData);
+                        } 
+                        catch (Exception e) 
+                        {
+                            System.err.println("Formato dei dati di progresso non valido: " + e.getMessage());
+                        }
+                        return progressState;
+                    }
                 }
             }
         } 
         catch (IOException e) 
         {
-            System.out.println("Nessun progresso precedente trovato per l'utente " + user);
+            System.out.println("Errore durante il caricamento del progresso: " + e.getMessage());
         }
 
-        // Initialize empty progress if no data is found
+        // Initialize empty progress if no data is found or format is invalid
         progressState.put("Principiante", new ArrayList<>(Collections.nCopies(5, "")));
         progressState.put("Intermedio", new ArrayList<>(Collections.nCopies(5, "")));
         progressState.put("Avanzato", new ArrayList<>(Collections.nCopies(5, "")));
+        return progressState;
+    }
+
+    public static Map<String, List<String>> parseProgressi(String progressi) 
+    {
+        Map<String, List<String>> progressState = new HashMap<>();
+        Pattern livelloPattern = Pattern.compile("\\[([^\\]]+?) \\(([^\\)]*?)\\)\\]");
+        Matcher livelloMatcher = livelloPattern.matcher(progressi);
+
+        while (livelloMatcher.find()) 
+        {
+            String livello = livelloMatcher.group(1); // "Principiante", "Intermedio", "Avanzato"
+            String[] risposte = livelloMatcher.group(2).split(";");
+            progressState.put(livello, Arrays.asList(risposte));
+        }
+
         return progressState;
     }
 
