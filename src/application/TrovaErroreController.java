@@ -365,9 +365,44 @@ public class TrovaErroreController
         progressData.append(" [Avanzato (").append(String.join(";", convertToRG(statoTacche.getOrDefault("Avanzato", new ArrayList<>())))).append(")]");
         progressData.append("}");
 
+        List<String> updatedLines = new ArrayList<>();
+        boolean userFound = false;
+
+        // Read existing progress and update the current user's data
+        try (BufferedReader reader = new BufferedReader(new FileReader(Costanti.PATH_FILE_PROGRESSI))) 
+        {
+            String line;
+            while ((line = reader.readLine()) != null) 
+            {
+                if (line.startsWith(utente + ",")) 
+                {
+                    updatedLines.add(progressData.toString());
+                    userFound = true;
+                } 
+                else 
+                {
+                    updatedLines.add(line);
+                }
+            }
+        } 
+        catch (IOException e) 
+        {
+            System.out.println("File non trovato, verrà creato un nuovo file.");
+        }
+
+        // If the user was not found, add their progress as a new entry
+        if (!userFound) 
+        {
+            updatedLines.add(progressData.toString());
+        }
+
+        // Write back all progress data
         try (PrintWriter writer = new PrintWriter(new FileWriter(Costanti.PATH_FILE_PROGRESSI, false))) 
         {
-            writer.println(progressData.toString());
+            for (String line : updatedLines) 
+            {
+                writer.println(line);
+            }
         } 
         catch (IOException e) 
         {
@@ -405,6 +440,26 @@ public class TrovaErroreController
         statoTacche.put("Principiante", translateTacche(loadedProgress.getOrDefault("Principiante", new ArrayList<>()), 5));
         statoTacche.put("Intermedio", translateTacche(loadedProgress.getOrDefault("Intermedio", new ArrayList<>()), 5));
         statoTacche.put("Avanzato", translateTacche(loadedProgress.getOrDefault("Avanzato", new ArrayList<>()), 5));
+
+        // Check if levels are completed based on at least one "G" or "R"
+        if (loadedProgress.getOrDefault("Principiante", new ArrayList<>()).stream().anyMatch(t -> t.equals("G") || t.equals("R"))) 
+        {
+            livelliCompletati.add("Principiante");
+            livelloCorrente = "Intermedio"; // Automatically move to the next level
+        }
+        if (loadedProgress.getOrDefault("Intermedio", new ArrayList<>()).stream().anyMatch(t -> t.equals("G") || t.equals("R"))) 
+        {
+            livelliCompletati.add("Intermedio");
+            livelloCorrente = "Avanzato"; // Automatically move to the next level
+        }
+        if (loadedProgress.getOrDefault("Avanzato", new ArrayList<>()).stream().anyMatch(t -> t.equals("G") || t.equals("R"))) 
+        {
+            livelliCompletati.add("Avanzato");
+            feedbackLabel.setText("Hai completato tutti i livelli! Complimenti!");
+            feedbackLabel.setStyle("-fx-text-fill: green;");
+            feedbackLabel.setVisible(true);
+            btnConferma.setDisable(true);
+        }
 
         // Debug: Print loaded progress for verification
         System.out.println("Progress loaded for user: " + utente);
