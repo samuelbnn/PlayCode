@@ -489,7 +489,6 @@ public class TrovaErroreController
     @FXML
     private void tornaAlMenu(ActionEvent event) throws IOException 
     {
-        salvaProgresso();
         FXMLLoader loader = new FXMLLoader(App.class.getResource(Costanti.PATH_FXML_MENU));
         Parent root = loader.load();
         MenuController menuController = loader.getController();
