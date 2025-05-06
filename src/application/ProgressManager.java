@@ -53,48 +53,61 @@ public class ProgressManager
         }
     }
 
-    public static Map<String, List<String>> loadProgress(String user, String exercise) 
-    {
+    public static Map<String, List<String>> loadProgress(String user, String exercise) {
         Map<String, List<String>> progressState = new HashMap<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) 
-        {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
-            while ((line = reader.readLine()) != null) 
-            {
-                // Adjust regex to correctly extract user, exercise, and progress
-                Pattern pattern = Pattern.compile("^([^,]+),\\s*\\{([^\\[]+?)\\s*\\[.*\\]\\}\\s*$");
-                Matcher matcher = pattern.matcher(line);
-                if (matcher.matches()) 
-                {
-                    String fileUser = matcher.group(1).trim();
-                    String fileExercise = matcher.group(2).trim(); // Extract only the exercise name
-                    if (fileUser.equals(user) && fileExercise.equals(exercise)) 
-                    {
-                        try 
-                        {
-                            // Extract progress data and parse it
-                            String progressData = line.substring(line.indexOf("[Principiante"), line.lastIndexOf("]") + 1);
-                            progressState = parseProgressi(progressData);
-                        } 
-                        catch (Exception e) 
-                        {
-                            System.err.println("Formato dei dati di progresso non valido: " + e.getMessage());
-                        }
-                        return progressState;
+            while ((line = reader.readLine()) != null) {
+                int commaIndex = line.indexOf(',');
+                if (commaIndex == -1) continue;
+    
+                String fileUser = line.substring(0, commaIndex).trim();
+                String progressContent = line.substring(commaIndex + 1).trim();
+    
+                if (!fileUser.equals(user)) continue;
+    
+                // Cerca il nome dell'esercizio nella stringa
+                int exerciseIndex = progressContent.indexOf(exercise);
+                if (exerciseIndex == -1) continue;
+    
+                // Trova l'inizio del blocco {
+                int startIndex = progressContent.lastIndexOf('{', exerciseIndex);
+                // Trova la fine del blocco }
+                int endIndex = findMatchingBrace(progressContent, startIndex);
+    
+                if (startIndex != -1 && endIndex != -1) {
+                    String exerciseBlock = progressContent.substring(startIndex + 1, endIndex).trim();
+                    try {
+                        // Cerca la prima occorrenza di [Principiante ...] dentro il blocco
+                        String progressData = exerciseBlock.substring(exerciseBlock.indexOf("[Principiante"));
+                        progressState = parseProgressi(progressData);
+                    } catch (Exception e) {
+                        System.err.println("Formato dei dati di progresso non valido: " + e.getMessage());
                     }
+                    return progressState;
                 }
             }
-        } 
-        catch (IOException e) 
-        {
+        } catch (IOException e) {
             System.out.println("Errore durante il caricamento del progresso: " + e.getMessage());
         }
-
+    
         // Initialize empty progress if no data is found or format is invalid
         progressState.put("Principiante", new ArrayList<>(Collections.nCopies(5, "")));
         progressState.put("Intermedio", new ArrayList<>(Collections.nCopies(5, "")));
         progressState.put("Avanzato", new ArrayList<>(Collections.nCopies(5, "")));
         return progressState;
+    }
+    private static int findMatchingBrace(String text, int startIndex) {
+        int depth = 0;
+        for (int i = startIndex; i < text.length(); i++) {
+            char c = text.charAt(i);
+            if (c == '{') depth++;
+            else if (c == '}') {
+                depth--;
+                if (depth == 0) return i;
+            }
+        }
+        return -1; // non trovato
     }
 
     public static Map<String, List<String>> parseProgressi(String progressi) 

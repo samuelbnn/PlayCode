@@ -38,3 +38,8 @@ bin/application/MenuController$ProgressData.class
 bin/application/ProgressManager.class
 bin/application/fxml/img/nome.png
 bin/application/TrovaErroreController$Grado.class
+src/saves/accounts.csv
+src/saves/progressi.csv
+src/saves/accounts.csv
+bin/application/CompletaCodiceController$Grado.class
+bin/application/LinkedListController$Grado.class

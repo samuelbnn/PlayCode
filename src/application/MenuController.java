@@ -113,9 +113,6 @@ public class MenuController
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
-
-            // Simulate progress update when exiting the exercise
-            stage.setOnCloseRequest(e -> updateProgress("TrovaErrore", 1, 0)); // Example: 1 correct answer
         } 
         catch (IOException e) 
         {
@@ -126,10 +123,17 @@ public class MenuController
     @FXML
     private void apriCompletaCodice(ActionEvent event) throws IOException 
     {
-        Parent root = FXMLLoader.load(App.class.getResource(Costanti.PATH_FXML_COMPLETACODICE));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
+        try 
+        {
+            Parent root = FXMLLoader.load(App.class.getResource(Costanti.PATH_FXML_COMPLETACODICE));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } 
+        catch (IOException e) 
+        {
+            e.printStackTrace();
+        }
     }
     
 

@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class TrovaErroreController 
+public class LinkedListController 
 {
     @FXML private Label titoloLabel;
     @FXML private Label livelloLabel;
@@ -45,7 +45,7 @@ public class TrovaErroreController
     private final Map<String, List<String>> statoTacche = new HashMap<>(); // Mappa per memorizzare lo stato delle tacche
     private final Set<String> livelliCompletati = new HashSet<>(); // Traccia i livelli completati
 
-    private static final String titolo = "Trova l'errore";
+    private static final String titolo= "Linked List";
     private enum Grado { PRINCIPIANTE, INTERMEDIO, AVANZATO }
 
     @FXML
@@ -98,27 +98,184 @@ public class TrovaErroreController
     private void caricaDomande() 
     {
         eserciziPerLivello.put("Principiante", List.of(
-            new Esercizio(titolo, Grado.PRINCIPIANTE, "System.out.println(\"Hello\")", "Cosa manca?", new String[]{"Punto e virgola", "Parentesi graffa", "Dichiarazione variabile", "Parentesi quadra"}, 0),
-            new Esercizio(titolo, Grado.PRINCIPIANTE, "if (x > 5)\n    System.out.println(\"Grande\")\nelse\n    System.out.println(\"Piccolo\");", "Individua l'errore sintattico", new String[]{"Manca una graffa", "Errore di tipo", "Variabile non inizializzata", "Manca il punto e virgola"}, 0),
-            new Esercizio(titolo, Grado.PRINCIPIANTE, "System.ou.println(\"Errore\");", "Cosa c'è che non va?", new String[]{"Errore di battitura: 'ou'", "System non definito", "Manca il punto e virgola", "Errore di runtime"}, 0),
-            new Esercizio(titolo, Grado.PRINCIPIANTE, "public static void main {\n    System.out.println(\"Ciao\");\n}", "Qual è l'errore?", new String[]{"Mancano le parentesi tonde", "Manca il return", "main non è static", "Errore di sintassi"}, 0),
-            new Esercizio(titolo, Grado.PRINCIPIANTE, "int numero = \"dieci\";", "Dove sta l'errore?", new String[]{"Tipo incompatibile", "String non definita", "Uso scorretto di = ", "Errore di casting"}, 0)
+            new Esercizio(
+                titolo,
+                Grado.PRINCIPIANTE,
+                "class Node {\n    int data;\n    Node next;\n    Node(int data) {\n        this.data = data;\n        this.next = null;\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Node node = new Node(10);\n        System.out.println(node.data);\n    }\n}",
+                "Qual è l'output?",
+                new String[]{"Errore di compilazione", "null", "10", "0"},
+                2
+            ),
+            
+            new Esercizio(
+                titolo,
+                Grado.PRINCIPIANTE,
+                "Node node = new Node(5);",
+                "Qual è il valore iniziale del puntatore 'next' in un nuovo nodo?",
+                new String[]{"node", "0", "null", "true"},
+                2
+            ),
+            
+            new Esercizio(
+                titolo,
+                Grado.PRINCIPIANTE,
+                "Node first = new Node(1);\nNode second = new Node(2);",
+                "Come si collega un nodo a un altro?",
+                new String[]{
+                    "first.data = second;",
+                    "first.next = second;",
+                    "second = first.next;",
+                    "first = next.second;"
+                },
+                1
+            ),
+            
+            new Esercizio(
+                titolo,
+                Grado.PRINCIPIANTE,
+                "class Node {\n    int data;\n    Node next;\n}",
+                "Qual è la funzione del campo 'next' in un nodo di una Linked List?",
+                new String[]{
+                    "Conservare il valore del nodo",
+                    "Puntare al nodo successivo",
+                    "Contare il numero di nodi",
+                    "Stampare i nodi"
+                },
+                1
+            ),
+            
+            new Esercizio(
+                titolo,
+                Grado.PRINCIPIANTE,
+                "Node node = new Node(7);\nSystem.out.println(node.next);",
+                "Cosa stampa il seguente codice?",
+                new String[]{"0", "7", "null", "Errore di compilazione"},
+                2
+            )
         ));
 
         eserciziPerLivello.put("Intermedio", List.of(
-            new Esercizio(titolo, Grado.INTERMEDIO, "if(x = 10) {\n  System.out.println(\"x\");\n}", "Errore logico?", new String[]{"Uso di '=' invece di '=='", "x è già definito", "System non importato", "Errore di runtime"}, 0),
-            new Esercizio(titolo, Grado.INTERMEDIO, "boolean valido = true;\nif(valido == false);\n  System.out.println(\"Non valido\");", "Cosa c'è che non va?", new String[]{"If con ; inutile", "La variabile non esiste", "Manca else", "Errore di logica"}, 0),
-            new Esercizio(titolo, Grado.INTERMEDIO, "for(int i = 0; i > 10; i++) {\n  System.out.println(i);\n}", "Ciclo non entra mai, perché?", new String[]{"Condizione errata", "Inizializzazione sbagliata", "i non definito", "Errore di sintassi"}, 0),
-            new Esercizio(titolo, Grado.INTERMEDIO, "int[] nums = new int[3];\nnums[3] = 5;", "Che problema c'è?", new String[]{"IndexOutOfBounds", "Errore di sintassi", "Array nullo", "Errore di runtime"}, 0),
-            new Esercizio(titolo, Grado.INTERMEDIO, "String s = null;\nSystem.out.println(s.length());", "Cosa succede?", new String[]{"NullPointerException", "String non importata", "Metodo sbagliato", "Errore di runtime"}, 0)
+            new Esercizio(
+                titolo,
+                Grado.INTERMEDIO,
+                "Node a = new Node(1);\nNode b = new Node(2);\na.next = b;\nSystem.out.println(a.next.data);",
+                "Cosa stampa il codice?",
+                new String[]{"1", "2", "null", "Errore"},
+                1
+            ),
+            
+            new Esercizio(
+                titolo,
+                Grado.INTERMEDIO,
+                "void printList(Node head) {\n    while (head != null) {\n        System.out.print(head.data + \" \");\n        head = head.next;\n    }\n}",
+                "Cosa fa questo metodo?",
+                new String[]{
+                    "Crea una nuova lista",
+                    "Stampa tutti gli elementi della lista",
+                    "Rimuove il primo nodo",
+                    "Conta i nodi"
+                },
+                1
+            ),
+            
+            new Esercizio(
+                titolo,
+                Grado.INTERMEDIO,
+                "Node head = new Node(1);\nhead.next = new Node(2);\nhead.next.next = new Node(3);\nSystem.out.println(head.next.next.data);",
+                "Qual è l'output?",
+                new String[]{"1", "2", "3", "null"},
+                2
+            ),
+            
+            new Esercizio(
+                titolo,
+                Grado.INTERMEDIO,
+                "Node head = new Node(1);\nhead.next.data = 2;",
+                "Qual è il problema in questo codice?",
+                new String[]{
+                    "Il nodo è statico",
+                    "head.next è null",
+                    "Mancano i getter",
+                    "data non è accessibile"
+                },
+                1
+            ),
+            
+            new Esercizio(
+                titolo,
+                Grado.INTERMEDIO,
+                "int countNodes(Node head) {\n    int count = 0;\n    while (head != null) {\n        count++;\n        head = head.next;\n    }\n    return count;\n}",
+                "Cosa fa questo metodo?",
+                new String[]{
+                    "Ritorna l’ultimo nodo",
+                    "Conta il numero di nodi",
+                    "Stampa tutti i nodi",
+                    "Crea una nuova lista"
+                },
+                1
+            )
         ));
 
         eserciziPerLivello.put("Avanzato", List.of(
-            new Esercizio(titolo, Grado.AVANZATO, "int[] arr = {1,2,3};\nfor(int i = 0; i <= arr.length; i++) {\n  System.out.println(arr[i]);\n}", "Cosa succede?", new String[]{"IndexOutOfBounds", "Errore di compilazione", "StackOverflow", "Errore di runtime"}, 0),
-            new Esercizio(titolo, Grado.AVANZATO, "while(true) {\n  int x = 5;\n  x++;\n}", "Qual è il problema?", new String[]{"Loop infinito", "x non definito", "Manca il break", "Errore di logica"}, 0),
-            new Esercizio(titolo, Grado.AVANZATO, "for(int i = 0; i < 5; i++)\n  break\n  System.out.println(i);", "Errore combinato?", new String[]{"Manca punto e virgola dopo break", "Ciclo sbagliato", "Variabile duplicata", "Errore di sintassi"}, 0),
-            new Esercizio(titolo, Grado.AVANZATO, "int x;\nif(x > 0) {\n  System.out.println(\"Positivo\");\n}", "Cosa accade?", new String[]{"Variabile non inizializzata", "Errore di logica", "Loop non chiuso", "Errore di runtime"}, 0),
-            new Esercizio(titolo, Grado.AVANZATO, "String[] parole = {\"ciao\", null, \"mondo\"};\nfor(String p : parole) {\n  System.out.println(p.toUpperCase());\n}", "Cosa può succedere?", new String[]{"NullPointerException", "IndexError", "ArrayIndexOutOfBounds", "Errore di runtime"}, 0)
+            new Esercizio(
+                titolo,
+                Grado.AVANZATO,
+                "Node reverse(Node head) {\n    Node prev = null;\n    Node curr = head;\n    while (curr != null) {\n        Node next = curr.next;\n        curr.next = prev;\n        prev = curr;\n        curr = next;\n    }\n    return prev;\n}",
+                "Cosa fa questo metodo?",
+                new String[]{
+                    "Conta i nodi",
+                    "Elimina i nodi duplicati",
+                    "Inverte la lista",
+                    "Crea una nuova lista"
+                },
+                2
+            ),
+            
+            new Esercizio(
+                titolo,
+                Grado.AVANZATO,
+                "Node reverse(Node head) { /* stessa funzione dell'esercizio precedente */ }",
+                "Qual è la complessità temporale della funzione 'reverse'?",
+                new String[]{"O(log n)", "O(n²)", "O(n)", "O(1)"},
+                2
+            ),
+            
+            new Esercizio(
+                titolo,
+                Grado.AVANZATO,
+                "Node head = new Node(1);\nhead.next = new Node(2);\nhead.next.next = new Node(3);\nNode temp = head;\nwhile (temp.next != null) {\n    temp = temp.next;\n}\nSystem.out.println(temp.data);",
+                "Cosa stampa questo codice?",
+                new String[]{"1", "2", "3", "null"},
+                2
+            ),
+            
+            new Esercizio(
+                titolo,
+                Grado.AVANZATO,
+                "Node a = new Node(1);\nNode b = new Node(2);\na.next = b;\nb.next = a;",
+                "Qual è il rischio di questo codice?",
+                new String[]{
+                    "Nessuno",
+                    "È più veloce",
+                    "Crea un ciclo infinito nella lista",
+                    "Elimina il nodo precedente"
+                },
+                2
+            ),
+            
+            new Esercizio(
+                titolo,
+                Grado.AVANZATO,
+                "boolean hasCycle(Node head) {\n    Node slow = head;\n    Node fast = head;\n    while (fast != null && fast.next != null) {\n        slow = slow.next;\n        fast = fast.next.next;\n        if (slow == fast) return true;\n    }\n    return false;\n}",
+                "Come si rileva un ciclo in una Linked List?",
+                new String[]{
+                    "Con un contatore",
+                    "Usando un array",
+                    "Con due puntatori (slow e fast)",
+                    "Ordinando i nodi"
+                },
+                2
+            )
         ));
 
         eserciziPerLivello.forEach((livello, lista) -> mostratiPerLivello.put(livello, new ArrayList<>()));
@@ -310,11 +467,26 @@ public class TrovaErroreController
 
     private void salvaRisultato() 
     {
+        String utente = Session.getCurrentUser();
+        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+        // Build the result entry for all levels
+        StringBuilder resultEntry = new StringBuilder(utente);
+        resultEntry.append(",["+ titolo + " ");
+
+        for (String livello : List.of("Principiante", "Intermedio", "Avanzato")) 
+        {
+            List<String> tacche = statoTacche.getOrDefault(livello, new ArrayList<>());
+            long correctAnswers = tacche.stream().filter(t -> t.equals("G")).count();
+            resultEntry.append(String.format(" (%s; %d;%s)", livello, correctAnswers, timestamp));
+        }
+
+        resultEntry.append("]");
+
+        // Append the result to the risultati.csv file
         try (PrintWriter writer = new PrintWriter(new FileWriter(Costanti.PATH_FILE_RISULTATI, true))) 
         {
-            String utente = Session.getCurrentUser();
-            String data = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            writer.printf("%s,%s,%d,%s\n", utente, titolo, punteggio, data);
+            writer.println(resultEntry.toString());
         } 
         catch (IOException e) 
         {
@@ -327,7 +499,7 @@ public class TrovaErroreController
         String utente = Session.getCurrentUser();
         StringBuilder progressData = new StringBuilder();
 
-        // Append progress for Trova l'errore
+        // Append progress for Linked List
         progressData.append(" {" + titolo + "");
         progressData.append(" [Principiante (").append(String.join(";", convertToRG(statoTacche.getOrDefault("Principiante", new ArrayList<>())))).append(")]");
         progressData.append(" [Intermedio (").append(String.join(";", convertToRG(statoTacche.getOrDefault("Intermedio", new ArrayList<>())))).append(")]");
