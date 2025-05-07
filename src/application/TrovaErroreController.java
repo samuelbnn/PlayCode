@@ -324,66 +324,8 @@ public class TrovaErroreController
 
     private void salvaProgresso() 
     {
-        String utente = Session.getCurrentUser();
-        StringBuilder progressData = new StringBuilder();
-
-        // Append progress for Trova l'errore
-        progressData.append(" {" + titolo + "");
-        progressData.append(" [Principiante (").append(String.join(";", convertToRG(statoTacche.getOrDefault("Principiante", new ArrayList<>())))).append(")]");
-        progressData.append(" [Intermedio (").append(String.join(";", convertToRG(statoTacche.getOrDefault("Intermedio", new ArrayList<>())))).append(")]");
-        progressData.append(" [Avanzato (").append(String.join(";", convertToRG(statoTacche.getOrDefault("Avanzato", new ArrayList<>())))).append(")]");
-        progressData.append("},");
-
-        List<String> updatedLines = new ArrayList<>();
-        boolean userFound = false;
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(Costanti.PATH_FILE_PROGRESSI))) 
-        {
-            String line;
-            while ((line = reader.readLine()) != null) 
-            {
-                if (line.startsWith(utente + ",")) 
-                {
-                    int closingBraceIndex = line.lastIndexOf("}");
-                    if (closingBraceIndex != -1) 
-                    {
-                        // Insert new progress before the closing brace
-                        String updatedLine = line.substring(0, closingBraceIndex) + progressData + line.substring(closingBraceIndex);
-                        updatedLines.add(updatedLine);
-                    } 
-                    else 
-                    {
-                        updatedLines.add(line); // Fallback in case of malformed line
-                    }
-                    userFound = true;
-                } 
-                else 
-                {
-                    updatedLines.add(line);
-                }
-            }
-        } 
-        catch (IOException e) 
-        {
-            System.out.println("File non trovato, verrà creato un nuovo file.");
-        }
-
-        if (!userFound) 
-        {
-            updatedLines.add(utente + "," + progressData);
-        }
-
-        try (PrintWriter writer = new PrintWriter(new FileWriter(Costanti.PATH_FILE_PROGRESSI, false))) 
-        {
-            for (String line : updatedLines) 
-            {
-                writer.println(line);
-            }
-        } 
-        catch (IOException e) 
-        {
-            e.printStackTrace();
-        }
+        ProgressManager progressManager = new ProgressManager();
+        progressManager.saveProgress(titolo, statoTacche);
     }
 
     private List<String> convertToRG(List<String> tacche) 
