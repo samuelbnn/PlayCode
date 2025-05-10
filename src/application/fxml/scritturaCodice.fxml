@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="application.ScriviCodiceController"
+            prefWidth="600" prefHeight="500">
+
+    <VBox spacing="10" alignment="TOP_CENTER" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10">
+        <Label fx:id="titoloLabel" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+        <Label fx:id="livelloLabel"/>
+        <Label fx:id="consegnaLabel"/>
+
+        <TextArea fx:id="codiceTextArea" editable="false" prefRowCount="5"/>
+
+        <Label fx:id="domandaLabel"/>
+        <TextField fx:id="rispostaField" promptText="Inserisci la tua risposta"/>
+
+        <Button fx:id="btnConferma" text="Conferma" onAction="#confermaRisposta"/>
+        <Label fx:id="feedbackLabel" textFill="BLACK"/>
+
+        <HBox spacing="5" alignment="CENTER">
+            <Circle fx:id="tacchePrincipiante_1" radius="8"/>
+            <Circle fx:id="tacchePrincipiante_2" radius="8"/>
+            <Circle fx:id="tacchePrincipiante_3" radius="8"/>
+            <Circle fx:id="taccheIntermedio_1" radius="8"/>
+            <Circle fx:id="taccheIntermedio_2" radius="8"/>
+            <Circle fx:id="taccheIntermedio_3" radius="8"/>
+            <Circle fx:id="taccheAvanzato_1" radius="8"/>
+            <Circle fx:id="taccheAvanzato_2" radius="8"/>
+            <Circle fx:id="taccheAvanzato_3" radius="8"/>
+        </HBox>
+    </VBox>
+</AnchorPane>
