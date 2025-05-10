@@ -195,7 +195,7 @@ public class CompletaCodiceController
         }
 
         // Save the progress to the file
-        ProgressManager.saveProgress(utente, "Completa il Codice", livelloCorrente, progressState);
+        //ProgressManager.saveProgress(utente, "Completa il Codice", livelloCorrente, progressState);
     }
 
     private void caricaProgresso() 
