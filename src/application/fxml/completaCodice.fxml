@@ -17,7 +17,7 @@
         <VBox fx:id="contenitoreCentrale" alignment="CENTER" spacing="20" styleClass="contenitore-centrale">
             
             <!-- Logo -->
-            <ImageView fx:id="logo" fitHeight="120" fitWidth="120" preserveRatio="true">
+            <ImageView fx:id="logo" fitHeight="150" fitWidth="150" preserveRatio="true">
                 <image><Image url="@img/logo.png"/></image>
             </ImageView>
 
@@ -66,13 +66,7 @@
 
             <!-- Campo risposta -->
             <TextField fx:id="rispostaTextField" promptText="Scrivi la tua risposta qui..." visible="false"/>
-
-            <!-- Risposte RadioButton -->
-            <RadioButton fx:id="risposta1" text="Risposta 1" visible="false"/>
-            <RadioButton fx:id="risposta2" text="Risposta 2" visible="false"/>
-            <RadioButton fx:id="risposta3" text="Risposta 3" visible="false"/>
-            <RadioButton fx:id="risposta4" text="Risposta 4" visible="false"/>
-
+            
             <!-- Feedback -->
             <Label fx:id="feedbackLabel" styleClass="feedback"/>
 

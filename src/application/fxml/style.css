@@ -141,10 +141,12 @@
     -fx-font-family: "Courier New";
     -fx-font-size: 16px;
     -fx-background-color: #f4f4f4;
-    -fx-padding: 10;
+    -fx-padding: 15; /* Increased padding for more space */
     -fx-background-radius: 6;
     -fx-border-color: transparent;
     -fx-effect: none;
+    -fx-pref-height: 200px; /* Increased height */
+    -fx-pref-width: 800px; /* Increased width */
 }
 
 .text-area {
@@ -191,4 +193,11 @@
     -fx-background-color: linear-gradient(to bottom, #2980B9, #2471A3);
 }
 
+/* ---------------------- RADIO BUTTON ---------------------- */
+.styled-radio {
+    -fx-font-family: 'Montserrat-MediumItalic';
+    -fx-font-size: 13px;
+    -fx-text-fill: #2D3E50;
+    -fx-padding: 5 10;
+}
 
