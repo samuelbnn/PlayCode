@@ -340,8 +340,8 @@ public class LinkedListController
         feedbackLabel.setStyle("-fx-text-fill: blue;");
         feedbackLabel.setVisible(true);
 
-        // Save progress after completing the level
-        salvaProgresso();
+        //Salvataggio del progresso alla chiusura del livello
+        ProgressManager.saveProgress(titolo, statoTacche);
 
         switch (livelloCorrente) 
         {
@@ -492,33 +492,6 @@ public class LinkedListController
         {
             e.printStackTrace();
         }
-    }
-
-    private void salvaProgresso() 
-    {
-         ProgressManager progressManager = new ProgressManager();
-        progressManager.saveProgress(titolo, statoTacche);
-    }
-
-    private List<String> convertToRG(List<String> tacche) 
-    {
-        List<String> result = new ArrayList<>();
-        for (String tacca : tacche) 
-        {
-            if (tacca.contains("green")) 
-            {
-                result.add("G");
-            } 
-            else if (tacca.contains("red")) 
-            {
-                result.add("R");
-            } 
-            else 
-            {
-                result.add("");
-            }
-        }
-        return result;
     }
 
     private void caricaProgresso() 

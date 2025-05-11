@@ -38,7 +38,10 @@ public class ProgressManager
                 withoutOld = withoutOld.replaceAll("[,\\s]+$", "");
                 // spezzetto utente vs resto
                 String prefix = user + ",";
-                String rest   = withoutOld.substring(prefix.length()).trim();
+                String rest = "";
+                if (withoutOld.length() > prefix.length()) {
+                    rest = withoutOld.substring(prefix.length()).trim();
+                }
                 // ricostruisco con un singolo spazio dopo la virgola
                 String rebuilt = prefix + " " + rest;
                 // se non c'era alcun blocco, rest era vuoto => evito doppie virgole
@@ -94,7 +97,7 @@ public class ProgressManager
                 if (startIdx != -1 && endIdx != -1) {
                     // Estraggo il contenuto interno del blocco (senza le graffe)
                     String block = rest.substring(startIdx + 1, endIdx).trim();
-                    // Trovo la parte a partire da [Principiante]
+                    // Trova la parte a partire da [Principiante]
                     int progIdx = block.indexOf("[Principiante");
                     if (progIdx != -1) {
                         String progressData = block.substring(progIdx);
