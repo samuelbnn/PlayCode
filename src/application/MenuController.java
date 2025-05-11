@@ -34,6 +34,7 @@ public class MenuController
     public void initialize() 
     {
         String username = Session.getCurrentUser(); //otteniamo l'utente loggato
+
         if (username != null && !username.isEmpty()) 
         {
             userNameLabel.setText("Benvenuto, " + username + "!");
@@ -55,28 +56,36 @@ public class MenuController
     }
 
     // Add methods to update progress bars
-    private void updateProgressBar(ProgressBar progressBar, ProgressData data) {
-        if (data.getTotal() > 0) {
+    private void updateProgressBar(ProgressBar progressBar, ProgressData data) 
+    {
+        if (data.getTotal() > 0) 
+        {
             double progress = (double) data.getCorrect() / data.getTotal();
             progressBar.setStyle("-fx-accent: green;");
             progressBar.setProgress(progress);
-        } else {
+        } 
+        else
+        {
             progressBar.setStyle("-fx-accent: white;");
             progressBar.setProgress(0);
         }
     }
 
-    void updateProgress(String exerciseKey, int correctIncrement, int incorrectIncrement) {
+    void updateProgress(String exerciseKey, int correctIncrement, int incorrectIncrement) 
+    {
         ProgressData data = progressDataMap.get(exerciseKey);
-        if (data != null) {
+        if (data != null) 
+        {
             data.incrementCorrect(correctIncrement);
             data.incrementIncorrect(incorrectIncrement);
             updateProgressBar(getProgressBarForExercise(exerciseKey), data);
         }
     }
 
-    private ProgressBar getProgressBarForExercise(String exerciseKey) {
-        switch (exerciseKey) {
+    private ProgressBar getProgressBarForExercise(String exerciseKey) 
+    {
+        switch (exerciseKey) 
+        {
             case "TrovaErrore":
                 return progressBarTrovaErrore;
             case "CompletaCodice":
@@ -88,25 +97,47 @@ public class MenuController
         }
     }
     
-    //Metodi per le finestre cliccabili
+    //#region Esercizi
+
     @FXML
     private void apriLeggiCodice(ActionEvent event) 
     {
         System.out.println("Apertura esercizio: Leggi il Codice");
-        //carica leggiCodice.fxml
+        try 
+        {
+            Parent root = FXMLLoader.load(App.class.getResource(Costanti.PATH_FXML_LEGGICODICE));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } 
+        catch (IOException e) 
+        {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void apriScritturaOutput(ActionEvent event) 
     {
         System.out.println("Apertura esercizio: Scrittura con Output");
-        //carica scritturaOutput.fxml
+        try 
+        {
+            Parent root = FXMLLoader.load(App.class.getResource(Costanti.PATH_FXML_SCRITTURAOUTPUT));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } 
+        catch (IOException e) 
+        {
+            e.printStackTrace();
+        }
     }
 
 
     @FXML
     private void apriTrovaErrore(ActionEvent event) 
     {
+        System.out.println("Apertura esercizio: Trova l'Errore");
         try 
         {
             Parent root = FXMLLoader.load(App.class.getResource(Costanti.PATH_FXML_TROVAERRORE));
@@ -123,6 +154,7 @@ public class MenuController
     @FXML
     private void apriCompletaCodice(ActionEvent event) throws IOException 
     {
+        System.out.println("Apertura esercizio: Completa il Codice");
         try 
         {
             Parent root = FXMLLoader.load(App.class.getResource(Costanti.PATH_FXML_COMPLETACODICE));
@@ -136,10 +168,10 @@ public class MenuController
         }
     }
     
-
     @FXML
     private void apriLinkedList(ActionEvent event) 
     {
+        System.out.println("Apertura esercizio: Linked List");
         try 
         {
             Parent root = FXMLLoader.load(App.class.getResource(Costanti.PATH_FXML_LINKEDLIST));
@@ -157,8 +189,20 @@ public class MenuController
     private void apriStaticCode(ActionEvent event) 
     {
         System.out.println("Apertura esercizio: Static Code");
-        //carica staticCode.fxml
+        try 
+        {
+            Parent root = FXMLLoader.load(App.class.getResource(Costanti.PATH_FXML_STATICCODE));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } 
+        catch (IOException e) 
+        {
+            e.printStackTrace();
+        }
     }
+
+    //#endregion
 
     @FXML
     private void logout(ActionEvent event) 
@@ -178,34 +222,41 @@ public class MenuController
     }
 
     // Inner class to track progress data
-    private static class ProgressData {
+    private static class ProgressData 
+    {
         private int correct;
         private int incorrect;
         private int total;
 
-        public ProgressData(int correct, int incorrect, int total) {
+        public ProgressData(int correct, int incorrect, int total) 
+        {
             this.correct = correct;
             this.incorrect = incorrect;
             this.total = total;
         }
 
-        public int getCorrect() {
+        public int getCorrect() 
+        {
             return correct;
         }
 
-        public int getIncorrect() {
+        public int getIncorrect() 
+        {
             return incorrect;
         }
 
-        public int getTotal() {
+        public int getTotal() 
+        {
             return total;
         }
 
-        public void incrementCorrect(int value) {
+        public void incrementCorrect(int value) 
+        {
             this.correct += value;
         }
 
-        public void incrementIncorrect(int value) {
+        public void incrementIncorrect(int value)
+        {
             this.incorrect += value;
         }
     }
