@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class LeggiCodiceController 
+public class StaticCodeController 
 {
     @FXML private Label titoloLabel;
     @FXML private Label livelloLabel;
@@ -42,10 +42,10 @@ public class LeggiCodiceController
     private final Map<String, List<Esercizio>> mostratiPerLivello = new HashMap<>();
     private int correctAnswers = 0;
     private int incorrectAnswers = 0;
-    private final Map<String, List<String>> statoTacche = new HashMap<>();
-    private final Set<String> livelliCompletati = new HashSet<>();
+    private final Map<String, List<String>> statoTacche = new HashMap<>(); // Mappa per memorizzare lo stato delle tacche
+    private final Set<String> livelliCompletati = new HashSet<>(); // Traccia i livelli completati
 
-    private static final String titolo = "Leggi il codice";
+    private static final String titolo= "Static Code";
     private enum Grado { PRINCIPIANTE, INTERMEDIO, AVANZATO }
 
     @FXML
@@ -58,11 +58,11 @@ public class LeggiCodiceController
         risposta4.setToggleGroup(gruppoRisposte);
 
         caricaDomande();
-        caricaProgresso();
-        inizializzaStatoTacche();
+        caricaProgresso(); 
+        inizializzaStatoTacche(); // Inizializza lo stato delle tacche
         mostraDomandaCasuale();
         aggiornaStileLivelli();
-        aggiornaTacche();
+        aggiornaTacche(); // Aggiorna la visualizzazione delle tacche per tutti i livelli
     }
 
     private void inizializzaStatoTacche() 
@@ -98,249 +98,203 @@ public class LeggiCodiceController
     private void caricaDomande() 
     {
         eserciziPerLivello.put("Principiante", List.of(
-            new Esercizio
-            (
-                titolo, 
-                Grado.PRINCIPIANTE, 
-                "int x = 5;\nint y = 3;\nint z = x + y;", 
-                "Qual è il valore di z?", 
-                new String[]
-                {
-                    "8",
-                     "53", 
-                     "x + y", 
-                     "35"
-                }, 
-                0),
+        new Esercizio
+        (
+            "Accesso a variabile statica",
+            Grado.PRINCIPIANTE,
+            "public class Test {\n    static int x = 5;\n    public static void main(String[] args) {\n        System.out.println(x);\n    }\n}",
+            "Cosa stampa questo codice?",
+            new String[]{"Errore di compilazione", "null", "5", "0"},
+            2
+        ),
 
-            new Esercizio
-            (
-                titolo, 
-                Grado.PRINCIPIANTE, 
-                "for(int i = 0; i < 3; i++) {\n  System.out.println(i);\n}", 
-                "Quante volte viene eseguito il ciclo?", 
-                new String[]
-                {
-                    "3", 
-                    "2", 
-                    "4", 
-                    "1"
-                },
-                0
-            ),
-            
-            new Esercizio
-            (
-                titolo, 
-                Grado.PRINCIPIANTE, 
-                "String s = \"Java\";\nSystem.out.println(s.length());", 
-                "Cosa viene stampato?", 
-                new String[]
-                {
-                    "4",
-                    "Java",
-                    "3",
-                    "Errore"
-                }, 
-                0
-            ),
-            
-            new Esercizio
-            (
-                titolo,
-                Grado.PRINCIPIANTE, 
-                "boolean b = true;\nif(!b) {\n  System.out.println(\"Vero\");\n} else {\n  System.out.println(\"Falso\");\n}", 
-                "Cosa viene stampato?", 
-                new String[]
-                {
-                    "Falso", 
-                    "Vero", 
-                    "Niente", 
-                    "Errore"
-                }, 
-                0
-            ),
-            
-            new Esercizio
-            (
-                titolo,
-                Grado.PRINCIPIANTE, 
-                "int[] arr = {1,2,3};\nSystem.out.println(arr[1]);", 
-                "Cosa viene stampato?", 
-                new String[]
-                {
-                    "2", 
-                    "1", 
-                    "3", 
-                    "Errore"
-                }, 
-                0
-            )
-        ));
+        new Esercizio
+        (
+            "Definizione di static",
+            Grado.PRINCIPIANTE,
+            "",
+            "Cosa significa che una variabile è dichiarata static?",
+            new String[]
+            {
+                "Appartiene all'oggetto",
+                "Appartiene alla classe e non all’istanza",
+                "Può essere usata solo nel main",
+                "Non può cambiare valore"
+            },
+            1
+        ),
+        
+        new Esercizio
+        (
+            "Modifica di campo statico",
+            Grado.PRINCIPIANTE,
+            "public class Test {\n    static int x = 10;\n    public static void main(String[] args) {\n        Test a = new Test();\n        Test b = new Test();\n        a.x = 20;\n        System.out.println(b.x);\n    }\n}",
+            "Cosa stampa questo codice?",
+            new String[]{"10", "20", "Errore", "null"},
+            1
+        ),
+        
+        new Esercizio
+        (
+            "Metodo statico",
+            Grado.PRINCIPIANTE,
+            "public class Utility {\n    static void greet() {\n        System.out.println(\"Ciao!\");\n    }\n}",
+            "Come si può chiamare il metodo greet da un’altra classe?",
+            new String[]{"new Utility().greet();", "Utility->greet();", "greet();", "Utility.greet();"},
+            3
+        ),
+        
+        new Esercizio
+        (
+            "Metodo statico vs. istanza",
+            Grado.PRINCIPIANTE,
+            null,
+            "Quale tra le seguenti affermazioni è corretta riguardo ai metodi statici?",
+            new String[]
+            {
+                "Un metodo statico può accedere direttamente a campi non statici",
+                "Un metodo statico può essere chiamato senza creare un oggetto",
+                "I metodi statici devono restituire un valore",
+                "Un metodo statico può essere sovrascritto nelle sottoclassi"
+            },
+            1
+        )));
 
         eserciziPerLivello.put("Intermedio", List.of(
-            new Esercizio
-            (
-                titolo, 
-                Grado.INTERMEDIO, 
-                "int x = 10;\nint y = x++;\nSystem.out.println(y);", 
-                "Cosa viene stampato?", 
-                new String[]
-                {
-                    "10",
-                    "11", 
-                    "12", 
-                    "Errore"
-                }, 
-                0
-            ),
+        new Esercizio
+        (
+            "Incremento di campo statico",
+            Grado.INTERMEDIO,
+            "public class Contatore {\n    static int count = 0;\n    public Contatore() {\n        count++;\n    }\n    public static void main(String[] args) {\n        new Contatore();\n        new Contatore();\n        System.out.println(count);\n    }\n}",
+            "Cosa stampa questo codice?",
+            new String[]{"0", "1", "2", "Errore"},
+            2
+        ),
 
-            new Esercizio
-            (
-                titolo, 
-                Grado.INTERMEDIO, 
-                "String s1 = \"Ciao\";\nString s2 = new String(\"Ciao\");\nSystem.out.println(s1 == s2);", 
-                "Cosa viene stampato?", 
-                new String[]
-                {
-                    "false", 
-                    "true", 
-                    "Ciao", 
-                    "Errore"
-                }, 
-                0
-            ),
-
-            new Esercizio
-            (
-                titolo, 
-                Grado.INTERMEDIO, 
-                "List<Integer> list = new ArrayList<>();\nlist.add(1);\nlist.add(2);\nlist.remove(1);\nSystem.out.println(list.size());", 
-                "Cosa viene stampato?",
-                new String[]
-                {
-                    "1", 
-                    "2", 
-                    "0", 
-                    "Errore"
-                }, 
-                0
-            ),
-
-            new Esercizio
-            (
-                titolo, 
-                Grado.INTERMEDIO, 
-                "int x = 5;\nint y = x > 0 ? 1 : -1;\nSystem.out.println(y);", 
-                "Cosa viene stampato?", 
-                new String[]
-                {
-                    "1", 
-                    "-1", 
-                    "5", 
-                    "0"
-                }, 
-                0
-            ),
-
-            new Esercizio
-            (
-                titolo, 
-                Grado.INTERMEDIO, 
-                "try {\n  int x = 5 / 0;\n} catch (Exception e) {\n  System.out.println(\"Errore\");\n}", 
-                "Cosa viene stampato?", 
-                new String[]
-                {
-                    "Errore",
-                    "Niente", 
-                    "0", 
-                    "Infinity"
-                },
-                0
-            )
-        ));
+        new Esercizio
+        (
+            "Accesso a variabili di istanza da metodo statico",
+            Grado.INTERMEDIO,
+            "",
+            "Perché un metodo statico **non può accedere direttamente** a variabili d’istanza?",
+            new String[]
+            {
+                "Perché non esistono nel contesto statico",
+                "Perché sono sempre private",
+                "Perché non sono inizializzate",
+                "Perché Java lo impedisce per motivi di sicurezza"
+            },
+            0
+        ),
+        
+        new Esercizio
+        (
+            "Blocco statico",
+            Grado.INTERMEDIO,
+            "public class Test {\n    static {\n        System.out.println(\"Inizializzazione\");\n    }\n    public static void main(String[] args) {\n        System.out.println(\"Main\");\n    }\n}",
+            "Cosa stampa questo codice?",
+            new String[]{"Main\nInizializzazione", "Solo Main", "Errore", "Inizializzazione\nMain"},
+            3
+        ),
+        
+        new Esercizio
+        (
+            "Ordinamento dei blocchi statici",
+            Grado.INTERMEDIO,
+            "class Esempio {\n    static int x;\n    static {\n        x = 10;\n    }\n}",
+            "Quando viene eseguito il blocco statico?",
+            new String[]{
+                "Ogni volta che si crea un oggetto",
+                "Al caricamento della classe",
+                "Alla chiamata del costruttore",
+                "Alla fine del programma"
+            },
+            1
+        ),
+        
+        new Esercizio
+        (
+            "Parola chiave this in static",
+            Grado.INTERMEDIO,
+            "",
+            "Cosa succede se si usa `this` in un metodo statico?",
+            new String[]{
+                "Compila ma non ha effetto",
+                "Richiama il costruttore",
+                "Compila ma genera un warning",
+                "Errore di compilazione: `this` non può essere usato in contesto statico"
+            },
+            3
+        )));
 
         eserciziPerLivello.put("Avanzato", List.of(
-            new Esercizio
-            (
-                titolo, 
-                Grado.AVANZATO, 
-                "Map<String, Integer> map = new HashMap<>();\nmap.put(\"A\", 1);\nmap.put(\"B\", 2);\nSystem.out.println(map.get(\"C\"));", 
-                "Cosa viene stampato?", 
-                new String[]
-                {
-                    "null", 
-                    "0", 
-                    "Errore", 
-                    "Niente"
-                }, 
-                0
-            ),
-            
-            new Esercizio
-            (
-                titolo, 
-                Grado.AVANZATO, 
-                "Supplier<Integer> supplier = () -> 5;\nSystem.out.println(supplier.get());", 
-                "Cosa viene stampato?", 
-                new String[]
-                {
-                    "5", 
-                    "supplier.get()", 
-                    "Errore", 
-                    "Niente"
-                }, 
-                0
-            ),
-            
-            new Esercizio
-            (
-                titolo, 
-                Grado.AVANZATO, 
-                "Stream<Integer> stream = Stream.of(1,2,3);\nlong count = stream.filter(n -> n > 1).count();\nSystem.out.println(count);", 
-                "Cosa viene stampato?", 
-                new String[]
-                {
-                    "2", 
-                    "3", 
-                    "1", 
-                    "0"
-                }, 
-                0
-            ),
-            
-            new Esercizio
-            (
-                titolo, 
-                Grado.AVANZATO, 
-                "Optional<String> opt = Optional.ofNullable(null);\nSystem.out.println(opt.orElse(\"Default\"));", 
-                "Cosa viene stampato?", 
-                new String[]
-                {
-                    "Default", 
-                    "null", 
-                    "Niente", 
-                    "Errore"
-                }, 
-                0
-            ),
-            
-            new Esercizio
-            (
-                titolo, 
-                Grado.AVANZATO, 
-                "List<String> list = Arrays.asList(\"A\",\"B\",\"C\");\nlist.forEach(System.out::print);", 
-                "Cosa viene stampato?", 
-                new String[]
-                {
-                    "ABC", 
-                    "A B C", 
-                    "List[A,B,C]", 
-                    "Errore"
-                }, 
-                0
-            )
-        ));
+        new Esercizio
+        (
+            "Conflitto tra variabili statiche",
+            Grado.AVANZATO,
+            "class A {\n    static int x = 10;\n}\nclass B extends A {\n    static int x = 20;\n}\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(B.x);\n        System.out.println(A.x);\n    }\n}",
+            "Cosa stampa il codice?",
+            new String[]{"20 e 10", "10 e 10", "20 e 20", "Errore di compilazione"},
+            0
+        ),
+
+        new Esercizio
+        (
+            "Sovrascrittura di metodo statico",
+            Grado.AVANZATO,
+            "class Base {\n    static void print() {\n        System.out.println(\"Base\");\n    }\n}\nclass Derivata extends Base {\n    static void print() {\n        System.out.println(\"Derivata\");\n    }\n}",
+            "Cosa succede se chiami `Base.print()` e `Derivata.print()`?",
+            new String[]
+            {
+                "Entrambe stampano Derivata",
+                "Stampa Base due volte",
+                "Ogni classe stampa il proprio metodo: Base e poi Derivata",
+                "Errore di override"
+            },
+            2
+        ),
+        
+        new Esercizio
+        (
+            "Uso corretto di campo static finale",
+            Grado.AVANZATO,
+            "public class Costanti {\n    static final double PI = 3.1415;\n}",
+            "Qual è il vantaggio di usare `static final`?",
+            new String[]
+            {
+                "Può essere modificato in runtime",
+                "Non occupa memoria",
+                "È condiviso da tutte le istanze ed è costante",
+                "Viene inizializzato ogni volta che si crea un oggetto"
+            },
+            2
+        ),
+        
+        new Esercizio
+        (
+            "Compilazione campo statico derivato",
+            Grado.AVANZATO,
+            "class Genitore {\n    static int x = 5;\n}\nclass Figlio extends Genitore {\n    static int y = x * 2;\n}",
+            "Cosa stampa `System.out.println(Figlio.y);`?",
+            new String[]{"5", "10", "0", "Errore"},
+            1
+        ),
+        
+        new Esercizio
+        (
+            "Accesso statico tramite oggetto",
+            Grado.AVANZATO,
+            "class Esempio {\n    static void stampa() {\n        System.out.println(\"Statica\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Esempio e = new Esempio();\n        e.stampa();\n    }\n}",
+            "Qual è il risultato dell’esecuzione?",
+            new String[]
+            {
+                "Errore di compilazione",
+                "Nessun output",
+                "Chiama il metodo ma non è buona pratica accedere static tramite istanza",
+                "Chiama il costruttore due volte"
+            },
+            2
+        )));
 
         eserciziPerLivello.forEach((livello, lista) -> mostratiPerLivello.put(livello, new ArrayList<>()));
     }
@@ -355,13 +309,14 @@ public class LeggiCodiceController
             return;
         }
 
+        // Check if all tacchette are filled with "G" or "R"
         List<String> tacchette = statoTacche.getOrDefault(livelloCorrente, new ArrayList<>());
         if (tacchette.stream().allMatch(t -> t.equals("G") || t.equals("R"))) 
         {
             feedbackLabel.setText("Hai già completato il livello!");
             feedbackLabel.setStyle("-fx-text-fill: blue;");
             feedbackLabel.setVisible(true);
-            livelliCompletati.add(livelloCorrente);
+            livelliCompletati.add(livelloCorrente); // Mark the level as completed
             return;
         }
 
@@ -382,9 +337,11 @@ public class LeggiCodiceController
         codiceArea.setText(esercizioCorrente.codice);
         consegnaLabel.setText(esercizioCorrente.domanda);
         
+        // Mescola le risposte
         List<String> risposteMischiate = new ArrayList<>(List.of(esercizioCorrente.risposte));
         Collections.shuffle(risposteMischiate);
         
+        // Imposta le risposte mescolate sui RadioButton
         risposta1.setText(risposteMischiate.get(0));
         risposta2.setText(risposteMischiate.get(1));
         risposta3.setText(risposteMischiate.get(2));
@@ -401,7 +358,8 @@ public class LeggiCodiceController
         feedbackLabel.setStyle("-fx-text-fill: blue;");
         feedbackLabel.setVisible(true);
 
-        salvaProgresso();
+        //Salvataggio del progresso alla chiusura del livello
+        ProgressManager.saveProgress(titolo, statoTacche);
 
         switch (livelloCorrente) 
         {
@@ -490,8 +448,8 @@ public class LeggiCodiceController
             if (!domanda.isAnswered) 
             {
                 correctAnswers++;
-                aggiornaColoreTacca(true);
-                domanda.isAnswered = true;
+                aggiornaColoreTacca(true); // Colora tacca verde
+                domanda.isAnswered = true; // Segna la domanda come già risolta
             }
 
             codiceArea.setStyle("-fx-border-color: green; -fx-border-width: 2;");
@@ -514,11 +472,11 @@ public class LeggiCodiceController
             feedbackLabel.setStyle("-fx-text-fill: red;");
             feedbackLabel.setVisible(true);
 
-            if (!domanda.isAnswered) 
+            if (!domanda.isAnswered) // Colora la tacca solo alla prima risposta
             {
                 incorrectAnswers++;
-                aggiornaColoreTacca(false);
-                domanda.isAnswered = true;
+                aggiornaColoreTacca(false); // Colora tacca rossa
+                domanda.isAnswered = true; // Segna la domanda come già risolta
             }
 
             codiceArea.setStyle("-fx-border-color: red; -fx-border-width: 2;");
@@ -527,99 +485,31 @@ public class LeggiCodiceController
 
     private void salvaRisultato() 
     {
+        String utente = Session.getCurrentUser();
+        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+        // Build the result entry for all levels
+        StringBuilder resultEntry = new StringBuilder(utente);
+        resultEntry.append(",["+ titolo + " ");
+
+        for (String livello : List.of("Principiante", "Intermedio", "Avanzato")) 
+        {
+            List<String> tacche = statoTacche.getOrDefault(livello, new ArrayList<>());
+            long correctAnswers = tacche.stream().filter(t -> t.equals("G")).count();
+            resultEntry.append(String.format(" (%s; %d;%s)", livello, correctAnswers, timestamp));
+        }
+
+        resultEntry.append("]");
+
+        // Append the result to the risultati.csv file
         try (PrintWriter writer = new PrintWriter(new FileWriter(Costanti.PATH_FILE_RISULTATI, true))) 
         {
-            String utente = Session.getCurrentUser();
-            String data = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            writer.printf("%s,%s,%d,%s\n", utente, titolo, punteggio, data);
+            writer.println(resultEntry.toString());
         } 
         catch (IOException e) 
         {
             e.printStackTrace();
         }
-    }
-
-    private void salvaProgresso() 
-    {
-        String utente = Session.getCurrentUser();
-        StringBuilder progressData = new StringBuilder();
-
-        progressData.append(" {" + titolo + "");
-        progressData.append(" [Principiante (").append(String.join(";", convertToRG(statoTacche.getOrDefault("Principiante", new ArrayList<>())))).append(")]");
-        progressData.append(" [Intermedio (").append(String.join(";", convertToRG(statoTacche.getOrDefault("Intermedio", new ArrayList<>())))).append(")]");
-        progressData.append(" [Avanzato (").append(String.join(";", convertToRG(statoTacche.getOrDefault("Avanzato", new ArrayList<>())))).append(")]");
-        progressData.append("},");
-
-        List<String> updatedLines = new ArrayList<>();
-        boolean userFound = false;
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(Costanti.PATH_FILE_PROGRESSI))) 
-        {
-            String line;
-            while ((line = reader.readLine()) != null) 
-            {
-                if (line.startsWith(utente + ",")) 
-                {
-                    int closingBraceIndex = line.lastIndexOf("}");
-                    if (closingBraceIndex != -1) 
-                    {
-                        String updatedLine = line.substring(0, closingBraceIndex) + progressData + line.substring(closingBraceIndex);
-                        updatedLines.add(updatedLine);
-                    } 
-                    else 
-                    {
-                        updatedLines.add(line);
-                    }
-                    userFound = true;
-                } 
-                else 
-                {
-                    updatedLines.add(line);
-                }
-            }
-        } 
-        catch (IOException e) 
-        {
-            System.out.println("File non trovato, verrà creato un nuovo file.");
-        }
-
-        if (!userFound) 
-        {
-            updatedLines.add(utente + "," + progressData);
-        }
-
-        try (PrintWriter writer = new PrintWriter(new FileWriter(Costanti.PATH_FILE_PROGRESSI, false))) 
-        {
-            for (String line : updatedLines) 
-            {
-                writer.println(line);
-            }
-        } 
-        catch (IOException e) 
-        {
-            e.printStackTrace();
-        }
-    }
-
-    private List<String> convertToRG(List<String> tacche) 
-    {
-        List<String> result = new ArrayList<>();
-        for (String tacca : tacche) 
-        {
-            if (tacca.contains("green")) 
-            {
-                result.add("G");
-            } 
-            else if (tacca.contains("red")) 
-            {
-                result.add("R");
-            } 
-            else 
-            {
-                result.add("");
-            }
-        }
-        return result;
     }
 
     private void caricaProgresso() 
@@ -627,6 +517,7 @@ public class LeggiCodiceController
         String utente = Session.getCurrentUser();
         Map<String, List<String>> loadedProgress = ProgressManager.loadProgress(utente, titolo);
 
+        // Convert R (red) or G (green) back to styles
         statoTacche.put("Principiante", translateTacche(loadedProgress.getOrDefault("Principiante", new ArrayList<>()), 5));
         statoTacche.put("Intermedio", translateTacche(loadedProgress.getOrDefault("Intermedio", new ArrayList<>()), 5));
         statoTacche.put("Avanzato", translateTacche(loadedProgress.getOrDefault("Avanzato", new ArrayList<>()), 5));
@@ -645,12 +536,14 @@ public class LeggiCodiceController
         {
             livelliCompletati.add("Avanzato");
 
+            // Show pop-up for completion
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Congratulazioni");
             alert.setHeaderText(null);
             alert.setContentText("Hai completato tutti i livelli!");
             alert.showAndWait();
 
+            // Prevent entry into the "Avanzato" level
             livelloCorrente = null;
             feedbackLabel.setText("Hai completato tutti i livelli! Complimenti!");
             feedbackLabel.setStyle("-fx-text-fill: green;");
@@ -658,6 +551,7 @@ public class LeggiCodiceController
             btnConferma.setDisable(true);
         }
 
+        // Debug: Print loaded progress for verification
         System.out.println("Progress loaded for user: " + utente);
         System.out.println("Principiante: " + statoTacche.get("Principiante"));
         System.out.println("Intermedio: " + statoTacche.get("Intermedio"));
@@ -684,9 +578,9 @@ public class LeggiCodiceController
         }
         while (translatedTacche.size() < expectedSize) 
         {
-            translatedTacche.add("");
+            translatedTacche.add(""); // Add empty entries if missing
         }
-        return translatedTacche.subList(0, expectedSize);
+        return translatedTacche.subList(0, expectedSize); // Ensure the list is trimmed to the expected size
     }
 
     private boolean isProgressoValido(String[] parts, String utente) 
@@ -699,9 +593,9 @@ public class LeggiCodiceController
         List<String> tacche = new ArrayList<>(Arrays.asList(taccheString.split(";")));
         while (tacche.size() < expectedSize) 
         {
-            tacche.add("");
+            tacche.add(""); // Aggiungi tacche vuote se mancano
         }
-        return tacche.subList(0, expectedSize);
+        return tacche.subList(0, expectedSize); // Troncamento se ci sono più tacche del previsto
     }
 
     @FXML
@@ -791,4 +685,4 @@ public class LeggiCodiceController
             case "Avanzato" -> btnAvanzato.getStyleClass().add("selected");
         }
     }
-}   
+}
