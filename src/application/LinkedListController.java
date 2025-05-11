@@ -408,6 +408,8 @@ public class LinkedListController
     @FXML
     private void confermaRisposta(ActionEvent event) 
     {
+        btnConferma.setDisable(true); // Disabilita il pulsante per evitare clic multipli
+
         RadioButton selezionata = (RadioButton) gruppoRisposte.getSelectedToggle();
 
         if (selezionata == null) 
@@ -415,6 +417,7 @@ public class LinkedListController
             feedbackLabel.setText("Seleziona una risposta!");
             feedbackLabel.setStyle("-fx-text-fill: red;");
             feedbackLabel.setVisible(true);
+            btnConferma.setDisable(false); // Riabilita il pulsante
             return;
         }
 
@@ -445,6 +448,7 @@ public class LinkedListController
                 javafx.application.Platform.runLater(() -> {
                     codiceArea.setStyle("");
                     mostraDomandaCasuale();
+                    btnConferma.setDisable(false); // Riabilita il pulsante
                 });
             }).start();
         } 
@@ -462,6 +466,7 @@ public class LinkedListController
             }
 
             codiceArea.setStyle("-fx-border-color: red; -fx-border-width: 2;");
+            btnConferma.setDisable(false); // Riabilita il pulsante
         }
     }
 

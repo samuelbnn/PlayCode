@@ -42,8 +42,8 @@ public class LeggiCodiceController
     private final Map<String, List<Esercizio>> mostratiPerLivello = new HashMap<>();
     private int correctAnswers = 0;
     private int incorrectAnswers = 0;
-    private final Map<String, List<String>> statoTacche = new HashMap<>();
-    private final Set<String> livelliCompletati = new HashSet<>();
+    private final Map<String, List<String>> statoTacche = new HashMap<>(); // Mappa per memorizzare lo stato delle tacche
+    private final Set<String> livelliCompletati = new HashSet<>(); // Traccia i livelli completati
 
     private static final String titolo = "Leggi il codice";
     private enum Grado { PRINCIPIANTE, INTERMEDIO, AVANZATO }
@@ -59,10 +59,10 @@ public class LeggiCodiceController
 
         caricaDomande();
         caricaProgresso();
-        inizializzaStatoTacche();
+        inizializzaStatoTacche(); // Inizializza lo stato delle tacche
         mostraDomandaCasuale();
         aggiornaStileLivelli();
-        aggiornaTacche();
+        aggiornaTacche(); // Aggiorna la visualizzazione delle tacche per tutti i livelli
     }
 
     private void inizializzaStatoTacche() 
@@ -355,13 +355,14 @@ public class LeggiCodiceController
             return;
         }
 
+        // Check if all tacchette are filled with "G" or "R"
         List<String> tacchette = statoTacche.getOrDefault(livelloCorrente, new ArrayList<>());
         if (tacchette.stream().allMatch(t -> t.equals("G") || t.equals("R"))) 
         {
             feedbackLabel.setText("Hai già completato il livello!");
             feedbackLabel.setStyle("-fx-text-fill: blue;");
             feedbackLabel.setVisible(true);
-            livelliCompletati.add(livelloCorrente);
+            livelliCompletati.add(livelloCorrente); // Mark the level as completed
             return;
         }
 
@@ -382,9 +383,11 @@ public class LeggiCodiceController
         codiceArea.setText(esercizioCorrente.codice);
         consegnaLabel.setText(esercizioCorrente.domanda);
         
+        // Mescola le risposte
         List<String> risposteMischiate = new ArrayList<>(List.of(esercizioCorrente.risposte));
         Collections.shuffle(risposteMischiate);
         
+        // Imposta le risposte mescolate sui RadioButton
         risposta1.setText(risposteMischiate.get(0));
         risposta2.setText(risposteMischiate.get(1));
         risposta3.setText(risposteMischiate.get(2));
@@ -401,7 +404,8 @@ public class LeggiCodiceController
         feedbackLabel.setStyle("-fx-text-fill: blue;");
         feedbackLabel.setVisible(true);
 
-        salvaProgresso();
+        //Salvataggio del progresso alla chiusura del livello
+        ProgressManager.saveProgress(titolo, statoTacche);
 
         switch (livelloCorrente) 
         {
@@ -468,6 +472,8 @@ public class LeggiCodiceController
     @FXML
     private void confermaRisposta(ActionEvent event) 
     {
+        btnConferma.setDisable(true); // Disabilita il pulsante per evitare clic multipli
+
         RadioButton selezionata = (RadioButton) gruppoRisposte.getSelectedToggle();
 
         if (selezionata == null) 
@@ -475,6 +481,7 @@ public class LeggiCodiceController
             feedbackLabel.setText("Seleziona una risposta!");
             feedbackLabel.setStyle("-fx-text-fill: red;");
             feedbackLabel.setVisible(true);
+            btnConferma.setDisable(false); // Riabilita il pulsante
             return;
         }
 
@@ -490,8 +497,8 @@ public class LeggiCodiceController
             if (!domanda.isAnswered) 
             {
                 correctAnswers++;
-                aggiornaColoreTacca(true);
-                domanda.isAnswered = true;
+                aggiornaColoreTacca(true); // Colora tacca verde
+                domanda.isAnswered = true; // Segna la domanda come già risolta
             }
 
             codiceArea.setStyle("-fx-border-color: green; -fx-border-width: 2;");
@@ -505,6 +512,7 @@ public class LeggiCodiceController
                 javafx.application.Platform.runLater(() -> {
                     codiceArea.setStyle("");
                     mostraDomandaCasuale();
+                    btnConferma.setDisable(false); // Riabilita il pulsante
                 });
             }).start();
         } 
@@ -514,112 +522,45 @@ public class LeggiCodiceController
             feedbackLabel.setStyle("-fx-text-fill: red;");
             feedbackLabel.setVisible(true);
 
-            if (!domanda.isAnswered) 
+            if (!domanda.isAnswered) // Colora la tacca solo alla prima risposta
             {
                 incorrectAnswers++;
-                aggiornaColoreTacca(false);
-                domanda.isAnswered = true;
+                aggiornaColoreTacca(false); // Colora tacca rossa
+                domanda.isAnswered = true; // Segna la domanda come già risolta
             }
 
             codiceArea.setStyle("-fx-border-color: red; -fx-border-width: 2;");
+            btnConferma.setDisable(false); // Riabilita il pulsante
         }
     }
 
     private void salvaRisultato() 
     {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(Costanti.PATH_FILE_RISULTATI, true))) 
-        {
             String utente = Session.getCurrentUser();
-            String data = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            writer.printf("%s,%s,%d,%s\n", utente, titolo, punteggio, data);
+        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+        // Build the result entry for all levels
+        StringBuilder resultEntry = new StringBuilder(utente);
+        resultEntry.append(",["+ titolo + " ");
+
+        for (String livello : List.of("Principiante", "Intermedio", "Avanzato")) 
+                {
+            List<String> tacche = statoTacche.getOrDefault(livello, new ArrayList<>());
+            long correctAnswers = tacche.stream().filter(t -> t.equals("G")).count();
+            resultEntry.append(String.format(" (%s; %d;%s)", livello, correctAnswers, timestamp));
+        }
+
+        resultEntry.append("]");
+
+        // Append the result to the risultati.csv file
+        try (PrintWriter writer = new PrintWriter(new FileWriter(Costanti.PATH_FILE_RISULTATI, true))) 
+            {
+            writer.println(resultEntry.toString());
         } 
         catch (IOException e) 
         {
             e.printStackTrace();
         }
-    }
-
-    private void salvaProgresso() 
-    {
-        String utente = Session.getCurrentUser();
-        StringBuilder progressData = new StringBuilder();
-
-        progressData.append(" {" + titolo + "");
-        progressData.append(" [Principiante (").append(String.join(";", convertToRG(statoTacche.getOrDefault("Principiante", new ArrayList<>())))).append(")]");
-        progressData.append(" [Intermedio (").append(String.join(";", convertToRG(statoTacche.getOrDefault("Intermedio", new ArrayList<>())))).append(")]");
-        progressData.append(" [Avanzato (").append(String.join(";", convertToRG(statoTacche.getOrDefault("Avanzato", new ArrayList<>())))).append(")]");
-        progressData.append("},");
-
-        List<String> updatedLines = new ArrayList<>();
-        boolean userFound = false;
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(Costanti.PATH_FILE_PROGRESSI))) 
-        {
-            String line;
-            while ((line = reader.readLine()) != null) 
-            {
-                if (line.startsWith(utente + ",")) 
-                {
-                    int closingBraceIndex = line.lastIndexOf("}");
-                    if (closingBraceIndex != -1) 
-                    {
-                        String updatedLine = line.substring(0, closingBraceIndex) + progressData + line.substring(closingBraceIndex);
-                        updatedLines.add(updatedLine);
-                    } 
-                    else 
-                    {
-                        updatedLines.add(line);
-                    }
-                    userFound = true;
-                } 
-                else 
-                {
-                    updatedLines.add(line);
-                }
-            }
-        } 
-        catch (IOException e) 
-        {
-            System.out.println("File non trovato, verrà creato un nuovo file.");
-        }
-
-        if (!userFound) 
-        {
-            updatedLines.add(utente + "," + progressData);
-        }
-
-        try (PrintWriter writer = new PrintWriter(new FileWriter(Costanti.PATH_FILE_PROGRESSI, false))) 
-        {
-            for (String line : updatedLines) 
-            {
-                writer.println(line);
-            }
-        } 
-        catch (IOException e) 
-        {
-            e.printStackTrace();
-        }
-    }
-
-    private List<String> convertToRG(List<String> tacche) 
-    {
-        List<String> result = new ArrayList<>();
-        for (String tacca : tacche) 
-        {
-            if (tacca.contains("green")) 
-            {
-                result.add("G");
-            } 
-            else if (tacca.contains("red")) 
-            {
-                result.add("R");
-            } 
-            else 
-            {
-                result.add("");
-            }
-        }
-        return result;
     }
 
     private void caricaProgresso() 
@@ -627,6 +568,7 @@ public class LeggiCodiceController
         String utente = Session.getCurrentUser();
         Map<String, List<String>> loadedProgress = ProgressManager.loadProgress(utente, titolo);
 
+        // Convert R (red) or G (green) back to styles
         statoTacche.put("Principiante", translateTacche(loadedProgress.getOrDefault("Principiante", new ArrayList<>()), 5));
         statoTacche.put("Intermedio", translateTacche(loadedProgress.getOrDefault("Intermedio", new ArrayList<>()), 5));
         statoTacche.put("Avanzato", translateTacche(loadedProgress.getOrDefault("Avanzato", new ArrayList<>()), 5));
@@ -645,12 +587,14 @@ public class LeggiCodiceController
         {
             livelliCompletati.add("Avanzato");
 
+            // Show pop-up for completion
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Congratulazioni");
             alert.setHeaderText(null);
             alert.setContentText("Hai completato tutti i livelli!");
             alert.showAndWait();
 
+            // Prevent entry into the "Avanzato" level
             livelloCorrente = null;
             feedbackLabel.setText("Hai completato tutti i livelli! Complimenti!");
             feedbackLabel.setStyle("-fx-text-fill: green;");
@@ -658,6 +602,7 @@ public class LeggiCodiceController
             btnConferma.setDisable(true);
         }
 
+        // Debug: Print loaded progress for verification
         System.out.println("Progress loaded for user: " + utente);
         System.out.println("Principiante: " + statoTacche.get("Principiante"));
         System.out.println("Intermedio: " + statoTacche.get("Intermedio"));
@@ -684,9 +629,9 @@ public class LeggiCodiceController
         }
         while (translatedTacche.size() < expectedSize) 
         {
-            translatedTacche.add("");
+            translatedTacche.add(""); // Add empty entries if missing
         }
-        return translatedTacche.subList(0, expectedSize);
+        return translatedTacche.subList(0, expectedSize); // Ensure the list is trimmed to the expected size
     }
 
     private boolean isProgressoValido(String[] parts, String utente) 
@@ -699,9 +644,9 @@ public class LeggiCodiceController
         List<String> tacche = new ArrayList<>(Arrays.asList(taccheString.split(";")));
         while (tacche.size() < expectedSize) 
         {
-            tacche.add("");
+            tacche.add(""); // Aggiungi tacche vuote se mancano
         }
-        return tacche.subList(0, expectedSize);
+        return tacche.subList(0, expectedSize); // Troncamento se ci sono più tacche del previsto
     }
 
     @FXML

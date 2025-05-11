@@ -1,33 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
 
 <BorderPane fx:controller="application.CompletaCodiceController"
-            xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml"
+            xmlns="http://javafx.com/javafx/8"
             stylesheets="@style.css"
-            prefWidth="1000" prefHeight="720"> <!-- Spazio totale per rispettare il layout -->
+            prefWidth="1000" prefHeight="720">
 
+    <!-- CONTENUTO CENTRALE -->
     <center>
-        <VBox fx:id="contenitoreCentrale" styleClass="contenitore-centrale" alignment="CENTER" spacing="20">
+        <VBox fx:id="contenitoreCentrale" alignment="CENTER" spacing="20" styleClass="contenitore-centrale">
             
             <!-- Logo -->
-            <ImageView fx:id="logo" fitHeight="200" fitWidth="200" preserveRatio="true">
+            <ImageView fx:id="logo" fitHeight="120" fitWidth="120" preserveRatio="true">
                 <image><Image url="@img/logo.png"/></image>
             </ImageView>
 
             <!-- Pulsanti livello -->
-            <HBox spacing="0" alignment="CENTER" styleClass="level-buttons">
+            <HBox spacing="20" alignment="CENTER" styleClass="level-buttons">
+                <VBox alignment="CENTER">
                 <Button fx:id="btnPrincipiante" text="Principiante" onAction="#vaiALivelloPrincipiante" styleClass="livello-btn"/>
+                    <HBox fx:id="tacchePrincipiante" spacing="5" alignment="CENTER">
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                    </HBox>
+                </VBox>
+                <VBox alignment="CENTER">
                 <Button fx:id="btnIntermedio" text="Intermedio" onAction="#vaiALivelloIntermedio" styleClass="livello-btn"/>
+                    <HBox fx:id="taccheIntermedio" spacing="5" alignment="CENTER">
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                    </HBox>
+                </VBox>
+                <VBox alignment="CENTER">
                 <Button fx:id="btnAvanzato" text="Avanzato" onAction="#vaiALivelloAvanzato" styleClass="livello-btn"/>
+                    <HBox fx:id="taccheAvanzato" spacing="5" alignment="CENTER">
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                        <Region styleClass="tacca" prefWidth="30" prefHeight="10"/>
+                    </HBox>
+                </VBox>
             </HBox>
-
-            <!-- Barra di progresso -->
-            <ProgressBar fx:id="progressBar" styleClass="progress-bar" prefWidth="600"/>
 
             <!-- Titolo -->
             <Label fx:id="titoloLabel" styleClass="titolo"/>
@@ -39,12 +65,18 @@
             <Label fx:id="consegnaLabel" wrapText="true" styleClass="consegna"/>
 
             <!-- Campo risposta -->
-            <TextField fx:id="campoRisposta" promptText="Scrivi la tua risposta qui..."/>
+            <TextField fx:id="rispostaTextField" promptText="Scrivi la tua risposta qui..." visible="false"/>
+
+            <!-- Risposte RadioButton -->
+            <RadioButton fx:id="risposta1" text="Risposta 1" visible="false"/>
+            <RadioButton fx:id="risposta2" text="Risposta 2" visible="false"/>
+            <RadioButton fx:id="risposta3" text="Risposta 3" visible="false"/>
+            <RadioButton fx:id="risposta4" text="Risposta 4" visible="false"/>
 
             <!-- Feedback -->
             <Label fx:id="feedbackLabel" styleClass="feedback"/>
 
-            <!-- Bottoni -->
+            <!-- Bottoni azione -->
             <HBox spacing="20" alignment="CENTER">
                 <Button fx:id="btnConferma" text="Conferma" onAction="#confermaRisposta" styleClass="btn-conferma"/>
                 <Button fx:id="btnEsci" text="Esci" onAction="#tornaAlMenu" styleClass="btn-neutro"/>
