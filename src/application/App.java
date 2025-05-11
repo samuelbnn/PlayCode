@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class App extends Application 
@@ -15,6 +16,8 @@ public class App extends Application
         {
             System.out.println("Carico schermata iniziale...");
             Parent root = FXMLLoader.load(App.class.getResource(Costanti.PATH_FXML_HOMEPAGE));
+            Image image = new Image("application/fxml/img/logo.png");
+            primaryStage.getIcons().add(image);
             System.out.println("FXML caricato!");
             Scene scene = new Scene(root);
             primaryStage.setTitle(Costanti.APP_NAME);
