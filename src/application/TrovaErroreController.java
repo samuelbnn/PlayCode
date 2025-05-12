@@ -185,6 +185,8 @@ public class TrovaErroreController
 
         //Salvataggio del progresso alla chiusura del livello
         ProgressManager.saveProgress(titolo, statoTacche);
+        salvaRisultato();
+        
 
         switch (livelloCorrente) 
         {
@@ -195,7 +197,6 @@ public class TrovaErroreController
                 feedbackLabel.setStyle("-fx-text-fill: green;");
                 feedbackLabel.setVisible(true);
                 btnConferma.setDisable(true);
-                salvaRisultato();
                 return;
             }
         }
@@ -315,31 +316,7 @@ public class TrovaErroreController
 
     private void salvaRisultato() 
     {
-        String utente = Session.getCurrentUser();
-        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-
-        // Build the result entry for all levels
-        StringBuilder resultEntry = new StringBuilder(utente);
-        resultEntry.append(",["+ titolo + " ");
-
-        for (String livello : List.of("Principiante", "Intermedio", "Avanzato")) 
-        {
-            List<String> tacche = statoTacche.getOrDefault(livello, new ArrayList<>());
-            long correctAnswers = tacche.stream().filter(t -> t.equals("G")).count();
-            resultEntry.append(String.format(" (%s; %d;%s)", livello, correctAnswers, timestamp));
-        }
-
-        resultEntry.append("]");
-
-        // Append the result to the risultati.csv file
-        try (PrintWriter writer = new PrintWriter(new FileWriter(Costanti.PATH_FILE_RISULTATI, true))) 
-        {
-            writer.println(resultEntry.toString());
-        } 
-        catch (IOException e) 
-        {
-            e.printStackTrace();
-        }
+        ProgressManager.salvaRisultatoCSV(titolo, livelloCorrente);
     }
 
     private void caricaProgresso() 

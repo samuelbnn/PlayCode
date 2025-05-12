@@ -1,6 +1,12 @@
 package application;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -189,4 +195,177 @@ public class ProgressManager
         }
         return result.toString().replaceAll(";$", ""); // Remove trailing semicolon
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public static void salvaRisultatoCSV(String esercizio, String livelloCorrente) {
+    String utente    = Session.getCurrentUser();
+    String timestamp = LocalDateTime.now()
+                           .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+    // 1) Calcola i count di G dai progressi:
+    int countPrincipiante = 0, countIntermedio = 0, countAvanzato = 0;
+    try (Scanner sc = new Scanner(new File(Costanti.PATH_FILE_PROGRESSI))) {
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            if (!line.startsWith(utente + ",")) continue;
+
+            int start = line.indexOf("{" + esercizio);
+            if (start < 0) break;
+            int end   = line.indexOf("}", start) + 1;
+            String block = line.substring(start, end);
+
+            Map<String, List<String>> prog = ProgressManager.parseProgressi(block);
+            countPrincipiante = (int) prog.get("Principiante").stream().filter("G"::equals).count();
+            countIntermedio   = (int) prog.get("Intermedio")  .stream().filter("G"::equals).count();
+            countAvanzato     = (int) prog.get("Avanzato")    .stream().filter("G"::equals).count();
+            break;
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+        return;
+    }
+
+    // 2) Prepara la nuova tupla solo per il livello corrente:
+    String nuovaTupla;
+    switch (livelloCorrente) {
+        case "Principiante":
+            nuovaTupla = String.format("(Principiante;%d;%s)", countPrincipiante, timestamp);
+            break;
+        case "Intermedio":
+            nuovaTupla = String.format("(Intermedio;%d;%s)",   countIntermedio,   timestamp);
+            break;
+        case "Avanzato":
+            nuovaTupla = String.format("(Avanzato;%d;%s)",     countAvanzato,     timestamp);
+            break;
+        default:
+            throw new IllegalArgumentException("Livello non valido: " + livelloCorrente);
+    }
+
+    // 3) Leggi e modifica risultati.csv in memoria
+    Path path = Paths.get(Costanti.PATH_FILE_RISULTATI);
+    List<String> lines;
+    try {
+        lines = Files.exists(path)
+              ? Files.readAllLines(path, StandardCharsets.UTF_8)
+              : new ArrayList<>();
+    } catch (IOException e) {
+        e.printStackTrace();
+        return;
+    }
+
+    boolean userFound = false;
+    String esercizioEsc = Pattern.quote(esercizio);
+    // regex per trovare il blocco esatto di questo esercizio, incluse le tre tuple
+    Pattern blockPattern = Pattern.compile(
+        "(\\[" + esercizioEsc + "\\s*)(\\(Principiante;[^)]+\\))?\\s*(\\(Intermedio;[^)]+\\))?\\s*(\\(Avanzato;[^)]+\\))?\\s*(\\])"
+    );
+
+    for (int i = 0; i < lines.size(); i++) {
+        String row = lines.get(i);
+        if (!row.startsWith(utente + ",")) continue;
+
+        userFound = true;
+        Matcher m = blockPattern.matcher(row);
+        if (m.find()) {
+            // Ensure groups are not null before accessing them
+            String p1 = m.group(1);
+            String tP = livelloCorrente.equals("Principiante") && m.group(2) != null ? nuovaTupla : (m.group(2) != null ? m.group(2) : "(Principiante;0;" + timestamp + ")");
+            String tI = livelloCorrente.equals("Intermedio") && m.group(3) != null ? nuovaTupla : (m.group(3) != null ? m.group(3) : "(Intermedio;0;" + timestamp + ")");
+            String tA = livelloCorrente.equals("Avanzato") && m.group(4) != null ? nuovaTupla : (m.group(4) != null ? m.group(4) : "(Avanzato;0;" + timestamp + ")");
+            String p6 = m.group(5);
+
+            String nuovoBlock = p1 + tP + " " + tI + " " + tA + " " + p6;
+            String nuovaRiga = m.replaceFirst(Matcher.quoteReplacement(nuovoBlock));
+            lines.set(i, nuovaRiga);
+        } else {
+            // If no block is found, append a new one
+            String fallback = String.format(",[%s %s %s %s]", 
+                esercizio, 
+                nuovaTupla,
+                livelloCorrente.equals("Principiante")
+                    ? "(Intermedio;0;" + timestamp + ") (Avanzato;0;" + timestamp + ")"
+                    : livelloCorrente.equals("Intermedio")
+                        ? "(Principiante;0;" + timestamp + ") " + nuovaTupla + " (Avanzato;0;" + timestamp + ")"
+                        : "(Principiante;0;" + timestamp + ") (Intermedio;0;" + timestamp + ") " + nuovaTupla,
+                ""
+            );
+            lines.set(i, row + fallback);
+        }
+        break;
+    }
+
+    if (!userFound) {
+        // Nuovo utente: crea riga da zero
+        lines.add(utente + String.format(",[%s (Principiante;%d;%s) (Intermedio;%d;%s) (Avanzato;%d;%s)]",
+            esercizio,
+            countPrincipiante, livelloCorrente.equals("Principiante") ? timestamp : timestamp,
+            countIntermedio,   livelloCorrente.equals("Intermedio")   ? timestamp : timestamp,
+            countAvanzato,     livelloCorrente.equals("Avanzato")     ? timestamp : timestamp
+        ));
+    }
+
+    // 4) Riscrivi il file
+    try {
+        Files.write(path, lines, StandardCharsets.UTF_8);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
