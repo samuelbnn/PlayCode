@@ -23,10 +23,6 @@ public class CompletaCodiceController
     @FXML private Label feedbackLabel;
     @FXML private Button btnConferma;
     @FXML private Button btnEsci;
-    @FXML private RadioButton risposta1;
-    @FXML private RadioButton risposta2;
-    @FXML private RadioButton risposta3;
-    @FXML private RadioButton risposta4;
     @FXML private HBox tacchePrincipiante;
     @FXML private HBox taccheIntermedio;
     @FXML private HBox taccheAvanzato;
@@ -51,20 +47,7 @@ public class CompletaCodiceController
 
     @FXML
     public void initialize() 
-    {
-        // Ensure all FXML elements are properly initialized
-        assert risposta1 != null : "fx:id 'risposta1' was not injected: check your FXML file.";
-        assert risposta2 != null : "fx:id 'risposta2' was not injected: check your FXML file.";
-        assert risposta3 != null : "fx:id 'risposta3' was not injected: check your FXML file.";
-        assert risposta4 != null : "fx:id 'risposta4' was not injected: check your FXML file.";
-        assert rispostaTextField != null : "fx:id 'rispostaTextField' was not injected: check your FXML file.";
-
-        gruppoRisposte = new ToggleGroup();
-        risposta1.setToggleGroup(gruppoRisposte);
-        risposta2.setToggleGroup(gruppoRisposte);
-        risposta3.setToggleGroup(gruppoRisposte);
-        risposta4.setToggleGroup(gruppoRisposte);
-
+    {        
         rispostaTextField.setVisible(false); // Nasconde il campo di testo inizialmente
 
         caricaDomande();
@@ -108,23 +91,26 @@ public class CompletaCodiceController
     private void caricaDomande() 
     {
         eserciziPerLivello.put("Principiante", new ArrayList<>(List.of(
-            new Esercizio(titolo, Grado.PRINCIPIANTE, "public int somma(int a, int b) {\\n    // manca il return\\n}", "Completa la funzione per restituire la somma di a e b", new String[]{"return a + b;"}, 0),
-            new Esercizio(titolo, Grado.PRINCIPIANTE, "for(int i = 0; i < 5; i++) {\\n    // manca la stampa\\n}", "Completa il ciclo per stampare i", new String[]{"System.out.println(i);"}, 0),
+            new Esercizio(titolo, Grado.PRINCIPIANTE, "public int somma(int a, int b) {\n    // manca il return\n}", "Completa la funzione per restituire la somma di a e b", new String[]{"return a + b;"}, 0),
+            new Esercizio(titolo, Grado.PRINCIPIANTE, "for(int i = 0; i < 5; i++) {\n    // manca la stampa\n}", "Completa il ciclo per stampare i", new String[]{"System.out.println(i);"}, 0),
             new Esercizio(titolo, Grado.PRINCIPIANTE, "System.out.println(_____);", "Completa la stampa del messaggio 'Ciao mondo'", new String[]{"\"Ciao mondo\""}, 0),
-            new Esercizio(titolo, Grado.PRINCIPIANTE, "if (x > 0) {\\n    _____\\n}", "Stampa 'positivo' se x è maggiore di 0", new String[]{"System.out.println(\"positivo\");"}, 0),
-            new Esercizio(titolo, Grado.PRINCIPIANTE, "int numero;\\n_____", "Assegna 10 alla variabile numero", new String[]{"numero = 10;"}, 0)
+            new Esercizio(titolo, Grado.PRINCIPIANTE, "if (x > 0) {\n    _____\n}", "Stampa 'positivo' se x è maggiore di 0", new String[]{"System.out.println(\"positivo\");"}, 0),
+            new Esercizio(titolo, Grado.PRINCIPIANTE, "int numero;\n_____", "Assegna 10 alla variabile numero", new String[]{"numero = 10;"}, 0)
         )));
 
         eserciziPerLivello.put("Intermedio", new ArrayList<>(List.of(
-            new Esercizio(titolo, Grado.INTERMEDIO, "if(nome.equals(\\\"Mario\\\")) {\\n    // manca azione\\n}", "Aggiungi il messaggio di benvenuto", new String[]{"System.out.println(\"Benvenuto Mario\");"}, 0),
-            new Esercizio(titolo, Grado.INTERMEDIO, "int somma = 0;\\nfor (int i = 0; i < 5; i++) {\\n    _____\\n}", "Aggiungi i alla somma", new String[]{"somma += i;"}, 0),
-            new Esercizio(titolo, Grado.INTERMEDIO, "String parola = \\\"ciao\\\";\\nif (_____) {\\n    System.out.println(\\\"ok\\\");\\n}", "Controlla che parola sia uguale a 'ciao'", new String[]{"parola.equals(\"ciao\")"}, 0)
+            new Esercizio(titolo, Grado.INTERMEDIO, "if(nome.equals(\\\"Mario\\\")) {\n    // manca azione\n}", "Aggiungi il messaggio di benvenuto", new String[]{"System.out.println(\"Benvenuto Mario\");"}, 0),
+            new Esercizio(titolo, Grado.INTERMEDIO, "int somma = 0;\\nfor (int i = 0; i < 5; i++) {\n    _____\\n}", "Aggiungi i alla somma", new String[]{"somma += i;"}, 0),
+            new Esercizio(titolo, Grado.INTERMEDIO, "String parola = \\\"ciao\\\";\\nif (_____) {\n    System.out.println(\\\"ok\\\");\n}", "Controlla che parola sia uguale a 'ciao'", new String[]{"parola.equals(\"ciao\")"}, 0),
+            new Esercizio(titolo, Grado.INTERMEDIO, "String[] frutti = {\"mela\", \"banana\", \"kiwi\"};\nfor(String frutto : frutti) {\n    // manca la stampa\n}", "Stampa ogni frutto dell'array", new String[]{"System.out.println(frutto);"}, 0),
+            new Esercizio(titolo, Grado.INTERMEDIO, "int[] numeri = {2, 4, 6};\nint media = 0;\nfor (int n : numeri) {\n    _____\n}", "Aggiungi n alla media", new String[]{"media += n;"}, 0)
         )));
-
         eserciziPerLivello.put("Avanzato", new ArrayList<>(List.of(
-            new Esercizio(titolo, Grado.AVANZATO, "int[] numeri = {1, 2, 3};\\nfor(int i = 0; i < numeri.length; i++) {\\n    // manca il controllo\\n}", "Mostra solo i numeri maggiori di 1", new String[]{"if(numeri[i] > 1) System.out.println(numeri[i]);"},0),
-            new Esercizio(titolo, Grado.AVANZATO, "public int fattoriale(int n) {\\n    if (n == 0) return 1;\\n    else _____\\n}", "Completa la ricorsione per il fattoriale", new String[]{"return n * fattoriale(n - 1);"}, 0),
-            new Esercizio(titolo, Grado.AVANZATO, "int[] numeri = {1,2,3,4};\\nfor (int n : numeri) {\\n    if (n % 2 == 0) {\\n        _____\\n    }\\n}", "Stampa solo i numeri pari", new String[]{"System.out.println(n);"}, 0)
+            new Esercizio(titolo, Grado.AVANZATO, "int[] numeri = {1, 2, 3};\\nfor(int i = 0; i < numeri.length; i++) {\n    // manca il controllo\n}", "Mostra solo i numeri maggiori di 1", new String[]{"if(numeri[i] > 1) System.out.println(numeri[i]);"},0),
+            new Esercizio(titolo, Grado.AVANZATO, "public int fattoriale(int n) {\\n    if (n == 0) return 1;\n    else _____\n}", "Completa la ricorsione per il fattoriale", new String[]{"return n * fattoriale(n - 1);"}, 0),
+            new Esercizio(titolo, Grado.AVANZATO, "int[] numeri = {1,2,3,4};\\nfor (int n : numeri) {\\n    if (n % 2 == 0) {\n        _____\n    }\n}", "Stampa solo i numeri pari", new String[]{"System.out.println(n);"}, 0),
+            new Esercizio(titolo, Grado.AVANZATO, "Map<String, Integer> punteggi = new HashMap<>();\npunteggi.put(\"Alice\", 10);\npunteggi.put(\"Bob\", 8);\n// stampa punteggio di Alice", "Accedi al valore associato ad 'Alice'", new String[]{"System.out.println(punteggi.get(\"Alice\"));"}, 0),
+            new Esercizio(titolo, Grado.AVANZATO, "List<String> nomi = Arrays.asList(\"Luca\", \"Marco\");\n// stampa la lista", "Stampa tutta la lista di nomi", new String[]{"System.out.println(nomi);"}, 0)
         )));
 
         eserciziPerLivello.forEach((livello, lista) -> mostratiPerLivello.put(livello, new ArrayList<>()));
@@ -170,11 +156,6 @@ public class CompletaCodiceController
         
         if (esercizioCorrente.risposte.length == 1) 
         {
-            // Se l'esercizio richiede una risposta scritta
-            risposta1.setVisible(false);
-            risposta2.setVisible(false);
-            risposta3.setVisible(false);
-            risposta4.setVisible(false);
             rispostaTextField.setVisible(true);
             rispostaTextField.clear();
         } 
@@ -186,24 +167,9 @@ public class CompletaCodiceController
                 throw new IllegalStateException("L'esercizio richiede almeno 4 risposte per i RadioButton.");
             }
 
-            risposta1.setVisible(true);
-            risposta2.setVisible(true);
-            risposta3.setVisible(true);
-            risposta4.setVisible(true);
-            rispostaTextField.setVisible(false);
-
-            // Mescola le risposte
-            List<String> risposteMischiate = new ArrayList<>(List.of(esercizioCorrente.risposte));
-            Collections.shuffle(risposteMischiate);
-            
-            // Imposta le risposte mescolate sui RadioButton
-            risposta1.setText(risposteMischiate.get(0));
-            risposta2.setText(risposteMischiate.get(1));
-            risposta3.setText(risposteMischiate.get(2));
-            risposta4.setText(risposteMischiate.get(3));
+            rispostaTextField.setVisible(false);            
         }
 
-        gruppoRisposte.selectToggle(null);
         feedbackLabel.setVisible(false);
     }
 
@@ -216,6 +182,7 @@ public class CompletaCodiceController
 
         //Salvataggio del progresso alla chiusura del livello
         ProgressManager.saveProgress(titolo, statoTacche);
+        salvaRisultato();
 
         switch (livelloCorrente) 
         {
@@ -223,7 +190,7 @@ public class CompletaCodiceController
             case "Intermedio" -> livelloCorrente = "Avanzato";
             case "Avanzato" -> {
                 feedbackLabel.setText("Hai completato tutti i livelli! Complimenti!");
-                feedbackLabel.setStyle("-fx-text-fill: green;");
+                feedbackLabel.setStyle("-fx-text-fill: #2ECC71;");
                 feedbackLabel.setVisible(true);
                 btnConferma.setDisable(true);
                 salvaRisultato();
@@ -238,7 +205,7 @@ public class CompletaCodiceController
 
     private void aggiornaColoreTacca(boolean rispostaCorretta) 
     {
-        String colore = rispostaCorretta ? "green" : "red";
+        String colore = rispostaCorretta ? "#2ECC71" : "#E74C3C";
 
         switch (livelloCorrente) 
         {
@@ -280,130 +247,67 @@ public class CompletaCodiceController
     }
 
     @FXML
-    private void confermaRisposta(ActionEvent event) 
-    {
-        btnConferma.setDisable(true); // Disabilita il pulsante per evitare clic multipli
+    private void confermaRisposta(ActionEvent event) {
+        btnConferma.setDisable(true); // Evita clic multipli
 
-        if (esercizioCorrente.risposte.length == 1) 
-        {
-            // Gestione per risposte scritte
-            String rispostaUtente = rispostaTextField.getText().trim();
-            if (rispostaUtente.isEmpty()) 
-            {
-                feedbackLabel.setText("Inserisci una risposta!");
-                feedbackLabel.setStyle("-fx-text-fill: red;");
-                feedbackLabel.setVisible(true);
-                btnConferma.setDisable(false);
-                return;
-            }
+        String rispostaUtente = rispostaTextField.getText().replaceAll("\\s+", "");
+        String rispostaCorretta = esercizioCorrente.risposte[esercizioCorrente.indiceCorretta].replaceAll("\\s+", "");
 
-            if (rispostaUtente.equals(esercizioCorrente.risposte[0])) 
-            {
-                feedbackLabel.setText("Corretto!");
-                feedbackLabel.setStyle("-fx-text-fill: green;");
-                feedbackLabel.setVisible(true);
+        if (rispostaUtente.isEmpty()) {
+            feedbackLabel.setText("Inserisci una risposta!");
+            feedbackLabel.setStyle("-fx-text-fill: #E74C3C;");
+            feedbackLabel.setVisible(true);
+            btnConferma.setDisable(false); // Riabilita pulsante
+            return;
+        }
+
+        Esercizio domanda = esercizioCorrente;
+
+        if (rispostaUtente.equalsIgnoreCase(rispostaCorretta)) {
+            feedbackLabel.setText("Corretto!");
+            feedbackLabel.setStyle("-fx-text-fill: #2ECC71;");
+            feedbackLabel.setVisible(true);
+
+            if (!domanda.isAnswered) {
                 correctAnswers++;
-                aggiornaColoreTacca(true);
-            } 
-            else 
-            {
-                feedbackLabel.setText("Sbagliato! Riprova.");
-                feedbackLabel.setStyle("-fx-text-fill: red;");
-                feedbackLabel.setVisible(true);
+                aggiornaColoreTacca(true); // Colora tacca verde
+                domanda.isAnswered = true; // Segna la domanda come risolta
+            }
+
+            codiceArea.setStyle("-fx-border-color: #2ECC71; -fx-border-width: 2;");
+
+            new Thread(() -> {
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                javafx.application.Platform.runLater(() -> {
+                    codiceArea.setStyle("");
+                    rispostaTextField.clear();
+                    mostraDomandaCasuale();
+                    btnConferma.setDisable(false); // Riabilita il pulsante
+                });
+            }).start();
+        } else {
+            feedbackLabel.setText("Sbagliato! Riprova.");
+            feedbackLabel.setStyle("-fx-text-fill: #E74C3C;");
+            feedbackLabel.setVisible(true);
+
+            if (!domanda.isAnswered) {
                 incorrectAnswers++;
-                aggiornaColoreTacca(false);
-            }
-        } 
-        else 
-        {
-            RadioButton selezionata = (RadioButton) gruppoRisposte.getSelectedToggle();
-
-            if (selezionata == null) 
-            {
-                feedbackLabel.setText("Seleziona una risposta!");
-                feedbackLabel.setStyle("-fx-text-fill: red;");
-                feedbackLabel.setVisible(true);
-                btnConferma.setDisable(false); // Riabilita il pulsante
-                return;
+                aggiornaColoreTacca(false); // Colora tacca rossa
+                domanda.isAnswered = true;
             }
 
-            String rispostaSelezionata = selezionata.getText();
-            Esercizio domanda = esercizioCorrente;
-
-            if (rispostaSelezionata.equals(domanda.risposte[domanda.indiceCorretta])) 
-            {
-                feedbackLabel.setText("Corretto!");
-                feedbackLabel.setStyle("-fx-text-fill: green;");
-                feedbackLabel.setVisible(true);
-
-                if (!domanda.isAnswered) 
-                {
-                    correctAnswers++;
-                    aggiornaColoreTacca(true); // Colora tacca verde
-                    domanda.isAnswered = true; // Segna la domanda come già risolta
-                }
-
-                codiceArea.setStyle("-fx-border-color: green; -fx-border-width: 2;");
-
-                new Thread(() -> {
-                    try {
-                        Thread.sleep(1500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    javafx.application.Platform.runLater(() -> {
-                        codiceArea.setStyle("");
-                        mostraDomandaCasuale();
-                        btnConferma.setDisable(false); // Riabilita il pulsante
-                    });
-                }).start();
-            } 
-            else 
-            {
-                feedbackLabel.setText("Sbagliato! Riprova.");
-                feedbackLabel.setStyle("-fx-text-fill: red;");
-                feedbackLabel.setVisible(true);
-
-                if (!domanda.isAnswered) // Colora la tacca solo alla prima risposta
-                {
-                    incorrectAnswers++;
-                    aggiornaColoreTacca(false); // Colora tacca rossa
-                    domanda.isAnswered = true; // Segna la domanda come già risolta
-                }
-
-                codiceArea.setStyle("-fx-border-color: red; -fx-border-width: 2;");
-                btnConferma.setDisable(false); // Riabilita il pulsante
-            }
+            codiceArea.setStyle("-fx-border-color: #E74C3C; -fx-border-width: 2;");
+            btnConferma.setDisable(false); // Riabilita il pulsante
         }
     }
 
     private void salvaRisultato() 
     {
-        String utente = Session.getCurrentUser();
-        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-
-        // Build the result entry for all levels
-        StringBuilder resultEntry = new StringBuilder(utente);
-        resultEntry.append(",["+ titolo + " ");
-
-        for (String livello : List.of("Principiante", "Intermedio", "Avanzato")) 
-        {
-            List<String> tacche = statoTacche.getOrDefault(livello, new ArrayList<>());
-            long correctAnswers = tacche.stream().filter(t -> t.equals("G")).count();
-            resultEntry.append(String.format(" (%s; %d;%s)", livello, correctAnswers, timestamp));
-        }
-
-        resultEntry.append("]");
-
-        // Append the result to the risultati.csv file
-        try (PrintWriter writer = new PrintWriter(new FileWriter(Costanti.PATH_FILE_RISULTATI, true))) 
-        {
-            writer.println(resultEntry.toString());
-        } 
-        catch (IOException e) 
-        {
-            e.printStackTrace();
-        }
+        ProgressManager.salvaRisultatoCSV(titolo, livelloCorrente);
     }
 
     private void caricaProgresso() 
@@ -440,7 +344,7 @@ public class CompletaCodiceController
             // Prevent entry into the "Avanzato" level
             livelloCorrente = null;
             feedbackLabel.setText("Hai completato tutti i livelli! Complimenti!");
-            feedbackLabel.setStyle("-fx-text-fill: green;");
+            feedbackLabel.setStyle("-fx-text-fill: #2ECC71;");
             feedbackLabel.setVisible(true);
             btnConferma.setDisable(true);
         }
@@ -459,11 +363,11 @@ public class CompletaCodiceController
         {
             if ("G".equals(tacca)) 
             {
-                translatedTacche.add("-fx-background-color: green;");
+                translatedTacche.add("-fx-background-color: #2ECC71;");
             } 
             else if ("R".equals(tacca)) 
             {
-                translatedTacche.add("-fx-background-color: red;");
+                translatedTacche.add("-fx-background-color: #E74C3C;");
             } 
             else 
             {
@@ -526,7 +430,7 @@ public class CompletaCodiceController
         if (!livelliCompletati.contains("Principiante")) 
         {
             feedbackLabel.setText("Completa il livello Principiante prima di accedere a Intermedio!");
-            feedbackLabel.setStyle("-fx-text-fill: red;");
+            feedbackLabel.setStyle("-fx-text-fill: #E74C3C;");
             feedbackLabel.setVisible(true);
             return;
         }
@@ -549,7 +453,7 @@ public class CompletaCodiceController
         if (!livelliCompletati.contains("Intermedio")) 
         {
             feedbackLabel.setText("Completa il livello Intermedio prima di accedere a Avanzato!");
-            feedbackLabel.setStyle("-fx-text-fill: red;");
+            feedbackLabel.setStyle("-fx-text-fill: #E74C3C;");
             feedbackLabel.setVisible(true);
             return;
         }

@@ -180,11 +180,11 @@ public class ProgressManager
         StringBuilder result = new StringBuilder();
         for (String tacca : tacche) 
         {
-            if (tacca.contains("green")) 
+            if (tacca.contains("#2ECC71")) 
             {
                 result.append("G;");
             } 
-            else if (tacca.contains("red")) 
+            else if (tacca.contains("#E74C3C")) 
             {
                 result.append("R;");
             } 
