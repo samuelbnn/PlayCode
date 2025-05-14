@@ -119,10 +119,10 @@ public class MenuController
     @FXML
     private void apriScritturaOutput(ActionEvent event) 
     {
-        System.out.println("Apertura esercizio: Scrittura con Output");
+        System.out.println("Apertura esercizio: Stampa Output");
         try 
         {
-            Parent root = FXMLLoader.load(App.class.getResource(Costanti.PATH_FXML_SCRITTURAOUTPUT));
+            Parent root = FXMLLoader.load(App.class.getResource(Costanti.PATH_FXML_STAMPAOUTPUT));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();

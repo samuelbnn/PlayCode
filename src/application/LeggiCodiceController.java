@@ -406,6 +406,8 @@ public class LeggiCodiceController
 
         //Salvataggio del progresso alla chiusura del livello
         ProgressManager.saveProgress(titolo, statoTacche);
+        salvaRisultato();
+        
 
         switch (livelloCorrente) 
         {
@@ -416,7 +418,6 @@ public class LeggiCodiceController
                 feedbackLabel.setStyle("-fx-text-fill: #2ECC71;");
                 feedbackLabel.setVisible(true);
                 btnConferma.setDisable(true);
-                salvaRisultato();
                 return;
             }
         }
@@ -536,31 +537,7 @@ public class LeggiCodiceController
 
     private void salvaRisultato() 
     {
-            String utente = Session.getCurrentUser();
-        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-
-        // Build the result entry for all levels
-        StringBuilder resultEntry = new StringBuilder(utente);
-        resultEntry.append(",["+ titolo + " ");
-
-        for (String livello : List.of("Principiante", "Intermedio", "Avanzato")) 
-                {
-            List<String> tacche = statoTacche.getOrDefault(livello, new ArrayList<>());
-            long correctAnswers = tacche.stream().filter(t -> t.equals("G")).count();
-            resultEntry.append(String.format(" (%s; %d;%s)", livello, correctAnswers, timestamp));
-        }
-
-        resultEntry.append("]");
-
-        // Append the result to the risultati.csv file
-        try (PrintWriter writer = new PrintWriter(new FileWriter(Costanti.PATH_FILE_RISULTATI, true))) 
-            {
-            writer.println(resultEntry.toString());
-        } 
-        catch (IOException e) 
-        {
-            e.printStackTrace();
-        }
+        ProgressManager.salvaRisultatoCSV(titolo, livelloCorrente);
     }
 
     private void caricaProgresso() 
@@ -587,12 +564,34 @@ public class LeggiCodiceController
         {
             livelliCompletati.add("Avanzato");
 
-            // Show pop-up for completion
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            // Show pop-up for completion with custom button
+            ButtonType btnRisultati = new ButtonType("Visualizza i risultati", ButtonBar.ButtonData.OK_DONE);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Hai completato tutti i livelli!", btnRisultati);
             alert.setTitle("Congratulazioni");
             alert.setHeaderText(null);
-            alert.setContentText("Hai completato tutti i livelli!");
+            alert.getButtonTypes().setAll(btnRisultati);
             alert.showAndWait();
+
+            // Dopo il click su "Visualizza i risultati", vai a risultati.fxml usando una finestra alternativa se feedbackLabel non è in scena
+            try 
+            {
+                FXMLLoader loader = new FXMLLoader(App.class.getResource(Costanti.PATH_FXML_RISULTATI));
+                Parent root = loader.load();
+                Stage stage;
+                if (feedbackLabel != null && feedbackLabel.getScene() != null && feedbackLabel.getScene().getWindow() != null) {
+                    stage = (Stage) feedbackLabel.getScene().getWindow();
+                } else if (btnConferma != null && btnConferma.getScene() != null && btnConferma.getScene().getWindow() != null) {
+                    stage = (Stage) btnConferma.getScene().getWindow();
+                } else {
+                    stage = new Stage();
+                }
+                stage.setScene(new Scene(root));
+                stage.show();
+            } 
+            catch (IOException e) 
+            {
+                e.printStackTrace();
+            }
 
             // Prevent entry into the "Avanzato" level
             livelloCorrente = null;
