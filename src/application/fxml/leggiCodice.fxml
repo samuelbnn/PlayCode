@@ -64,8 +64,13 @@
             <!-- Consegna -->
             <Label fx:id="consegnaLabel" wrapText="true" styleClass="consegna"/>
 
-            <!-- Campo risposta -->
-            <TextField fx:id="campoRisposta" promptText="Inserisci la risposta..." styleClass="campo-risposta" maxWidth="400"/>
+            <!-- Scelte -->
+            <VBox spacing="10" alignment="CENTER_LEFT">
+                <RadioButton fx:id="risposta1" wrapText="true" styleClass="styled-radio"/>
+                <RadioButton fx:id="risposta2" wrapText="true" styleClass="styled-radio"/>
+                <RadioButton fx:id="risposta3" wrapText="true" styleClass="styled-radio"/>
+                <RadioButton fx:id="risposta4" wrapText="true" styleClass="styled-radio"/>
+            </VBox>
 
             <!-- Feedback -->
             <Label fx:id="feedbackLabel" styleClass="feedback"/>
