@@ -367,7 +367,7 @@ public class StaticCodeController
             case "Intermedio" -> livelloCorrente = "Avanzato";
             case "Avanzato" -> {
                 feedbackLabel.setText("Hai completato tutti i livelli! Complimenti!");
-                feedbackLabel.setStyle("-fx-text-fill: green;");
+                feedbackLabel.setStyle("-fx-text-fill: #2ECC71;");
                 feedbackLabel.setVisible(true);
                 btnConferma.setDisable(true);
                 salvaRisultato();
@@ -382,7 +382,7 @@ public class StaticCodeController
 
     private void aggiornaColoreTacca(boolean rispostaCorretta) 
     {
-        String colore = rispostaCorretta ? "green" : "red";
+        String colore = rispostaCorretta ? "#2ECC71" : "#E74C3C";
 
         switch (livelloCorrente) 
         {
@@ -433,7 +433,7 @@ public class StaticCodeController
         if (selezionata == null) 
         {
             feedbackLabel.setText("Seleziona una risposta!");
-            feedbackLabel.setStyle("-fx-text-fill: red;");
+            feedbackLabel.setStyle("-fx-text-fill: #E74C3C;");
             feedbackLabel.setVisible(true);
             btnConferma.setDisable(false); // Riabilita il pulsante
             return;
@@ -445,7 +445,7 @@ public class StaticCodeController
         if (rispostaSelezionata.equals(domanda.risposte[domanda.indiceCorretta])) 
         {
             feedbackLabel.setText("Corretto!");
-            feedbackLabel.setStyle("-fx-text-fill: green;");
+            feedbackLabel.setStyle("-fx-text-fill: #2ECC71;");
             feedbackLabel.setVisible(true);
 
             if (!domanda.isAnswered) 
@@ -455,7 +455,7 @@ public class StaticCodeController
                 domanda.isAnswered = true; // Segna la domanda come già risolta
             }
 
-            codiceArea.setStyle("-fx-border-color: green; -fx-border-width: 2;");
+            codiceArea.setStyle("-fx-border-color: #2ECC71; -fx-border-width: 2;");
 
             new Thread(() -> {
                 try {
@@ -473,7 +473,7 @@ public class StaticCodeController
         else 
         {
             feedbackLabel.setText("Sbagliato! Riprova.");
-            feedbackLabel.setStyle("-fx-text-fill: red;");
+            feedbackLabel.setStyle("-fx-text-fill: #E74C3C;");
             feedbackLabel.setVisible(true);
 
             if (!domanda.isAnswered) // Colora la tacca solo alla prima risposta
@@ -483,7 +483,7 @@ public class StaticCodeController
                 domanda.isAnswered = true; // Segna la domanda come già risolta
             }
 
-            codiceArea.setStyle("-fx-border-color: red; -fx-border-width: 2;");
+            codiceArea.setStyle("-fx-border-color: #E74C3C; -fx-border-width: 2;");
             btnConferma.setDisable(false); // Riabilita il pulsante
         }
     }
@@ -551,7 +551,7 @@ public class StaticCodeController
             // Prevent entry into the "Avanzato" level
             livelloCorrente = null;
             feedbackLabel.setText("Hai completato tutti i livelli! Complimenti!");
-            feedbackLabel.setStyle("-fx-text-fill: green;");
+            feedbackLabel.setStyle("-fx-text-fill: #2ECC71;");
             feedbackLabel.setVisible(true);
             btnConferma.setDisable(true);
         }
@@ -570,11 +570,11 @@ public class StaticCodeController
         {
             if ("G".equals(tacca)) 
             {
-                translatedTacche.add("-fx-background-color: green;");
+                translatedTacche.add("-fx-background-color: #2ECC71;");
             } 
             else if ("R".equals(tacca)) 
             {
-                translatedTacche.add("-fx-background-color: red;");
+                translatedTacche.add("-fx-background-color: #E74C3C;");
             } 
             else 
             {
@@ -637,7 +637,7 @@ public class StaticCodeController
         if (!livelliCompletati.contains("Principiante")) 
         {
             feedbackLabel.setText("Completa il livello Principiante prima di accedere a Intermedio!");
-            feedbackLabel.setStyle("-fx-text-fill: red;");
+            feedbackLabel.setStyle("-fx-text-fill: #E74C3C;");
             feedbackLabel.setVisible(true);
             return;
         }
@@ -660,7 +660,7 @@ public class StaticCodeController
         if (!livelliCompletati.contains("Intermedio")) 
         {
             feedbackLabel.setText("Completa il livello Intermedio prima di accedere a Avanzato!");
-            feedbackLabel.setStyle("-fx-text-fill: red;");
+            feedbackLabel.setStyle("-fx-text-fill: #E74C3C;");
             feedbackLabel.setVisible(true);
             return;
         }
