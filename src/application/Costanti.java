@@ -11,6 +11,7 @@ public class Costanti
     public static final String PATH_FXML_HOMEPAGE = "/application/fxml/homepage.fxml";
     public static final String PATH_FXML_LOGIN = "/application/fxml/login.fxml";
     public static final String PATH_FXML_MENU = "/application/fxml/menu.fxml";
+    public static final String PATH_FXML_RISULTATI = "/application/fxml/risultati.fxml";
 
     public static final String PATH_FXML_LEGGICODICE = "/application/fxml/leggiCodice.fxml";
     public static final String PATH_FXML_SCRITTURAOUTPUT = "/application/scritturaOutput.fxml";
@@ -21,4 +22,6 @@ public class Costanti
 
     // Altre costanti globali
     public static final String APP_NAME = "PlayCode";
+
+    public static final String LOGO = "application/fxml/img/logo.png";
 }
