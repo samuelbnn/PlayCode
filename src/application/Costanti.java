@@ -14,7 +14,7 @@ public class Costanti
     public static final String PATH_FXML_RISULTATI = "/application/fxml/risultati.fxml";
 
     public static final String PATH_FXML_LEGGICODICE = "/application/fxml/leggiCodice.fxml";
-    public static final String PATH_FXML_SCRITTURAOUTPUT = "/application/scritturaOutput.fxml";
+    public static final String PATH_FXML_STAMPAOUTPUT = "/application/fxml/stampaOutput.fxml";
     public static final String PATH_FXML_TROVAERRORE = "/application/fxml/trovaErrore.fxml";
     public static final String PATH_FXML_COMPLETACODICE = "/application/fxml/completaCodice.fxml";
     public static final String PATH_FXML_LINKEDLIST = "/application/fxml/linkedList.fxml";
