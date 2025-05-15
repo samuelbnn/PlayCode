@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+
+<VBox xmlns="http://javafx.com/javafx/8"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="application.DescrizioneEsercizioController"
+      spacing="15.0" alignment="CENTER"
+      stylesheets="@style.css"      
+      styleClass="popup"
+      >
+    
+    <Label fx:id="titoloLabel" styleClass="titolo-popup" wrapText="true"/>
+    
+    <Label fx:id="descrizioneArea" styleClass="testo-popup" wrapText="true"/>
+
+    <HBox spacing="10.0" alignment="CENTER">
+        <Button fx:id="iniziaButton"
+                text="Inizia"
+                onAction="#avviaEsercizio"
+                styleClass="btn-conferma"/>
+        
+        <Button fx:id="chiudiButton"
+                text="Annulla"
+                onAction="#chiudiPopup"
+                styleClass="btn-neutro"/>
+    </HBox>
+</VBox>
