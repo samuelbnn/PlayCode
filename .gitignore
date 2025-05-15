@@ -47,3 +47,6 @@ src/saves/risultati.csv
 bin/application/RisultatiController$Risultato.class
 bin/application/RisultatiController.class
 bin/application/fxml/risultati.fxml
+bin/application/StampaOutputController.class
+bin/application/StampaOutputController$Grado.class
+bin/application/fxml/stampaOutput.fxml

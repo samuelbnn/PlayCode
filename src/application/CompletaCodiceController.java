@@ -193,7 +193,6 @@ public class CompletaCodiceController
                 feedbackLabel.setStyle("-fx-text-fill: #2ECC71;");
                 feedbackLabel.setVisible(true);
                 btnConferma.setDisable(true);
-                salvaRisultato();
                 return;
             }
         }
@@ -334,12 +333,34 @@ public class CompletaCodiceController
         {
             livelliCompletati.add("Avanzato");
 
-            // Show pop-up for completion
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            // Show pop-up for completion with custom button
+            ButtonType btnRisultati = new ButtonType("Visualizza i risultati", ButtonBar.ButtonData.OK_DONE);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Hai completato tutti i livelli!", btnRisultati);
             alert.setTitle("Congratulazioni");
             alert.setHeaderText(null);
-            alert.setContentText("Hai completato tutti i livelli!");
+            alert.getButtonTypes().setAll(btnRisultati);
             alert.showAndWait();
+
+            // Dopo il click su "Visualizza i risultati", vai a risultati.fxml usando una finestra alternativa se feedbackLabel non è in scena
+            try 
+            {
+                FXMLLoader loader = new FXMLLoader(App.class.getResource(Costanti.PATH_FXML_RISULTATI));
+                Parent root = loader.load();
+                Stage stage;
+                if (feedbackLabel != null && feedbackLabel.getScene() != null && feedbackLabel.getScene().getWindow() != null) {
+                    stage = (Stage) feedbackLabel.getScene().getWindow();
+                } else if (btnConferma != null && btnConferma.getScene() != null && btnConferma.getScene().getWindow() != null) {
+                    stage = (Stage) btnConferma.getScene().getWindow();
+                } else {
+                    stage = new Stage();
+                }
+                stage.setScene(new Scene(root));
+                stage.show();
+            } 
+            catch (IOException e) 
+            {
+                e.printStackTrace();
+            }
 
             // Prevent entry into the "Avanzato" level
             livelloCorrente = null;
