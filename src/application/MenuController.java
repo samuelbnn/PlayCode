@@ -139,7 +139,7 @@ public class MenuController
                                         "Interpreta le istruzioni e scrivi l’output corretto.");
         descrController.setAzioneInizia(() -> {
             try {
-                FXMLLoader loader = new FXMLLoader(App.class.getResource(Costanti.PATH_FXML_SCRITTURAOUTPUT));
+                FXMLLoader loader = new FXMLLoader(App.class.getResource(Costanti.PATH_FXML_STAMPAOUTPUT));
                 Parent root = loader.load();
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root));
