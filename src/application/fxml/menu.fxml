@@ -34,7 +34,7 @@
                     <ProgressBar fx:id="progressBarLeggiCodice" prefWidth="250" progress="0.0"/>
                 </VBox>
                 <VBox alignment="CENTER" spacing="10" GridPane.rowIndex="0" GridPane.columnIndex="1">
-                    <Button text="Scrittura con Output" onAction="#apriScritturaOutput" prefWidth="250" prefHeight="100" styleClass="menu-button"/>
+                    <Button text="Stampa l'Output" onAction="#apriStampaOutput" prefWidth="250" prefHeight="100" styleClass="menu-button"/>
                     <ProgressBar fx:id="progressBarScritturaOutput" prefWidth="250" progress="0.0"/>
                 </VBox>
                 

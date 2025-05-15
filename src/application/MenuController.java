@@ -129,14 +129,13 @@ public class MenuController
     }
 
     @FXML
-    private void apriScritturaOutput(ActionEvent event) throws IOException {
+    private void apriStampaOutput(ActionEvent event) throws IOException {
         FXMLLoader popupLoader = new FXMLLoader(App.class.getResource("fxml/descrizione.fxml"));
         Parent popupRoot = popupLoader.load();
         DescrizioneEsercizioController descrController = popupLoader.getController();
 
-        descrController.setTitolo("Scrittura con Output");
-        descrController.setDescrizione("Prevedi l’output generato dal codice che viene eseguito." +
-                                        "Interpreta le istruzioni e scrivi l’output corretto.");
+        descrController.setTitolo("Stampa l'Output");
+        descrController.setDescrizione("Digita il codice corretto che genera l’output indicato.");
         descrController.setAzioneInizia(() -> {
             try {
                 FXMLLoader loader = new FXMLLoader(App.class.getResource(Costanti.PATH_FXML_STAMPAOUTPUT));
