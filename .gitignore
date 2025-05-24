@@ -44,6 +44,7 @@ bin/saves/risultati.csv
 src/saves/accounts.csv
 src/saves/progressi.csv
 src/saves/risultati.csv
+bin/saves/stato.csv
 bin/application/RisultatiController$Risultato.class
 bin/application/RisultatiController.class
 bin/application/fxml/risultati.fxml

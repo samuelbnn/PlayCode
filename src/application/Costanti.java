@@ -6,6 +6,7 @@ public class Costanti
     public static final String PATH_FILE_ACCOUNTS = "src/saves/accounts.csv";
     public static final String PATH_FILE_PROGRESSI = "src/saves/progressi.csv";
     public static final String PATH_FILE_RISULTATI = "src/saves/risultati.csv";
+    public static final String PATH_FILE_STATO = "src/saves/stato.csv";
 
     // Percorsi dei FXML
     public static final String PATH_FXML_HOMEPAGE = "/application/fxml/homepage.fxml";
@@ -24,4 +25,12 @@ public class Costanti
     public static final String APP_NAME = "PlayCode";
 
     public static final String LOGO = "application/fxml/img/logo.png";
+
+    // Chiavi per gli esercizi (usate in MenuController)
+    public static final String ES_TROVA_ERRORE = "Trova Errore";
+    public static final String ES_COMPLETA_CODICE = "Completa Codice";
+    public static final String ES_LINKED_LIST = "Linked List";
+    public static final String ES_STATIC_CODE = "Static Code";
+    public static final String ES_LEGGI_CODICE = "Leggi Codice";
+    public static final String ES_STAMPA_OUTPUT = "Stampa Output";    
 }

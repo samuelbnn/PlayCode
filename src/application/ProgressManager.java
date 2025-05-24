@@ -351,7 +351,69 @@ public static void salvaRisultatoCSV(String esercizio, String livelloCorrente) {
 
 
 
+public static void updateProgressBar(String titoloEsercizio, String livelloCorrente) 
+    {
+        String utente = Session.getCurrentUser();
+        String statoDaInserire = titoloEsercizio + " - " + livelloCorrente;
 
+        Path path = Paths.get(Costanti.PATH_FILE_STATO); // ad esempio "stati_livelli.csv"
+        List<String> righe;
+        try {
+            righe = Files.exists(path)
+                  ? Files.readAllLines(path, StandardCharsets.UTF_8)
+                  : new ArrayList<>();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        boolean trovatoUtente = false;
+
+        for (int i = 0; i < righe.size(); i++) 
+        {
+            String riga = righe.get(i);
+            if (!riga.startsWith(utente + ",")) continue;
+
+            trovatoUtente = true;
+
+            // Ottieni tutte le coppie già presenti
+            String[] parti = riga.split(",", 2);
+            String[] coppie = (parti.length > 1) ? parti[1].split(",") : new String[0];
+
+            List<String> nuovaLista = new ArrayList<>();
+            boolean aggiornato = false;
+
+            for (String coppia : coppie) {
+                String trim = coppia.trim();
+                if (trim.startsWith(titoloEsercizio + " - ")) {
+                    // sostituisco con il nuovo livello
+                    nuovaLista.add(statoDaInserire);
+                    aggiornato = true;
+                } else {
+                    nuovaLista.add(trim);
+                }
+            }
+
+            if (!aggiornato) {
+                nuovaLista.add(statoDaInserire);
+            }
+
+            // Ricostruisco la riga utente
+            righe.set(i, utente + "," + String.join(",", nuovaLista));
+            break;
+        }
+
+        if (!trovatoUtente) {
+            // Nuovo utente, nuova riga
+            righe.add(utente + "," + statoDaInserire);
+        }
+
+        try {
+            Files.write(path, righe, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 

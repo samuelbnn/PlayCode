@@ -6,12 +6,19 @@ import javafx.scene.Parent;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MenuController 
 {
@@ -21,19 +28,23 @@ public class MenuController
 
     @FXML
     private ProgressBar progressBarTrovaErrore;
-
     @FXML
     private ProgressBar progressBarCompletaCodice;
-
     @FXML
     private ProgressBar progressBarLinkedList;
-
-    private Map<String, ProgressData> progressDataMap = new HashMap<>();
+    @FXML
+    private ProgressBar progressBarStaticCode;
+    @FXML
+    private ProgressBar progressBarLeggiCodice;
+    @FXML
+    private ProgressBar progressBarStampaOutput;
+    @FXML
+    private ProgressBar progressBarScritturaOutput;
     
     @FXML
     public void initialize() 
     {
-        String username = Session.getCurrentUser(); //otteniamo l'utente loggato
+        String username = Session.getCurrentUser();
 
         if (username != null && !username.isEmpty()) 
         {
@@ -44,57 +55,77 @@ public class MenuController
             userNameLabel.setText("Benvenuto!");
         }
 
-        // Initialize progress data for each exercise
-        progressDataMap.put("TrovaErrore", new ProgressData(0, 0, 5));
-        progressDataMap.put("CompletaCodice", new ProgressData(0, 0, 5));
-        progressDataMap.put("LinkedList", new ProgressData(0, 0, 5));
-
-        // Update progress bars with initial data
-        updateProgressBar(progressBarTrovaErrore, progressDataMap.get("TrovaErrore"));
-        updateProgressBar(progressBarCompletaCodice, progressDataMap.get("CompletaCodice"));
-        updateProgressBar(progressBarLinkedList, progressDataMap.get("LinkedList"));
+        // Imposta le progress bar solo se non sono null per evitare NullPointerException
+        if (progressBarLinkedList != null)
+            progressBarLinkedList.setProgress(calcolaAvanzamentoProgressBar(username, Costanti.ES_LINKED_LIST));
+        if (progressBarCompletaCodice != null)
+            progressBarCompletaCodice.setProgress(calcolaAvanzamentoProgressBar(username, Costanti.ES_COMPLETA_CODICE));
+        if (progressBarLeggiCodice != null)
+            progressBarLeggiCodice.setProgress(calcolaAvanzamentoProgressBar(username, Costanti.ES_LEGGI_CODICE));
+        if (progressBarStampaOutput != null)
+            progressBarStampaOutput.setProgress(calcolaAvanzamentoProgressBar(username, Costanti.ES_STAMPA_OUTPUT));
+        if (progressBarTrovaErrore != null)
+            progressBarTrovaErrore.setProgress(calcolaAvanzamentoProgressBar(username, Costanti.ES_TROVA_ERRORE));
+        if (progressBarStaticCode != null)
+            progressBarStaticCode.setProgress(calcolaAvanzamentoProgressBar(username, Costanti.ES_STATIC_CODE));
     }
 
-    // Add methods to update progress bars
-    private void updateProgressBar(ProgressBar progressBar, ProgressData data) 
+    private double calcolaAvanzamentoProgressBar(String utente, String titoloEsercizio) 
     {
-        if (data.getTotal() > 0) 
+        String grado = leggiGradoPerUtenteEsercizio(utente, titoloEsercizio);
+
+        if (grado == null) return 0.0;
+
+        return switch (grado) 
         {
-            double progress = (double) data.getCorrect() / data.getTotal();
-            progressBar.setStyle("-fx-accent: green;");
-            progressBar.setProgress(progress);
+            case "Principiante" -> 1.0 / 3;
+            case "Intermedio"   -> 2.0 / 3;
+            case "Avanzato"     -> 1.0;
+            default             -> 0.0;
+        };
+    }
+
+    private String leggiGradoPerUtenteEsercizio(String utente, String titoloEsercizio) 
+    {
+        Path path = Paths.get(Costanti.PATH_FILE_STATO);
+
+        if (!Files.exists(path)) 
+        {
+            return null;
+        }
+
+        try 
+        {
+            List<String> righe = Files.readAllLines(path, StandardCharsets.UTF_8);
+            for (String riga : righe) 
+            {
+                if (!riga.startsWith(utente + ",")) 
+                    continue;
+
+                String[] parti = riga.split(",", 2);
+
+                if (parti.length < 2) 
+                    return null;
+
+                String[] coppie = parti[1].split(",");
+
+                for (String coppia : coppie) 
+                {
+                    String[] split = coppia.trim().split(" - ");
+
+                    if (split.length == 2 && split[0].equals(titoloEsercizio)) 
+                    {
+                        return split[1];
+                    }
+                }
+            }
         } 
-        else
+        catch (IOException e) 
         {
-            progressBar.setStyle("-fx-accent: white;");
-            progressBar.setProgress(0);
+            e.printStackTrace();
         }
-    }
 
-    void updateProgress(String exerciseKey, int correctIncrement, int incorrectIncrement) 
-    {
-        ProgressData data = progressDataMap.get(exerciseKey);
-        if (data != null) 
-        {
-            data.incrementCorrect(correctIncrement);
-            data.incrementIncorrect(incorrectIncrement);
-            updateProgressBar(getProgressBarForExercise(exerciseKey), data);
-        }
-    }
-
-    private ProgressBar getProgressBarForExercise(String exerciseKey) 
-    {
-        switch (exerciseKey) 
-        {
-            case "TrovaErrore":
-                return progressBarTrovaErrore;
-            case "CompletaCodice":
-                return progressBarCompletaCodice;
-            case "LinkedList":
-                return progressBarLinkedList;
-            default:
-                return null;
-        }
+        return null;
     }
     
     //#region Esercizi
@@ -218,46 +249,6 @@ public class MenuController
         catch (IOException e) 
         {
             e.printStackTrace();
-        }
-    }
-
-    // Inner class to track progress data
-    private static class ProgressData 
-    {
-        private int correct;
-        private int incorrect;
-        private int total;
-
-        public ProgressData(int correct, int incorrect, int total) 
-        {
-            this.correct = correct;
-            this.incorrect = incorrect;
-            this.total = total;
-        }
-
-        public int getCorrect() 
-        {
-            return correct;
-        }
-
-        public int getIncorrect() 
-        {
-            return incorrect;
-        }
-
-        public int getTotal() 
-        {
-            return total;
-        }
-
-        public void incrementCorrect(int value) 
-        {
-            this.correct += value;
-        }
-
-        public void incrementIncorrect(int value)
-        {
-            this.incorrect += value;
         }
     }
 }

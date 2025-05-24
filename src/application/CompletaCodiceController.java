@@ -31,9 +31,7 @@ public class CompletaCodiceController
     @FXML private Button btnAvanzato;
     @FXML private TextField rispostaTextField; // Rinominato da campoRisposta
 
-    private ToggleGroup gruppoRisposte;
     private String livelloCorrente = "Principiante";
-    private int punteggio = 0;
     private Esercizio esercizioCorrente;
     private final Map<String, List<Esercizio>> eserciziPerLivello = new LinkedHashMap<>();
     private final Map<String, List<Esercizio>> mostratiPerLivello = new HashMap<>();
@@ -42,7 +40,7 @@ public class CompletaCodiceController
     private final Map<String, List<String>> statoTacche = new HashMap<>(); // Mappa per memorizzare lo stato delle tacche
     private final Set<String> livelliCompletati = new HashSet<>(); // Traccia i livelli completati
 
-    private static final String titolo = "Completa Codice";
+    private static final String titolo = Costanti.ES_COMPLETA_CODICE;
     private enum Grado { PRINCIPIANTE, INTERMEDIO, AVANZATO }
 
     @FXML
@@ -307,6 +305,7 @@ public class CompletaCodiceController
     private void salvaRisultato() 
     {
         ProgressManager.salvaRisultatoCSV(titolo, livelloCorrente);
+        ProgressManager.updateProgressBar(titolo, livelloCorrente);
     }
 
     private void caricaProgresso() 
@@ -422,8 +421,6 @@ public class CompletaCodiceController
     {
         FXMLLoader loader = new FXMLLoader(App.class.getResource(Costanti.PATH_FXML_MENU));
         Parent root = loader.load();
-        MenuController menuController = loader.getController();
-        menuController.updateProgress(titolo, correctAnswers, incorrectAnswers);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
