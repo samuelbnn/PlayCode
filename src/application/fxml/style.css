@@ -177,6 +177,11 @@
     -fx-background-radius: 6;
 }
 
+.btn-neutro:hover {
+    -fx-background-color: #2D3E50;
+    -fx-text-fill: #FFFFFF;
+}
+
 .menu-button {
     -fx-background-color: linear-gradient(to bottom, #3498DB, #2980B9);
     -fx-text-fill: white;
@@ -201,3 +206,29 @@
     -fx-padding: 5 10;
 }
 
+.popup {
+    -fx-padding: 20 20 20 20;
+}
+
+.descrizione-popup {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 20;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.titolo-popup {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #3498DB;
+}
+
+.area-descrizione {
+    -fx-font-size: 14px;
+    -fx-control-inner-background: #ffffff;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+}

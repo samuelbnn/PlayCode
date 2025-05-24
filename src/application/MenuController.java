@@ -131,106 +131,176 @@ public class MenuController
     //#region Esercizi
 
     @FXML
-    private void apriLeggiCodice(ActionEvent event) 
-    {
-        System.out.println("Apertura esercizio: Leggi il Codice");
-        try 
-        {
-            Parent root = FXMLLoader.load(App.class.getResource(Costanti.PATH_FXML_LEGGICODICE));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } 
-        catch (IOException e) 
-        {
-            e.printStackTrace();
-        }
+    private void apriLeggiCodice(ActionEvent event) throws IOException {
+        FXMLLoader popupLoader = new FXMLLoader(App.class.getResource("fxml/descrizione.fxml"));
+        Parent popupRoot = popupLoader.load();
+        DescrizioneEsercizioController descrController = popupLoader.getController();
+
+        descrController.setTitolo("Leggi il Codice");
+        descrController.setDescrizione("Leggi attentamente il codice fornito e comprendi il suo funzionamento." +
+                                        "Rispondi alle domande per verificare la tua comprensione.");
+        descrController.setAzioneInizia(() -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(App.class.getResource(Costanti.PATH_FXML_LEGGICODICE));
+                Parent root = loader.load();
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        Stage popupStage = new Stage();
+        popupStage.setScene(new Scene(popupRoot, 500, 300));
+        popupStage.centerOnScreen();
+        popupStage.setResizable(false);
+        popupStage.setTitle("Descrizione");
+        popupStage.showAndWait();
     }
 
     @FXML
-    private void apriScritturaOutput(ActionEvent event) 
-    {
-        System.out.println("Apertura esercizio: Stampa Output");
-        try 
-        {
-            Parent root = FXMLLoader.load(App.class.getResource(Costanti.PATH_FXML_STAMPAOUTPUT));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } 
-        catch (IOException e) 
-        {
-            e.printStackTrace();
-        }
-    }
+    private void apriStampaOutput(ActionEvent event) throws IOException {
+        FXMLLoader popupLoader = new FXMLLoader(App.class.getResource("fxml/descrizione.fxml"));
+        Parent popupRoot = popupLoader.load();
+        DescrizioneEsercizioController descrController = popupLoader.getController();
 
+        descrController.setTitolo("Stampa l'Output");
+        descrController.setDescrizione("Digita il codice corretto che genera l’output indicato.");
+        descrController.setAzioneInizia(() -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(App.class.getResource(Costanti.PATH_FXML_STAMPAOUTPUT));
+                Parent root = loader.load();
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
-    @FXML
-    private void apriTrovaErrore(ActionEvent event) 
-    {
-        System.out.println("Apertura esercizio: Trova l'Errore");
-        try 
-        {
-            Parent root = FXMLLoader.load(App.class.getResource(Costanti.PATH_FXML_TROVAERRORE));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } 
-        catch (IOException e) 
-        {
-            e.printStackTrace();
-        }
+        Stage popupStage = new Stage();
+        popupStage.setScene(new Scene(popupRoot, 500, 300));
+        popupStage.centerOnScreen();
+        popupStage.setResizable(false);
+        popupStage.setTitle("Descrizione");
+        popupStage.showAndWait();
     }
 
     @FXML
-    private void apriCompletaCodice(ActionEvent event) throws IOException 
-    {
-        System.out.println("Apertura esercizio: Completa il Codice");
-        try 
-        {
-            Parent root = FXMLLoader.load(App.class.getResource(Costanti.PATH_FXML_COMPLETACODICE));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } 
-        catch (IOException e) 
-        {
-            e.printStackTrace();
-        }
+    private void apriTrovaErrore(ActionEvent event) throws IOException {
+        FXMLLoader popupLoader = new FXMLLoader(App.class.getResource("fxml/descrizione.fxml"));
+        Parent popupRoot = popupLoader.load();
+        DescrizioneEsercizioController descrController = popupLoader.getController();
+
+        descrController.setTitolo("Trova l'Errore");
+        descrController.setDescrizione("Analizza il codice proposto e individua gli errori di logica o sintassi." +
+                                        "Scegli tra le opzioni quella che corregge correttamente il problema.");
+        descrController.setAzioneInizia(() -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(App.class.getResource(Costanti.PATH_FXML_TROVAERRORE));
+                Parent root = loader.load();
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        Stage popupStage = new Stage();
+        popupStage.setScene(new Scene(popupRoot, 500, 300));
+        popupStage.centerOnScreen();
+        popupStage.setResizable(false);
+        popupStage.setTitle("Descrizione");
+        popupStage.showAndWait();
+    }
+
+    @FXML
+    private void apriCompletaCodice(ActionEvent event) throws IOException {
+        FXMLLoader popupLoader = new FXMLLoader(App.class.getResource("fxml/descrizione.fxml"));
+        Parent popupRoot = popupLoader.load();
+        DescrizioneEsercizioController descrController = popupLoader.getController();
+
+        descrController.setTitolo("Completa il Codice");
+        descrController.setDescrizione("Osserva il frammento di codice incompleto e riempi gli spazi vuoti." +
+                                        "Inserisci le istruzioni corrette per far funzionare il programma.");
+        descrController.setAzioneInizia(() -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(App.class.getResource(Costanti.PATH_FXML_COMPLETACODICE));
+                Parent root = loader.load();
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        Stage popupStage = new Stage();
+        popupStage.setScene(new Scene(popupRoot, 500, 300));
+        popupStage.centerOnScreen();
+        popupStage.setResizable(false);
+        popupStage.setTitle("Descrizione");
+        popupStage.showAndWait();
     }
     
     @FXML
-    private void apriLinkedList(ActionEvent event) 
-    {
-        System.out.println("Apertura esercizio: Linked List");
-        try 
-        {
-            Parent root = FXMLLoader.load(App.class.getResource(Costanti.PATH_FXML_LINKEDLIST));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } 
-        catch (IOException e) 
-        {
-            e.printStackTrace();
-        }
+    private void apriLinkedList(ActionEvent event) throws IOException {
+        FXMLLoader popupLoader = new FXMLLoader(App.class.getResource("fxml/descrizione.fxml"));
+        Parent popupRoot = popupLoader.load();
+        DescrizioneEsercizioController descrController = popupLoader.getController();
+
+        descrController.setTitolo("Linked List");
+        descrController.setDescrizione("Lavora con strutture dati dinamiche come le liste collegate." +
+                                        "Completa o modifica il codice per gestire correttamente nodi e collegamenti.");
+        descrController.setAzioneInizia(() -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(App.class.getResource(Costanti.PATH_FXML_LINKEDLIST));
+                Parent root = loader.load();
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        Stage popupStage = new Stage();
+        popupStage.setScene(new Scene(popupRoot, 500, 300));
+        popupStage.centerOnScreen();
+        popupStage.setResizable(false);
+        popupStage.setTitle("Descrizione");
+        popupStage.showAndWait();
     }
 
     @FXML
-    private void apriStaticCode(ActionEvent event) 
-    {
-        System.out.println("Apertura esercizio: Static Code");
-        try 
-        {
-            Parent root = FXMLLoader.load(App.class.getResource(Costanti.PATH_FXML_STATICCODE));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } 
-        catch (IOException e) 
-        {
-            e.printStackTrace();
-        }
+    private void apriStaticCode(ActionEvent event) throws IOException {
+        FXMLLoader popupLoader = new FXMLLoader(App.class.getResource("fxml/descrizione.fxml"));
+        Parent popupRoot = popupLoader.load();
+        DescrizioneEsercizioController descrController = popupLoader.getController();
+
+        descrController.setTitolo("Static Code");
+        descrController.setDescrizione("Analizza blocchi di codice statici, comprendendo classi e metodi." +
+                                        "Risolvi quesiti focalizzati su struttura e comportamento statico in Java.");
+        descrController.setAzioneInizia(() -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(App.class.getResource(Costanti.PATH_FXML_LINKEDLIST));
+                Parent root = loader.load();
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        Stage popupStage = new Stage();
+        popupStage.setScene(new Scene(popupRoot, 500, 300));
+        popupStage.centerOnScreen();
+        popupStage.setResizable(false);
+        popupStage.setTitle("Descrizione");
+        popupStage.showAndWait();
     }
 
     //#endregion
