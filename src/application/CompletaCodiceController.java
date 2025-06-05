@@ -304,7 +304,7 @@ public class CompletaCodiceController
 
     private void salvaRisultato() 
     {
-        ProgressManager.salvaRisultatoCSV(titolo, livelloCorrente);
+        ProgressManager.salvaRisultati(titolo, livelloCorrente, "");
         ProgressManager.updateProgressBar(titolo, livelloCorrente);
     }
 

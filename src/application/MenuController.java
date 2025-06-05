@@ -285,7 +285,7 @@ public class MenuController
                                         "Risolvi quesiti focalizzati su struttura e comportamento statico in Java.");
         descrController.setAzioneInizia(() -> {
             try {
-                FXMLLoader loader = new FXMLLoader(App.class.getResource(Costanti.PATH_FXML_LINKEDLIST));
+                FXMLLoader loader = new FXMLLoader(App.class.getResource(Costanti.PATH_FXML_STATICCODE));
                 Parent root = loader.load();
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root));

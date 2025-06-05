@@ -79,7 +79,6 @@ public class ProgressManager
 }
 
 
-
     public static Map<String, List<String>> loadProgress(String user, String exercise) {
         Map<String, List<String>> progressState = new HashMap<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(Costanti.PATH_FILE_PROGRESSI))) {
@@ -200,10 +199,33 @@ public class ProgressManager
 
 
     //#region RISULTATI.CSV
-    public static void salvaRisultatoCSV(String esercizio, String livelloCorrente) 
-    {
+    public static void salvaRisultati(String esercizio, String livelloCorrente, String timestamp_inizio) {
         String utente = Session.getCurrentUser();
-        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String timestamp_fine = now.format(formatter);
+
+        String durataFormattata = "00:00:00";
+        try {
+            // Fix: estrai SOLO la parte che rappresenta la data, ignorando eventuali prefissi come "00:00:16;"
+            String tsPulito = timestamp_inizio.trim();
+            if (tsPulito.contains(";")) {
+                // Prendi l'ultima parte dopo l'ultimo ';'
+                String[] parti = tsPulito.split(";");
+                tsPulito = parti[parti.length - 1].trim();
+            }
+            LocalDateTime inizio = LocalDateTime.parse(tsPulito, formatter);
+            LocalDateTime fine = LocalDateTime.parse(timestamp_fine, formatter);
+
+            long durataSecondi = java.time.Duration.between(inizio, fine).getSeconds();
+            long ore = durataSecondi / 3600;
+            long minuti = (durataSecondi % 3600) / 60;
+            long secondi = durataSecondi % 60;
+            durataFormattata = String.format("%02d:%02d:%02d", ore, minuti, secondi);
+        } catch (Exception e) {
+            System.err.println("Errore nel parsing del timestamp_inizio: " + timestamp_inizio);
+            durataFormattata = "00:00:00";
+        }
 
         // 1) Calcola i count di G dai progressi:
         int countPrincipiante = 0, countIntermedio = 0, countAvanzato = 0;
@@ -235,18 +257,18 @@ public class ProgressManager
             return;
         }
 
-        // 2) Prepara la nuova tupla solo per il livello corrente:
+        // 2) Prepara la nuova tupla solo per il livello corrente, aggiungendo ora e dataFine:
         String nuovaTupla;
         switch (livelloCorrente) 
         {
             case "Principiante":
-                nuovaTupla = String.format("(Principiante;%d;%s)", countPrincipiante, timestamp);
+                nuovaTupla = String.format("(Principiante;%d;%s;%s)", countPrincipiante, durataFormattata, timestamp_fine);
                 break;
             case "Intermedio":
-                nuovaTupla = String.format("(Intermedio;%d;%s)",   countIntermedio,   timestamp);
+                nuovaTupla = String.format("(Intermedio;%d;%s;%s)", countIntermedio, durataFormattata, timestamp_fine);
                 break;
             case "Avanzato":
-                nuovaTupla = String.format("(Avanzato;%d;%s)",     countAvanzato,     timestamp);
+                nuovaTupla = String.format("(Avanzato;%d;%s;%s)", countAvanzato, durataFormattata, timestamp_fine);
                 break;
             default:
                 throw new IllegalArgumentException("Livello non valido: " + livelloCorrente);
@@ -334,7 +356,6 @@ public class ProgressManager
     //#endregion RISULTATI.CSV
 
     //#region STATO.CSV
-
     public static void updateProgressBar(String titoloEsercizio, String livelloCorrente) 
     {
         String utente = Session.getCurrentUser();
@@ -413,4 +434,46 @@ public class ProgressManager
     }
 
     //#endregion STATO.CSV
+
+
+
+    public static List<String> translateTacche(List<String> tacche, int expectedSize) 
+    {
+        List<String> translatedTacche = new ArrayList<>();
+        for (String tacca : tacche) 
+        {
+            if ("G".equals(tacca)) 
+            {
+                translatedTacche.add("-fx-background-color: #2ECC71;");
+            } 
+            else if ("R".equals(tacca)) 
+            {
+                translatedTacche.add("-fx-background-color: #E74C3C;");
+            } 
+            else 
+            {
+                translatedTacche.add("");
+            }
+        }
+        while (translatedTacche.size() < expectedSize) 
+        {
+            translatedTacche.add(""); // Add empty entries if missing
+        }
+        return translatedTacche.subList(0, expectedSize); // Ensure the list is trimmed to the expected size
+    }
+
+    public boolean isProgressoValido(String[] parts, String utente, String titolo) 
+    {
+        return parts.length >= 9 && parts[0].equals(utente) && parts[1].equals(titolo);
+    }
+
+    public List<String> normalizeTacche(String taccheString, int expectedSize) 
+    {
+        List<String> tacche = new ArrayList<>(Arrays.asList(taccheString.split(";")));
+        while (tacche.size() < expectedSize) 
+        {
+            tacche.add(""); // Aggiungi tacche vuote se mancano
+        }
+        return tacche.subList(0, expectedSize); // Troncamento se ci sono più tacche del previsto
+    }
 }

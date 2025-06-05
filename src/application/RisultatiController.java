@@ -6,7 +6,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -22,7 +21,6 @@ import java.util.regex.Pattern;
 
 public class RisultatiController 
 {
-
     @FXML
     private ListView<String> risultatiListView;
 
@@ -56,46 +54,109 @@ public class RisultatiController
             e.printStackTrace();
         }
 
-        if (lista == null || lista.isEmpty()) {
+        if (lista == null || lista.isEmpty()) 
+        {
             risultatiListView.getItems().add("Nessun risultato trovato.");
             return;
         }
 
+        // Imposta cell factory per colorare le righe in base al punteggio
+        risultatiListView.setCellFactory(lv -> new javafx.scene.control.ListCell<>() 
+        {
+            @Override
+            protected void updateItem(String item, boolean empty) 
+            {
+                super.updateItem(item, empty);
+                if (empty || item == null) 
+                {
+                    setText(null);
+                    setStyle("");
+                } 
+                else 
+                {
+                    setText(item);
+                    int risposte = 0;
+                    try 
+                    {
+                        int idx = item.indexOf(":");
+                        int idxSlash = item.indexOf("/", idx);
+                        if (idx != -1 && idxSlash != -1) 
+                        {
+                            String num = item.substring(idx + 1, idxSlash).replaceAll("[^0-9]", "").trim();
+                            risposte = Integer.parseInt(num);
+                        }
+                    } 
+                    catch (Exception e) 
+                    {
+                        risposte = 0;
+                    }
+                    String baseBg, selectedBg;
+                    if (risposte < 3) 
+                    {
+                        baseBg = "#ee6363";  // rosso
+                        selectedBg = "#e93a3a"; // rosso selezionato
+                    } 
+                    else 
+                    {
+                        baseBg = "#77f877"; // verde 
+                        selectedBg = "#85ea85"; // verde selezionato
+                    }
+                    if (isSelected()) 
+                    {
+                        setStyle("-fx-control-inner-background: " + selectedBg + "; -fx-background-color: " + selectedBg + "; -fx-text-fill: black;");
+                    } 
+                    else 
+                    {
+                        setStyle("-fx-control-inner-background: " + baseBg + "; -fx-background-color: " + baseBg + "; -fx-text-fill: black;");
+                    }
+                }
+            }
+        });
+
         // Populate the ListView with results
-        for (RisultatiController.Risultato risultato : lista) {
+        for (RisultatiController.Risultato risultato : lista) 
+        {
             risultatiListView.getItems().add(risultato.toString());
         }
     }
 
     @FXML
-    private void chiudiSchermata() {
+    private void chiudiSchermata() 
+    {
         Stage stage = (Stage) btnChiudi.getScene().getWindow();
         stage.close();
     }
 
     // Oggetto che contiene i dati di un singolo risultato
-    public static class Risultato {
+    public static class Risultato 
+    {
         private final String esercizio;
         private final String livello;
         private final int risposteCorrette;
+        private final String durata; // aggiunto campo durata opzionale
         private final LocalDateTime data;
 
-        public Risultato(String esercizio, String livello, int risposteCorrette, LocalDateTime data) {
+        public Risultato(String esercizio, String livello, int risposteCorrette, String durata, LocalDateTime data) 
+        {
             this.esercizio = esercizio;
             this.livello = livello;
             this.risposteCorrette = risposteCorrette;
+            this.durata = durata;
             this.data = data;
         }
 
         public String getEsercizio()        { return esercizio; }
         public String getLivello()          { return livello; }
         public int getRisposteCorrette()    { return risposteCorrette; }
+        public String getDurata()           { return durata; }
         public LocalDateTime getData()      { return data; }
 
         @Override
-        public String toString() {
-            return String.format("%s - %s: %d risposte corrette il %s",
-                esercizio, livello, risposteCorrette,
+        public String toString() 
+        { 
+            String durataStr = (durata != null && !durata.isEmpty()) ? " - Durata: " + durata : "";
+            return String.format("%s - %s: %d/5 risposte corrette - Completato in %s il: %s",
+                esercizio, livello, risposteCorrette, durataStr,
                 data.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         }
     }
@@ -103,9 +164,11 @@ public class RisultatiController
     /**
      * Legge risultati.csv e restituisce la lista di Risultato per lo user specificato.
      */
-    public static List<Risultato> leggiRisultatiPerUtente(String utente) throws IOException {
+    public static List<Risultato> leggiRisultatiPerUtente(String utente) throws IOException 
+    {
         Path path = Paths.get(Costanti.PATH_FILE_RISULTATI);
-        if (!Files.exists(path)) {
+        if (!Files.exists(path)) 
+        {
             return Collections.emptyList();
         }
 
@@ -115,7 +178,8 @@ public class RisultatiController
             .findFirst()
             .orElse(null);
 
-        if (lineaUtente == null) {
+        if (lineaUtente == null) 
+        {
             return Collections.emptyList();
         }
 
@@ -125,10 +189,10 @@ public class RisultatiController
         Pattern bloccoPattern = Pattern.compile("\\[([^\\]]+)\\]");
         Matcher bloccoMatcher = bloccoPattern.matcher(lineaUtente);
 
-        // Pattern per le tuple (Livello;count;timestamp)
-        Pattern tuplaPattern = Pattern.compile("\\(([^;]+);(\\d+);([^\\)]+)\\)");
+        // Pattern per le tuple (Livello;count;durata;timestamp)
+        Pattern tuplaPattern = Pattern.compile("\\(([^;]+);(\\d+);(\\d{2}:\\d{2}:\\d{2});([^\\)]+)\\)");
 
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
         while (bloccoMatcher.find()) {
             String contenuto = bloccoMatcher.group(1).trim();
@@ -140,9 +204,11 @@ public class RisultatiController
             while (tuplaMatcher.find()) {
                 String livello = tuplaMatcher.group(1);
                 int count    = Integer.parseInt(tuplaMatcher.group(2));
-                LocalDateTime data = LocalDateTime.parse(tuplaMatcher.group(3), fmt);
+                String durata = tuplaMatcher.group(3);
+                String timestampStr = tuplaMatcher.group(4);
+                LocalDateTime data = LocalDateTime.parse(timestampStr, fmt);
 
-                risultati.add(new Risultato(nomeEsercizio, livello, count, data));
+                risultati.add(new Risultato(nomeEsercizio, livello, count, durata, data));
             }
         }
 

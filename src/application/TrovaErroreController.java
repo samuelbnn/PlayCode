@@ -14,6 +14,7 @@ import java.util.*;
 
 public class TrovaErroreController 
 {
+    //region FXML Variabili
     @FXML private Label titoloLabel;
     @FXML private Label livelloLabel;
     @FXML private TextArea codiceArea;
@@ -31,20 +32,22 @@ public class TrovaErroreController
     @FXML private Button btnPrincipiante;
     @FXML private Button btnIntermedio;
     @FXML private Button btnAvanzato;
+    //endregion
 
+    //region Variabili
     private ToggleGroup gruppoRisposte;
     private String livelloCorrente = "Principiante";
     private Esercizio esercizioCorrente;
     private final Map<String, List<Esercizio>> eserciziPerLivello = new LinkedHashMap<>();
     private final Map<String, List<Esercizio>> mostratiPerLivello = new HashMap<>();
-    private int correctAnswers = 0;
-    private int incorrectAnswers = 0;
-    private final Map<String, List<String>> statoTacche = new HashMap<>(); // Mappa per memorizzare lo stato delle tacche
-    private final Set<String> livelliCompletati = new HashSet<>(); // Traccia i livelli completati
-
+    private final Map<String, List<String>> statoTacche = new HashMap<>();
+    private final Set<String> livelliCompletati = new HashSet<>();
     private static final String titolo = Costanti.ES_TROVA_ERRORE;
     private enum Grado { PRINCIPIANTE, INTERMEDIO, AVANZATO }
+    private String timestampInizioLivello = null;
+    //endregion
 
+    //region Inizializzazione
     @FXML
     public void initialize() 
     {
@@ -56,42 +59,28 @@ public class TrovaErroreController
 
         caricaDomande();
         caricaProgresso(); 
-        inizializzaStatoTacche(); // Inizializza lo stato delle tacche
+        inizializzaStatoTacche();
         mostraDomandaCasuale();
         aggiornaStileLivelli();
-        aggiornaTacche(); // Aggiorna la visualizzazione delle tacche per tutti i livelli
+        aggiornaTacche();
+        setTimestampInizioLivello();
     }
+    //endregion
 
-    private void inizializzaStatoTacche() 
+    //region Timer Livello
+    private void setTimestampInizioLivello() 
     {
-        if (statoTacche.isEmpty()) 
-        {
-            statoTacche.put("Principiante", new ArrayList<>(Collections.nCopies(5, "")));
-            statoTacche.put("Intermedio", new ArrayList<>(Collections.nCopies(5, "")));
-            statoTacche.put("Avanzato", new ArrayList<>(Collections.nCopies(5, "")));
-        }
-
-        String utente = Session.getCurrentUser();
-        try (Scanner scanner = new Scanner(new File(Costanti.PATH_FILE_PROGRESSI))) 
-        {
-            while (scanner.hasNextLine()) 
-            {
-                String[] parts = scanner.nextLine().split(",");
-                if (isProgressoValido(parts, utente)) 
-                {
-                    statoTacche.put("Principiante", normalizeTacche(parts[6], 5));
-                    statoTacche.put("Intermedio", normalizeTacche(parts[7], 5));
-                    statoTacche.put("Avanzato", normalizeTacche(parts[8], 5));
-                    return;
-                }
-            }
-        } 
-        catch (IOException e) 
-        {
-            System.out.println("Nessun progresso precedente trovato per l'utente " + utente);
-        }
+        java.time.LocalDateTime now = java.time.LocalDateTime.now();
+        timestampInizioLivello = now.format(java.time.format.DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
     }
 
+    private String getTimestampInizioLivello()
+    {
+        return timestampInizioLivello;
+    }
+    //endregion
+
+    //region Domande
     private void caricaDomande() 
     {
         eserciziPerLivello.put("Principiante", List.of(
@@ -101,7 +90,7 @@ public class TrovaErroreController
                 "System.out.println(\"Hello\")", 
                 "Cosa manca?", 
                 new String[]{"Punto e virgola", "Parentesi graffa", "Dichiarazione variabile", "Parentesi quadra"},
-                 0),
+                0),
 
             new Esercizio(
                 titolo, 
@@ -220,22 +209,24 @@ public class TrovaErroreController
 
     private void mostraDomandaCasuale() 
     {
+        if (livelloCorrente == null) 
+            return;
+
         if (livelliCompletati.contains(livelloCorrente)) 
         {
             feedbackLabel.setText("Hai completato questo livello!");
-            feedbackLabel.setStyle("-fx-text-fill: blue;");
+            feedbackLabel.setStyle("-fx-text-fill: " + Costanti.BLU + ";");
             feedbackLabel.setVisible(true);
             return;
         }
 
-        // Check if all tacchette are filled with "G" or "R"
         List<String> tacchette = statoTacche.getOrDefault(livelloCorrente, new ArrayList<>());
         if (tacchette.stream().allMatch(t -> t.equals("G") || t.equals("R"))) 
         {
             feedbackLabel.setText("Hai già completato il livello!");
-            feedbackLabel.setStyle("-fx-text-fill: blue;");
+            feedbackLabel.setStyle("-fx-text-fill: " + Costanti.BLU + ";");
             feedbackLabel.setVisible(true);
-            livelliCompletati.add(livelloCorrente); // Mark the level as completed
+            livelliCompletati.add(livelloCorrente);
             return;
         }
 
@@ -256,11 +247,10 @@ public class TrovaErroreController
         codiceArea.setText(esercizioCorrente.codice);
         consegnaLabel.setText(esercizioCorrente.domanda);
         
-        // Mescola le risposte
+        //Mescola le risposte
         List<String> risposteMischiate = new ArrayList<>(List.of(esercizioCorrente.risposte));
         Collections.shuffle(risposteMischiate);
         
-        // Imposta le risposte mescolate sui RadioButton
         risposta1.setText(risposteMischiate.get(0));
         risposta2.setText(risposteMischiate.get(1));
         risposta3.setText(risposteMischiate.get(2));
@@ -274,21 +264,24 @@ public class TrovaErroreController
     {
         livelliCompletati.add(livelloCorrente);
         feedbackLabel.setText("Hai completato il livello " + livelloCorrente + "!");
-        feedbackLabel.setStyle("-fx-text-fill: blue;");
+        feedbackLabel.setStyle("-fx-text-fill: " + Costanti.BLU + ";");
         feedbackLabel.setVisible(true);
 
-        //Salvataggio del progresso alla chiusura del livello
-        ProgressManager.saveProgress(titolo, statoTacche);
         salvaRisultato();
-        
 
         switch (livelloCorrente) 
         {
-            case "Principiante" -> livelloCorrente = "Intermedio";
-            case "Intermedio" -> livelloCorrente = "Avanzato";
+            case "Principiante" -> {
+                livelloCorrente = "Intermedio";
+                setTimestampInizioLivello();    //Reset timestamp per nuovo livello
+            }
+            case "Intermedio" -> {
+                livelloCorrente = "Avanzato";
+                setTimestampInizioLivello();    //Reset timestamp per nuovo livello
+            }
             case "Avanzato" -> {
                 feedbackLabel.setText("Hai completato tutti i livelli! Complimenti!");
-                feedbackLabel.setStyle("-fx-text-fill: #2ECC71;");
+                feedbackLabel.setStyle("-fx-text-fill: " + Costanti.VERDE + ";");
                 feedbackLabel.setVisible(true);
                 btnConferma.setDisable(true);
                 return;
@@ -299,10 +292,47 @@ public class TrovaErroreController
         mostratiPerLivello.get(livelloCorrente).clear();
         mostraDomandaCasuale();
     }
+    //endregion
+
+    //region Gestione Tacche
+    private void inizializzaStatoTacche() 
+    {
+        ProgressManager progressManager = new ProgressManager();
+
+        if (statoTacche.isEmpty()) 
+        {
+            statoTacche.put("Principiante", new ArrayList<>(Collections.nCopies(5, "")));
+            statoTacche.put("Intermedio", new ArrayList<>(Collections.nCopies(5, "")));
+            statoTacche.put("Avanzato", new ArrayList<>(Collections.nCopies(5, "")));
+        }
+
+        String utente = Session.getCurrentUser();
+        try (Scanner scanner = new Scanner(new File(Costanti.PATH_FILE_PROGRESSI))) 
+        {
+            while (scanner.hasNextLine()) 
+            {
+                String[] parts = scanner.nextLine().split(",");
+                if (progressManager.isProgressoValido(parts, utente, titolo)) 
+                {
+                    statoTacche.put("Principiante", progressManager.normalizeTacche(parts[6], 5));
+                    statoTacche.put("Intermedio", progressManager.normalizeTacche(parts[7], 5));
+                    statoTacche.put("Avanzato", progressManager.normalizeTacche(parts[8], 5));
+                    return;
+                }
+            }
+        } 
+        catch (IOException e) 
+        {
+            System.out.println("Nessun progresso precedente trovato per l'utente " + utente);
+        }
+    }
 
     private void aggiornaColoreTacca(boolean rispostaCorretta) 
     {
-        String colore = rispostaCorretta ? "#2ECC71" : "#E74C3C";
+        if (livelloCorrente == null) 
+            return;
+
+        String colore = rispostaCorretta ?  Costanti.VERDE : Costanti.ROSSO;
 
         switch (livelloCorrente) 
         {
@@ -330,7 +360,12 @@ public class TrovaErroreController
 
     private void coloraTacca(HBox tacche, String colore) 
     {
+        if (livelloCorrente == null) 
+            return;
+
         List<String> statoCorrente = statoTacche.get(livelloCorrente);
+        if (statoCorrente == null) 
+            return;
 
         for (int i = 0; i < tacche.getChildren().size(); i++) 
         {
@@ -342,20 +377,22 @@ public class TrovaErroreController
             }
         }
     }
+    //endregion
 
+    //region Risposte
     @FXML
     private void confermaRisposta(ActionEvent event) 
     {
-        btnConferma.setDisable(true); // Disabilita il pulsante per evitare clic multipli
+        btnConferma.setDisable(true); //Disabilita il pulsante per evitare clic multipli
 
         RadioButton selezionata = (RadioButton) gruppoRisposte.getSelectedToggle();
 
         if (selezionata == null) 
         {
             feedbackLabel.setText("Seleziona una risposta!");
-            feedbackLabel.setStyle("-fx-text-fill: #E74C3C;");
+            feedbackLabel.setStyle("-fx-text-fill: " + Costanti.ROSSO + ";");
             feedbackLabel.setVisible(true);
-            btnConferma.setDisable(false); // Riabilita il pulsante
+            btnConferma.setDisable(false);
             return;
         }
 
@@ -365,52 +402,56 @@ public class TrovaErroreController
         if (rispostaSelezionata.equals(domanda.risposte[domanda.indiceCorretta])) 
         {
             feedbackLabel.setText("Corretto!");
-            feedbackLabel.setStyle("-fx-text-fill: #2ECC71;");
+            feedbackLabel.setStyle("-fx-text-fill: " + Costanti.VERDE + ";");
             feedbackLabel.setVisible(true);
 
             if (!domanda.isAnswered) 
             {
-                correctAnswers++;
-                aggiornaColoreTacca(true); // Colora tacca verde
-                domanda.isAnswered = true; // Segna la domanda come già risolta
+                aggiornaColoreTacca(true);      //Colora tacca verde
+                domanda.isAnswered = true;
             }
 
-            codiceArea.setStyle("-fx-border-color: #2ECC71; -fx-border-width: 2;");
+            codiceArea.setStyle("-fx-border-color: " + Costanti.VERDE + "; -fx-border-width: 2;");
 
             new Thread(() -> {
-                try {
+                try 
+                {
                     Thread.sleep(1500);
-                } catch (InterruptedException e) {
+                } 
+                catch (InterruptedException e) 
+                {
                     e.printStackTrace();
                 }
                 javafx.application.Platform.runLater(() -> {
                     codiceArea.setStyle("");
                     mostraDomandaCasuale();
-                    btnConferma.setDisable(false); // Riabilita il pulsante
+                    btnConferma.setDisable(false);
                 });
             }).start();
         } 
         else 
         {
             feedbackLabel.setText("Sbagliato! Riprova.");
-            feedbackLabel.setStyle("-fx-text-fill: red;");
+            feedbackLabel.setStyle("-fx-text-fill: " + Costanti.ROSSO + ";");
             feedbackLabel.setVisible(true);
 
-            if (!domanda.isAnswered) // Colora la tacca solo alla prima risposta
+            if (!domanda.isAnswered)
             {
-                incorrectAnswers++;
-                aggiornaColoreTacca(false); // Colora tacca rossa
-                domanda.isAnswered = true; // Segna la domanda come già risolta
+                aggiornaColoreTacca(false);     //Colora tacca rossa
+                domanda.isAnswered = true;
             }
 
-            codiceArea.setStyle("-fx-border-color: #E74C3C; -fx-border-width: 2;");
-            btnConferma.setDisable(false); // Riabilita il pulsante
+            codiceArea.setStyle("-fx-border-color: "+ Costanti.ROSSO + "; -fx-border-width: 2;");
+            btnConferma.setDisable(false);
         }
     }
+    //endregion
 
+    //region Gestione Progresso
     private void salvaRisultato() 
     {
-        ProgressManager.salvaRisultatoCSV(titolo, livelloCorrente);
+        ProgressManager.saveProgress(titolo, statoTacche);
+        ProgressManager.salvaRisultati(titolo, livelloCorrente, getTimestampInizioLivello());
         ProgressManager.updateProgressBar(titolo, livelloCorrente);
     }
 
@@ -419,10 +460,10 @@ public class TrovaErroreController
         String utente = Session.getCurrentUser();
         Map<String, List<String>> loadedProgress = ProgressManager.loadProgress(utente, titolo);
 
-        // Convert R (red) or G (green) back to styles
-        statoTacche.put("Principiante", translateTacche(loadedProgress.getOrDefault("Principiante", new ArrayList<>()), 5));
-        statoTacche.put("Intermedio", translateTacche(loadedProgress.getOrDefault("Intermedio", new ArrayList<>()), 5));
-        statoTacche.put("Avanzato", translateTacche(loadedProgress.getOrDefault("Avanzato", new ArrayList<>()), 5));
+        //Conversione R e G in rosso e verde
+        statoTacche.put("Principiante", ProgressManager.translateTacche(loadedProgress.getOrDefault("Principiante", new ArrayList<>()), 5));
+        statoTacche.put("Intermedio", ProgressManager.translateTacche(loadedProgress.getOrDefault("Intermedio", new ArrayList<>()), 5));
+        statoTacche.put("Avanzato", ProgressManager.translateTacche(loadedProgress.getOrDefault("Avanzato", new ArrayList<>()), 5));
 
         if (loadedProgress.getOrDefault("Principiante", new ArrayList<>()).stream().anyMatch(t -> t.equals("G") || t.equals("R"))) 
         {
@@ -438,7 +479,7 @@ public class TrovaErroreController
         {
             livelliCompletati.add("Avanzato");
 
-            // Show pop-up for completion with custom button
+            //Pop-up per completamento dell'esercizio
             ButtonType btnRisultati = new ButtonType("Visualizza i risultati", ButtonBar.ButtonData.OK_DONE);
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Hai completato tutti i livelli!", btnRisultati);
             alert.setTitle("Congratulazioni");
@@ -446,7 +487,7 @@ public class TrovaErroreController
             alert.getButtonTypes().setAll(btnRisultati);
             alert.showAndWait();
 
-            // Dopo il click su "Visualizza i risultati", vai a risultati.fxml usando una finestra alternativa se feedbackLabel non è in scena
+            //Visualizzo risultati.fxml
             try 
             {
                 FXMLLoader loader = new FXMLLoader(App.class.getResource(Costanti.PATH_FXML_RISULTATI));
@@ -467,60 +508,16 @@ public class TrovaErroreController
                 e.printStackTrace();
             }
 
-            // Prevent entry into the "Avanzato" level
             livelloCorrente = null;
             feedbackLabel.setText("Hai completato tutti i livelli! Complimenti!");
-            feedbackLabel.setStyle("-fx-text-fill: #2ECC71;");
+            feedbackLabel.setStyle("-fx-text-fill: " + Costanti.VERDE + ";");
             feedbackLabel.setVisible(true);
             btnConferma.setDisable(true);
         }
-
-        // Debug: Print loaded progress for verification
-        System.out.println("Progress loaded for user: " + utente);
-        System.out.println("Principiante: " + statoTacche.get("Principiante"));
-        System.out.println("Intermedio: " + statoTacche.get("Intermedio"));
-        System.out.println("Avanzato: " + statoTacche.get("Avanzato"));
     }
+    //endregion
 
-    private List<String> translateTacche(List<String> tacche, int expectedSize) 
-    {
-        List<String> translatedTacche = new ArrayList<>();
-        for (String tacca : tacche) 
-        {
-            if ("G".equals(tacca)) 
-            {
-                translatedTacche.add("-fx-background-color: #2ECC71;");
-            } 
-            else if ("R".equals(tacca)) 
-            {
-                translatedTacche.add("-fx-background-color: #E74C3C;");
-            } 
-            else 
-            {
-                translatedTacche.add("");
-            }
-        }
-        while (translatedTacche.size() < expectedSize) 
-        {
-            translatedTacche.add(""); // Add empty entries if missing
-        }
-        return translatedTacche.subList(0, expectedSize); // Ensure the list is trimmed to the expected size
-    }
-
-    private boolean isProgressoValido(String[] parts, String utente) 
-    {
-        return parts.length >= 9 && parts[0].equals(utente) && parts[1].equals(titolo);
-    }
-
-    private List<String> normalizeTacche(String taccheString, int expectedSize) 
-    {
-        List<String> tacche = new ArrayList<>(Arrays.asList(taccheString.split(";")));
-        while (tacche.size() < expectedSize) 
-        {
-            tacche.add(""); // Aggiungi tacche vuote se mancano
-        }
-        return tacche.subList(0, expectedSize); // Troncamento se ci sono più tacche del previsto
-    }
+    //region Eventi FXML
 
     @FXML
     private void tornaAlMenu(ActionEvent event) throws IOException 
@@ -539,13 +536,14 @@ public class TrovaErroreController
         if (livelliCompletati.contains("Principiante")) 
         {
             feedbackLabel.setText("Hai già completato il livello Principiante!");
-            feedbackLabel.setStyle("-fx-text-fill: blue;");
+            feedbackLabel.setStyle("-fx-text-fill: " + Costanti.BLU + ";");
             feedbackLabel.setVisible(true);
             return;
         }
 
         livelloCorrente = "Principiante";
         aggiornaStileLivelli();
+        setTimestampInizioLivello(); //Reset timestamp quando si entra nel livello
     }
 
     @FXML
@@ -554,7 +552,7 @@ public class TrovaErroreController
         if (!livelliCompletati.contains("Principiante")) 
         {
             feedbackLabel.setText("Completa il livello Principiante prima di accedere a Intermedio!");
-            feedbackLabel.setStyle("-fx-text-fill: #E74C3C;");
+            feedbackLabel.setStyle("-fx-text-fill: " + Costanti.ROSSO + ";");
             feedbackLabel.setVisible(true);
             return;
         }
@@ -562,13 +560,14 @@ public class TrovaErroreController
         if (livelliCompletati.contains("Intermedio")) 
         {
             feedbackLabel.setText("Hai già completato il livello Intermedio!");
-            feedbackLabel.setStyle("-fx-text-fill: blue;");
+            feedbackLabel.setStyle("-fx-text-fill: " + Costanti.BLU + ";");
             feedbackLabel.setVisible(true);
             return;
         }
 
         livelloCorrente = "Intermedio";
         aggiornaStileLivelli();
+        setTimestampInizioLivello(); //Reset timestamp quando si entra nel livello
     }
 
     @FXML
@@ -577,7 +576,7 @@ public class TrovaErroreController
         if (!livelliCompletati.contains("Intermedio")) 
         {
             feedbackLabel.setText("Completa il livello Intermedio prima di accedere a Avanzato!");
-            feedbackLabel.setStyle("-fx-text-fill: #E74C3C;");
+            feedbackLabel.setStyle("-fx-text-fill: " + Costanti.ROSSO + ";");
             feedbackLabel.setVisible(true);
             return;
         }
@@ -585,13 +584,14 @@ public class TrovaErroreController
         if (livelliCompletati.contains("Avanzato")) 
         {
             feedbackLabel.setText("Hai già completato il livello Avanzato!");
-            feedbackLabel.setStyle("-fx-text-fill: blue;");
+            feedbackLabel.setStyle("-fx-text-fill: " + Costanti.BLU + ";");
             feedbackLabel.setVisible(true);
             return;
         }
 
         livelloCorrente = "Avanzato";
         aggiornaStileLivelli();
+        setTimestampInizioLivello(); //Reset timestamp quando si entra nel livello
     }
 
     private void aggiornaStileLivelli() 
@@ -607,4 +607,5 @@ public class TrovaErroreController
             case "Avanzato" -> btnAvanzato.getStyleClass().add("selected");
         }
     }
+    //endregion
 }

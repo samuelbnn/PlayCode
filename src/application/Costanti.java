@@ -26,11 +26,22 @@ public class Costanti
 
     public static final String LOGO = "application/fxml/img/logo.png";
 
-    // Chiavi per gli esercizi (usate in MenuController)
+    // Chiavi per gli esercizi
     public static final String ES_TROVA_ERRORE = "Trova Errore";
     public static final String ES_COMPLETA_CODICE = "Completa Codice";
     public static final String ES_LINKED_LIST = "Linked List";
     public static final String ES_STATIC_CODE = "Static Code";
     public static final String ES_LEGGI_CODICE = "Leggi Codice";
     public static final String ES_STAMPA_OUTPUT = "Stampa Output";    
+
+    //Grado livello
+    public static final String LIVELLO_BASE = "Principiante";
+    public static final String LIVELLO_INTERMEDIO = "Intermedio";
+    public static final String LIVELLO_AVANZATO = "Avanzato";
+
+    //Set colori
+    public static final String ROSSO = "#E74C3C";
+    public static final String VERDE = "#2ECC71";
+    public static final String BLU = "#4D8ADE";
+
 }
