@@ -38,9 +38,7 @@ public class MenuController
     private ProgressBar progressBarLeggiCodice;
     @FXML
     private ProgressBar progressBarStampaOutput;
-    @FXML
-    private ProgressBar progressBarScritturaOutput;
-    
+        
     @FXML
     public void initialize() 
     {

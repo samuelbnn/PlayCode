@@ -84,82 +84,44 @@ public class LeggiCodiceController
     private void caricaDomande() 
     {
         eserciziPerLivello.put("Principiante", List.of(
-            new Esercizio
-            (
+            new Esercizio(
                 titolo, 
                 Grado.PRINCIPIANTE, 
                 "int x = 5;\nint y = 3;\nint z = x + y;", 
                 "Qual è il valore di z?", 
-                new String[]
-                {
-                    "8",
-                     "53", 
-                     "x + y", 
-                     "35"
-                }, 
-                0),
-
-            new Esercizio
-            (
+                new String[]{"8", "53", "x + y", "35"}, 
+                0
+            ),
+            new Esercizio(
                 titolo, 
                 Grado.PRINCIPIANTE, 
                 "for(int i = 0; i < 3; i++) {\n  System.out.println(i);\n}", 
                 "Quante volte viene eseguito il ciclo?", 
-                new String[]
-                {
-                    "3", 
-                    "2", 
-                    "4", 
-                    "1"
-                },
+                new String[]{"3", "2", "4", "1"}, 
                 0
             ),
-            
-            new Esercizio
-            (
+            new Esercizio(
                 titolo, 
                 Grado.PRINCIPIANTE, 
                 "String s = \"Java\";\nSystem.out.println(s.length());", 
                 "Cosa viene stampato?", 
-                new String[]
-                {
-                    "4",
-                    "Java",
-                    "3",
-                    "Errore"
-                }, 
+                new String[]{"4", "Java", "3", "Errore"}, 
                 0
             ),
-            
-            new Esercizio
-            (
+            new Esercizio(
                 titolo,
                 Grado.PRINCIPIANTE, 
-                "boolean b = true;\nif(!b) {\n  System.out.println(\"Vero\");\n} else {\n  System.out.println(\"Falso\");\n}", 
+                "int x = 10;\nif(x > 5) {\n  System.out.println(\"Grande\");\n} else {\n  System.out.println(\"Piccolo\");\n}", 
                 "Cosa viene stampato?", 
-                new String[]
-                {
-                    "Falso", 
-                    "Vero", 
-                    "Niente", 
-                    "Errore"
-                }, 
+                new String[]{"Grande", "Piccolo", "10", "Errore"}, 
                 0
             ),
-            
-            new Esercizio
-            (
+            new Esercizio(
                 titolo,
                 Grado.PRINCIPIANTE, 
                 "int[] arr = {1,2,3};\nSystem.out.println(arr[1]);", 
                 "Cosa viene stampato?", 
-                new String[]
-                {
-                    "2", 
-                    "1", 
-                    "3", 
-                    "Errore"
-                }, 
+                new String[]{"2", "1", "3", "Errore"}, 
                 0
             )
         ));
