@@ -88,7 +88,7 @@ public class LeggiCodiceController
                 titolo, 
                 Grado.PRINCIPIANTE, 
                 "int x = 5;\nint y = 3;\nint z = x + y;", 
-                "Qual è il valore di z?", 
+                "Quale valore verrà assegnato alla variabile z?", 
                 new String[]{"8", "53", "x + y", "35"}, 
                 0
             ),
@@ -96,7 +96,7 @@ public class LeggiCodiceController
                 titolo, 
                 Grado.PRINCIPIANTE, 
                 "for(int i = 0; i < 3; i++) {\n  System.out.println(i);\n}", 
-                "Quante volte viene eseguito il ciclo?", 
+                "Quante volte verrà eseguito il ciclo?", 
                 new String[]{"3", "2", "4", "1"}, 
                 0
             ),
@@ -104,7 +104,7 @@ public class LeggiCodiceController
                 titolo, 
                 Grado.PRINCIPIANTE, 
                 "String s = \"Java\";\nSystem.out.println(s.length());", 
-                "Cosa viene stampato?", 
+                "Quale valore verrà stampato a schermo?", 
                 new String[]{"4", "Java", "3", "Errore"}, 
                 0
             ),
@@ -112,7 +112,7 @@ public class LeggiCodiceController
                 titolo,
                 Grado.PRINCIPIANTE, 
                 "int x = 10;\nif(x > 5) {\n  System.out.println(\"Grande\");\n} else {\n  System.out.println(\"Piccolo\");\n}", 
-                "Cosa viene stampato?", 
+                "Cosa verrà stampato a schermo?", 
                 new String[]{"Grande", "Piccolo", "10", "Errore"}, 
                 0
             ),
@@ -120,7 +120,7 @@ public class LeggiCodiceController
                 titolo,
                 Grado.PRINCIPIANTE, 
                 "int[] arr = {1,2,3};\nSystem.out.println(arr[1]);", 
-                "Cosa viene stampato?", 
+                "Quale valore verrà stampato a schermo?", 
                 new String[]{"2", "1", "3", "Errore"}, 
                 0
             )
@@ -132,7 +132,7 @@ public class LeggiCodiceController
                 titolo, 
                 Grado.INTERMEDIO, 
                 "int x = 10;\nint y = x++;\nSystem.out.println(y);", 
-                "Cosa viene stampato?", 
+                "Quale valore verrà stampato a schermo?", 
                 new String[]
                 {
                     "10",
@@ -148,7 +148,7 @@ public class LeggiCodiceController
                 titolo, 
                 Grado.INTERMEDIO, 
                 "String s1 = \"Ciao\";\nString s2 = new String(\"Ciao\");\nSystem.out.println(s1 == s2);", 
-                "Cosa viene stampato?", 
+                "Cosa verrà stampato a schermo?", 
                 new String[]
                 {
                     "false", 
@@ -164,7 +164,7 @@ public class LeggiCodiceController
                 titolo, 
                 Grado.INTERMEDIO, 
                 "List<Integer> list = new ArrayList<>();\nlist.add(1);\nlist.add(2);\nlist.remove(1);\nSystem.out.println(list.size());", 
-                "Cosa viene stampato?",
+                "Quale valore verrà stampato a schermo?",
                 new String[]
                 {
                     "1", 
@@ -180,7 +180,7 @@ public class LeggiCodiceController
                 titolo, 
                 Grado.INTERMEDIO, 
                 "int x = 5;\nint y = x > 0 ? 1 : -1;\nSystem.out.println(y);", 
-                "Cosa viene stampato?", 
+                "Quale valore verrà stampato a schermo?", 
                 new String[]
                 {
                     "1", 
@@ -196,7 +196,7 @@ public class LeggiCodiceController
                 titolo, 
                 Grado.INTERMEDIO, 
                 "try {\n  int x = 5 / 0;\n} catch (Exception e) {\n  System.out.println(\"Errore\");\n}", 
-                "Cosa viene stampato?", 
+                "Cosa verrà stampato a schermo?", 
                 new String[]
                 {
                     "Errore",
@@ -214,7 +214,7 @@ public class LeggiCodiceController
                 titolo, 
                 Grado.AVANZATO, 
                 "Map<String, Integer> map = new HashMap<>();\nmap.put(\"A\", 1);\nmap.put(\"B\", 2);\nSystem.out.println(map.get(\"C\"));", 
-                "Cosa viene stampato?", 
+                "Cosa verrà stampato a schermo?", 
                 new String[]
                 {
                     "null", 
@@ -230,7 +230,7 @@ public class LeggiCodiceController
                 titolo, 
                 Grado.AVANZATO, 
                 "Supplier<Integer> supplier = () -> 5;\nSystem.out.println(supplier.get());", 
-                "Cosa viene stampato?", 
+                "Quale valore verrà stampato a schermo?", 
                 new String[]
                 {
                     "5", 
@@ -246,45 +246,13 @@ public class LeggiCodiceController
                 titolo, 
                 Grado.AVANZATO, 
                 "Stream<Integer> stream = Stream.of(1,2,3);\nlong count = stream.filter(n -> n > 1).count();\nSystem.out.println(count);", 
-                "Cosa viene stampato?", 
+                "Quale valore verrà stampato a schermo?", 
                 new String[]
                 {
                     "2", 
                     "3", 
                     "1", 
                     "0"
-                }, 
-                0
-            ),
-            
-            new Esercizio
-            (
-                titolo, 
-                Grado.AVANZATO, 
-                "Optional<String> opt = Optional.ofNullable(null);\nSystem.out.println(opt.orElse(\"Default\"));", 
-                "Cosa viene stampato?", 
-                new String[]
-                {
-                    "Default", 
-                    "null", 
-                    "Niente", 
-                    "Errore"
-                }, 
-                0
-            ),
-            
-            new Esercizio
-            (
-                titolo, 
-                Grado.AVANZATO, 
-                "List<String> list = Arrays.asList(\"A\",\"B\",\"C\");\nlist.forEach(System.out::print);", 
-                "Cosa viene stampato?", 
-                new String[]
-                {
-                    "ABC", 
-                    "A B C", 
-                    "List[A,B,C]", 
-                    "Errore"
                 }, 
                 0
             )

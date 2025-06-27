@@ -31,6 +31,7 @@ public class StampaOutputController
     @FXML private Button btnPrincipiante;
     @FXML private Button btnIntermedio;
     @FXML private Button btnAvanzato;
+    @FXML private TextArea codiceArea;
     //endregion
 
     //region Variabili
@@ -83,31 +84,31 @@ public class StampaOutputController
     private void caricaDomande() 
     {
         eserciziPerLivello.put("Principiante", new ArrayList<>(List.of(
-            new Esercizio(titolo, Grado.PRINCIPIANTE, "Stampa a schermo il numero 10.", new String[]{
+            new Esercizio(titolo, Grado.PRINCIPIANTE, "Quale istruzione stampa esattamente il numero 10 a schermo?", new String[]{
                 "System.out.println(\"10\");",
                 "System.out.print(10 + 1);",
                 "print(\"10\");",
                 "println(10);"
             }, 0),
-            new Esercizio(titolo, Grado.PRINCIPIANTE, "Stampa la somma tra 3 e 4.", new String[]{
+            new Esercizio(titolo, Grado.PRINCIPIANTE, "Quale istruzione stampa il risultato della somma tra 3 e 4?", new String[]{
                 "System.out.println(3 + 4);",
                 "System.out.println(\"3 + 4\");",
                 "System.print(7);",
                 "Console.log(7);"
             }, 0),
-            new Esercizio(titolo, Grado.PRINCIPIANTE, "Stampa il messaggio \"Benvenuto!\".", new String[]{
+            new Esercizio(titolo, Grado.PRINCIPIANTE, "Quale istruzione stampa il messaggio 'Benvenuto!' a schermo?", new String[]{
                 "System.out.println(\"Benvenuto!\");",
                 "println(\"Benvenuto!\");",
                 "print(\"Benvenuto\");",
                 "echo(\"Benvenuto!\");"
             }, 0),
-            new Esercizio(titolo, Grado.PRINCIPIANTE, "Stampa \"Ciao\" seguito da \"Mondo\" sulla stessa riga.", new String[]{
+            new Esercizio(titolo, Grado.PRINCIPIANTE, "Quale istruzione stampa 'Ciao' seguito da 'Mondo' sulla stessa riga?", new String[]{
                 "System.out.print(\"Ciao\"); System.out.print(\"Mondo\");",
                 "System.out.println(\"Ciao\"); System.out.println(\"Mondo\");",
                 "print(\"Ciao\" + \"\\n\" + \"Mondo\");",
                 "println(\"Ciao\" + \" \" + \"Mondo\");"
             }, 0),
-            new Esercizio(titolo, Grado.PRINCIPIANTE, "Stampa il risultato dell'operazione 15 diviso 3.", new String[]{
+            new Esercizio(titolo, Grado.PRINCIPIANTE, "Quale istruzione stampa il risultato dell'operazione 15 diviso 3?", new String[]{
                 "System.out.println(15 / 3);",
                 "System.out.println(\"15 / 3\");",
                 "System.out.println(5 * 3);",
@@ -115,88 +116,71 @@ public class StampaOutputController
             }, 0)
         )));
 
-    eserciziPerLivello.put("Intermedio", new ArrayList<>(List.of(
-    new Esercizio(titolo, Grado.INTERMEDIO, "System.out.println(\"1\\n2\\n3\");", "Stampa i numeri da 1 a 3 su righe separate.", new String[]{
-        "System.out.println(\"1\\n2\\n3\");",
-        "System.out.print(\"1 2 3\");",
-        "System.out.println(\"1 2 3\");",
-        "System.out.print(\"1\\n2\\n3\");"
-    }, 0),
+        eserciziPerLivello.put("Intermedio", new ArrayList<>(List.of(
+            new Esercizio(titolo, Grado.INTERMEDIO, "System.out.println(\"1\\n2\\n3\");", "Quale sarà l'output prodotto da questa istruzione?", new String[]{
+                "1\n2\n3 (tre righe distinte)",
+                "1 2 3",
+                "1 2 3 (una sola riga)",
+                "1\\n2\\n3 (stampato letteralmente)"
+            }, 0),
+            new Esercizio(titolo, Grado.INTERMEDIO, "System.out.println(\"Java\".length());", "Cosa verrà stampato a schermo?", new String[]{
+                "4",
+                "Java.length()",
+                "5",
+                "Errore"
+            }, 0),
+            new Esercizio(titolo, Grado.INTERMEDIO, "if(n % 2 == 0) System.out.println(\"Pari\");", "Cosa verrà stampato se n = 4?", new String[]{
+                "Pari",
+                "Niente",
+                "4",
+                "Errore"
+            }, 0),
+            new Esercizio(titolo, Grado.INTERMEDIO, "int[] nums = {9, 8, 7};\nSystem.out.println(nums[0]);", "Cosa verrà stampato a schermo?", new String[]{
+                "9",
+                "8",
+                "7",
+                "nums"
+            }, 0),
+            new Esercizio(titolo, Grado.INTERMEDIO, "boolean attivo = true;\nif(attivo) System.out.println(\"OK\");", "Cosa verrà stampato se attivo è true?", new String[]{
+                "OK",
+                "Niente",
+                "true",
+                "Errore"
+            }, 0)
+        )));
 
-    new Esercizio(titolo, Grado.INTERMEDIO, "System.out.println(\"Java\".length());", "Stampa la lunghezza della stringa \"Java\".", new String[]{
-        "System.out.println(\"Java\".length());",
-        "System.out.println(length(\"Java\"));",
-        "System.out.println(\"Java.length()\");",
-        "System.out.println(size(\"Java\"));"
-    }, 0),
-
-    new Esercizio(titolo, Grado.INTERMEDIO, "if(n % 2 == 0) System.out.println(\"Pari\");", "Stampa \"Pari\" se il numero è pari (n = 4).", new String[]{
-        "if(n % 2 == 0) System.out.println(\"Pari\");",
-        "if(n % 2 != 0) System.out.println(\"Pari\");",
-        "if(n == 2) System.out.println(\"Pari\");",
-        "if(n % 4 == 0) System.out.print(\"Pari\");"
-    }, 0),
-
-    new Esercizio(titolo, Grado.INTERMEDIO, "System.out.println(nums[0]);", "Stampa il primo elemento di un array di interi int[] nums = {9, 8, 7};", new String[]{
-        "System.out.println(nums[0]);",
-        "System.out.println(nums[1]);",
-        "System.out.println(nums[2]);",
-        "System.out.println(nums);"
-    }, 0),
-
-    new Esercizio(titolo, Grado.INTERMEDIO, "if(attivo) System.out.println(\"OK\");", "Stampa \"OK\" solo se la variabile booleana attivo è true.", new String[]{
-        "if(attivo) System.out.println(\"OK\");",
-        "if(!attivo) System.out.println(\"OK\");",
-        "if(attivo == false) System.out.println(\"OK\");",
-        "if(attivo = true) System.out.println(\"OK\");"
-    }, 0)
-)));
-
-eserciziPerLivello.put("Avanzato", new ArrayList<>(List.of(
-    new Esercizio(titolo, Grado.AVANZATO, "if(username.equals(\"admin\")) System.out.println(\"Login effettuato\");", "Stampa \"Login effettuato\" solo se username è uguale a \"admin\".", new String[]{
-        "if(username.equals(\"admin\")) System.out.println(\"Login effettuato\");",
-        "if(username == \"admin\") System.out.println(\"Login effettuato\");",
-        "if(username = \"admin\") System.out.println(\"Login effettuato\");",
-        "if(username != \"admin\") System.out.println(\"Login effettuato\");"
-    }, 0),
-
-    new Esercizio(titolo, Grado.AVANZATO, "for(String s : arr) System.out.println(s);", "Stampa ogni elemento dell'array String[] arr = {\"a\", \"b\", \"c\"};", new String[]{
-        "for(String s : arr) System.out.println(s);",
-        "for(int i=0; i<arr.size(); i++) print(arr[i]);",
-        "foreach(arr as s) println(s);",
-        "for(s in arr) System.out.println(s);"
-    }, 0),
-
-    new Esercizio(titolo, Grado.AVANZATO, 
-        "if(n > 0) System.out.println(\"Positivo\");\nelse if(n < 0) System.out.println(\"Negativo\");\nelse System.out.println(\"Zero\");", 
-        "Stampa \"Positivo\" se n > 0, \"Negativo\" se n < 0, \"Zero\" altrimenti.", 
-        new String[]{
-            "if(n > 0) System.out.println(\"Positivo\");\nelse if(n < 0) System.out.println(\"Negativo\");\nelse System.out.println(\"Zero\");",
-            "if(n == 0) System.out.println(\"Zero\");\nif(n < 0) System.out.println(\"Negativo\");\nif(n > 0) System.out.println(\"Positivo\");",
-            "if(n != 0) System.out.println(\"Non zero\");\nelse System.out.println(\"Zero\");",
-            "if(n > 0) System.out.print(\"Positivo\"); System.out.print(\"Negativo\");"
-        }, 0),
-
-    new Esercizio(titolo, Grado.AVANZATO, 
-        "try {\n    int x = 10 / 0;\n} catch(Exception e) {\n    System.out.println(\"Errore\");\n}", 
-        "Stampa \"Errore\" se viene sollevata un'eccezione durante la divisione.", 
-        new String[]{
-            "try {\n    int x = 10 / 0;\n} catch(Exception e) {\n    System.out.println(\"Errore\");\n}",
-            "int x = 10 / 0;\nSystem.out.println(\"Errore\");",
-            "if(10 / 0) System.out.println(\"Errore\");",
-            "catch(Exception) { System.out.println(\"Errore\"); }"
-        }, 0),
-
-    new Esercizio(titolo, Grado.AVANZATO, 
-        "for(int i = 0; i < 3; i++) {\n    // operazioni\n}\nSystem.out.println(\"Fine\");", 
-        "Stampa \"Fine\" dopo che il ciclo ha iterato 3 volte.", 
-        new String[]{
-            "for(int i = 0; i < 3; i++) {\n    // operazioni\n}\nSystem.out.println(\"Fine\");",
-            "while(i < 3) System.out.println(\"Fine\");",
-            "for(int i = 1; i <= 3) System.out.println(\"Fine\");",
-            "if(i == 3) System.out.println(\"Fine\");"
-        }, 0)
-)));
+        eserciziPerLivello.put("Avanzato", new ArrayList<>(List.of(
+            new Esercizio(titolo, Grado.AVANZATO, "if(username.equals(\"admin\")) System.out.println(\"Login effettuato\");", "Cosa verrà stampato se username è 'admin'?", new String[]{
+                "Login effettuato",
+                "admin",
+                "Niente",
+                "Errore"
+            }, 0),
+            new Esercizio(titolo, Grado.AVANZATO, "for(String s : arr) System.out.println(s);", "Se arr = {'a', 'b', 'c'}, quale sarà l'output?", new String[]{
+                "a\nb\nc",
+                "abc",
+                "[a, b, c]",
+                "Errore"
+            }, 0),
+            new Esercizio(titolo, Grado.AVANZATO, "if(n > 0) System.out.println(\"Positivo\");\nelse if(n < 0) System.out.println(\"Negativo\");\nelse System.out.println(\"Zero\");", "Cosa verrà stampato se n = 0?", new String[]{
+                "Zero",
+                "Positivo",
+                "Negativo",
+                "Niente"
+            }, 0),
+            new Esercizio(titolo, Grado.AVANZATO, "try {\n    int x = 10 / 0;\n} catch(Exception e) {\n    System.out.println(\"Errore\");\n}", "Cosa verrà stampato?", new String[]{
+                "Errore",
+                "0",
+                "10",
+                "Division by zero"
+            }, 0),
+            new Esercizio(titolo, Grado.AVANZATO, "for(int i = 0; i < 3; i++) {\n    // operazioni\n}\nSystem.out.println(\"Fine\");", "Cosa verrà stampato dopo che il ciclo ha iterato 3 volte?", new String[]{
+                "Fine",
+                "3",
+                "operazioni",
+                "Errore"
+            }, 0)
+        )));
 
         eserciziPerLivello.forEach((livello, lista) -> mostratiPerLivello.put(livello, new ArrayList<>()));
     }
@@ -239,6 +223,18 @@ eserciziPerLivello.put("Avanzato", new ArrayList<>(List.of(
         
         titoloLabel.setText(esercizioCorrente.titolo);
         consegnaLabel.setText(esercizioCorrente.domanda);
+        // Mostra codice se presente
+        if (codiceArea != null) {
+            if (esercizioCorrente.codice != null && !esercizioCorrente.codice.isEmpty()) {
+                codiceArea.setText(esercizioCorrente.codice);
+                codiceArea.setVisible(true);
+                codiceArea.setManaged(true);
+            } else {
+                codiceArea.clear();
+                codiceArea.setVisible(false);
+                codiceArea.setManaged(false);
+            }
+        }
         
         // Mescola le risposte
         List<String> risposteMischiate = new ArrayList<>(List.of(esercizioCorrente.risposte));

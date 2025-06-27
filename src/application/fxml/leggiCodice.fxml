@@ -14,7 +14,7 @@
 
     <!-- CONTENUTO CENTRALE -->
     <center>
-        <VBox fx:id="contenitoreCentrale" alignment="CENTER" spacing="20" styleClass="contenitore-centrale">
+        <VBox fx:id="contenitoreCentrale" alignment="CENTER" spacing="20" maxWidth="900" prefWidth="900">
 
             <!-- Logo -->
             <ImageView fx:id="logo" fitHeight="150" fitWidth="150" preserveRatio="true">
@@ -59,7 +59,7 @@
             <Label fx:id="titoloLabel" styleClass="titolo"/>
 
             <!-- Codice -->
-            <TextArea fx:id="codiceArea" editable="false" wrapText="true" styleClass="codice-area"/>
+            <TextArea fx:id="codiceArea" editable="false" wrapText="true" styleClass="codice-area" VBox.vgrow="ALWAYS"/>
 
             <!-- Consegna -->
             <Label fx:id="consegnaLabel" wrapText="true" styleClass="consegna"/>

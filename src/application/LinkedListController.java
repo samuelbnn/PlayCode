@@ -87,56 +87,42 @@ public class LinkedListController
             new Esercizio(
                 titolo,
                 Grado.PRINCIPIANTE,
-                "class Node {\n    int data;\n    Node next;\n    Node(int data) {\n        this.data = data;\n        this.next = null;\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Node node = new Node(10);\n        System.out.println(node.data);\n    }\n}",
-                "Qual è l'output?",
-                new String[]{"Errore di compilazione", "null", "10", "0"},
-                2
+                "class Node {\n    int data;\n    Node next;\n    Node(int data) {\n        this.data = data;\n        this.next = null;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Node node = new Node(10);\n        System.out.println(node.data);\n    }\n}",
+                "Cosa verrà stampato a schermo?",
+                new String[]{"10", "null", "Errore di compilazione", "0"},
+                0
             ),
-            
             new Esercizio(
                 titolo,
                 Grado.PRINCIPIANTE,
                 "Node node = new Node(5);",
-                "Qual è il valore iniziale del puntatore 'next' in un nuovo nodo?",
-                new String[]{"node", "0", "null", "true"},
-                2
+                "Qual è il valore iniziale del campo 'next' in un nuovo nodo?",
+                new String[]{"null", "0", "node", "true"},
+                0
             ),
-            
             new Esercizio(
                 titolo,
                 Grado.PRINCIPIANTE,
                 "Node first = new Node(1);\nNode second = new Node(2);",
-                "Come si collega un nodo a un altro?",
-                new String[]{
-                    "first.data = second;",
-                    "first.next = second;",
-                    "second = first.next;",
-                    "first = next.second;"
-                },
-                1
+                "Come si collega il nodo 'first' al nodo 'second'?",
+                new String[]{"first.next = second;", "first.data = second;", "second = first.next;", "first = next.second;"},
+                0
             ),
-            
             new Esercizio(
                 titolo,
                 Grado.PRINCIPIANTE,
                 "class Node {\n    int data;\n    Node next;\n}",
-                "Qual è la funzione del campo 'next' in un nodo di una Linked List?",
-                new String[]{
-                    "Conservare il valore del nodo",
-                    "Puntare al nodo successivo",
-                    "Contare il numero di nodi",
-                    "Stampare i nodi"
-                },
-                1
+                "Qual è la funzione del campo 'next' in una Linked List?",
+                new String[]{"Puntare al nodo successivo", "Conservare il valore del nodo", "Contare il numero di nodi", "Stampare i nodi"},
+                0
             ),
-            
             new Esercizio(
                 titolo,
                 Grado.PRINCIPIANTE,
                 "Node node = new Node(7);\nSystem.out.println(node.next);",
-                "Cosa stampa il seguente codice?",
-                new String[]{"0", "7", "null", "Errore di compilazione"},
-                2
+                "Cosa verrà stampato a schermo?",
+                new String[]{"null", "7", "0", "Errore di compilazione"},
+                0
             )
         ));
 
@@ -145,60 +131,41 @@ public class LinkedListController
                 titolo,
                 Grado.INTERMEDIO,
                 "Node a = new Node(1);\nNode b = new Node(2);\na.next = b;\nSystem.out.println(a.next.data);",
-                "Cosa stampa il codice?",
-                new String[]{"1", "2", "null", "Errore"},
-                1
+                "Cosa verrà stampato a schermo?",
+                new String[]{"2", "1", "null", "Errore"},
+                0
             ),
-            
             new Esercizio(
                 titolo,
                 Grado.INTERMEDIO,
-                "void printList(Node head) {\n    while (head != null) {\n        System.out.print(head.data + \" \");\n        head = head.next;\n    }\n}",
+                "void printList(Node head) {\n    while (head != null) {\n        System.out.print(head.data + \" \" );\n        head = head.next;\n    }\n}",
                 "Cosa fa questo metodo?",
-                new String[]{
-                    "Crea una nuova lista",
-                    "Stampa tutti gli elementi della lista",
-                    "Rimuove il primo nodo",
-                    "Conta i nodi"
-                },
-                1
+                new String[]{"Stampa tutti gli elementi della lista", "Crea una nuova lista", "Rimuove il primo nodo", "Conta i nodi"},
+                0
             ),
-            
             new Esercizio(
                 titolo,
                 Grado.INTERMEDIO,
                 "Node head = new Node(1);\nhead.next = new Node(2);\nhead.next.next = new Node(3);\nSystem.out.println(head.next.next.data);",
-                "Qual è l'output?",
-                new String[]{"1", "2", "3", "null"},
-                2
+                "Cosa verrà stampato a schermo?",
+                new String[]{"3", "2", "1", "null"},
+                0
             ),
-            
             new Esercizio(
                 titolo,
                 Grado.INTERMEDIO,
                 "Node head = new Node(1);\nhead.next.data = 2;",
                 "Qual è il problema in questo codice?",
-                new String[]{
-                    "Il nodo è statico",
-                    "head.next è null",
-                    "Mancano i getter",
-                    "data non è accessibile"
-                },
-                1
+                new String[]{"head.next è null", "Il nodo è statico", "Mancano i getter", "data non è accessibile"},
+                0
             ),
-            
             new Esercizio(
                 titolo,
                 Grado.INTERMEDIO,
                 "int countNodes(Node head) {\n    int count = 0;\n    while (head != null) {\n        count++;\n        head = head.next;\n    }\n    return count;\n}",
-                "Cosa fa questo metodo?",
-                new String[]{
-                    "Ritorna l’ultimo nodo",
-                    "Conta il numero di nodi",
-                    "Stampa tutti i nodi",
-                    "Crea una nuova lista"
-                },
-                1
+                "Cosa restituisce questo metodo?",
+                new String[]{"Conta il numero di nodi", "Ritorna l'ultimo nodo", "Stampa tutti i nodi", "Crea una nuova lista"},
+                0
             )
         ));
 
@@ -208,59 +175,40 @@ public class LinkedListController
                 Grado.AVANZATO,
                 "Node reverse(Node head) {\n    Node prev = null;\n    Node curr = head;\n    while (curr != null) {\n        Node next = curr.next;\n        curr.next = prev;\n        prev = curr;\n        curr = next;\n    }\n    return prev;\n}",
                 "Cosa fa questo metodo?",
-                new String[]{
-                    "Conta i nodi",
-                    "Elimina i nodi duplicati",
-                    "Inverte la lista",
-                    "Crea una nuova lista"
-                },
-                2
+                new String[]{"Inverte la lista", "Conta i nodi", "Elimina i nodi duplicati", "Crea una nuova lista"},
+                0
             ),
-            
             new Esercizio(
                 titolo,
                 Grado.AVANZATO,
                 "Node reverse(Node head) { /* stessa funzione dell'esercizio precedente */ }",
                 "Qual è la complessità temporale della funzione 'reverse'?",
-                new String[]{"O(log n)", "O(n²)", "O(n)", "O(1)"},
-                2
+                new String[]{"O(n)", "O(log n)", "O(n²)", "O(1)"},
+                0
             ),
-            
             new Esercizio(
                 titolo,
                 Grado.AVANZATO,
                 "Node head = new Node(1);\nhead.next = new Node(2);\nhead.next.next = new Node(3);\nNode temp = head;\nwhile (temp.next != null) {\n    temp = temp.next;\n}\nSystem.out.println(temp.data);",
-                "Cosa stampa questo codice?",
-                new String[]{"1", "2", "3", "null"},
-                2
+                "Cosa verrà stampato a schermo?",
+                new String[]{"3", "2", "1", "null"},
+                0
             ),
-            
             new Esercizio(
                 titolo,
                 Grado.AVANZATO,
                 "Node a = new Node(1);\nNode b = new Node(2);\na.next = b;\nb.next = a;",
                 "Qual è il rischio di questo codice?",
-                new String[]{
-                    "Nessuno",
-                    "È più veloce",
-                    "Crea un ciclo infinito nella lista",
-                    "Elimina il nodo precedente"
-                },
-                2
+                new String[]{"Crea un ciclo infinito nella lista", "Nessuno", "È più veloce", "Elimina il nodo precedente"},
+                0
             ),
-            
             new Esercizio(
                 titolo,
                 Grado.AVANZATO,
-                "boolean hasCycle(Node head) {\n    Node slow = head;\n    Node fast = head;\n    while (fast != null && fast.next != null) {\n        slow = slow.next;\n        fast = fast.next.next;\n        if (slow == fast) return true;\n    }\n    return false;\n}",
-                "Come si rileva un ciclo in una Linked List?",
-                new String[]{
-                    "Con un contatore",
-                    "Usando un array",
-                    "Con due puntatori (slow e fast)",
-                    "Ordinando i nodi"
-                },
-                2
+                "Node head = null;\nSystem.out.println(head.data);",
+                "Cosa succede eseguendo questo codice?",
+                new String[]{"NullPointerException", "0", "Errore di compilazione", "Stampa null"},
+                0
             )
         ));
 

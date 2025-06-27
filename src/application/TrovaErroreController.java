@@ -88,40 +88,40 @@ public class TrovaErroreController
                 titolo, 
                 Grado.PRINCIPIANTE, 
                 "System.out.println(\"Hello\")", 
-                "Cosa manca?", 
-                new String[]{"Punto e virgola", "Parentesi graffa", "Dichiarazione variabile", "Parentesi quadra"},
+                "Quale errore impedisce la compilazione di questa istruzione?", 
+                new String[]{"Manca il punto e virgola", "Manca una parentesi graffa", "Manca la dichiarazione della variabile", "Manca la parentesi quadra"},
                 0),
 
             new Esercizio(
                 titolo, 
                 Grado.PRINCIPIANTE, 
                 "if (x > 5)\n    System.out.println(\"Grande\")\nelse\n    System.out.println(\"Piccolo\");", 
-                "Individua l'errore sintattico", 
-                new String[]{"Manca una graffa", "Errore di tipo", "Variabile non inizializzata", "Manca il punto e virgola"}, 
+                "Qual è l'errore sintattico in questo codice?", 
+                new String[]{"Mancano le parentesi graffe", "Manca il punto e virgola dopo System.out.println(\"Grande\")", "Manca la dichiarazione di x", "Manca la parentesi tonda"}, 
                 0),
 
             new Esercizio(
                 titolo, 
                 Grado.PRINCIPIANTE, 
                 "System.ou.println(\"Errore\");", 
-                "Cosa c'è che non va?", 
-                new String[]{"Errore di battitura: 'ou'", "System non definito", "Manca il punto e virgola", "Errore di runtime"}, 
+                "Qual è l'errore in questa istruzione?", 
+                new String[]{"Errore di battitura: 'ou' invece di 'out'", "Manca il punto e virgola", "Manca la dichiarazione di System", "Errore di runtime"}, 
                 0),
 
             new Esercizio(
                 titolo, 
                 Grado.PRINCIPIANTE, 
                 "public static void main {\n    System.out.println(\"Ciao\");\n}", 
-                "Qual è l'errore?", 
-                new String[]{"Mancano le parentesi tonde", "Manca il return", "main non è static", "Errore di sintassi"}, 
+                "Qual è l'errore nella dichiarazione del metodo main?", 
+                new String[]{"Mancano le parentesi tonde", "Manca il modificatore static", "Manca il return", "main non è pubblico"}, 
                 0),
 
             new Esercizio(
                 titolo, 
                 Grado.PRINCIPIANTE, 
                 "int numero = \"dieci\";", 
-                "Dove sta l'errore?", 
-                new String[]{"Tipo incompatibile", "String non definita", "Uso scorretto di = ", "Errore di casting"}, 
+                "Qual è l'errore in questa istruzione?", 
+                new String[]{"Assegnazione di una stringa a una variabile int", "Manca il punto e virgola", "Uso scorretto dell'operatore =", "Variabile non inizializzata"}, 
                 0)
         ));
 
@@ -130,40 +130,40 @@ public class TrovaErroreController
                 titolo, 
                 Grado.INTERMEDIO, 
                 "if(x = 10) {\n  System.out.println(\"x\");\n}", 
-                "Errore logico?", 
-                new String[]{"Uso di '=' invece di '=='", "x è già definito", "System non importato", "Errore di runtime"}, 
+                "Qual è l'errore in questa condizione?", 
+                new String[]{"Uso di '=' invece di '=='", "x non dichiarato", "Manca il punto e virgola", "Errore di runtime"}, 
                 0),
             
             new Esercizio(
                 titolo, 
                 Grado.INTERMEDIO, 
                 "boolean valido = true;\nif(valido == false);\n  System.out.println(\"Non valido\");", 
-                "Cosa c'è che non va?", 
-                new String[]{"If con ; inutile", "La variabile non esiste", "Manca else", "Errore di logica"}, 
+                "Qual è l'errore logico in questo frammento?", 
+                new String[]{"Il punto e virgola dopo l'if rende il controllo inutile", "Manca la dichiarazione di valido", "Manca else", "Errore di sintassi"}, 
                 0),
             
             new Esercizio(
                 titolo, 
                 Grado.INTERMEDIO, 
                 "for(int i = 0; i > 10; i++) {\n  System.out.println(i);\n}", 
-                "Ciclo non entra mai, perché?", 
-                new String[]{"Condizione errata", "Inizializzazione sbagliata", "i non definito", "Errore di sintassi"}, 
+                "Qual è l'errore nella condizione del ciclo?", 
+                new String[]{"La condizione è sempre falsa, il ciclo non viene mai eseguito", "i non dichiarato", "Manca il punto e virgola", "Errore di sintassi"}, 
                 0),
             
             new Esercizio(
                 titolo, 
                 Grado.INTERMEDIO, 
                 "int[] nums = new int[3];\nnums[3] = 5;", 
-                "Che problema c'è?", 
-                new String[]{"IndexOutOfBounds", "Errore di sintassi", "Array nullo", "Errore di runtime"}, 
+                "Qual è l'errore in questo codice?", 
+                new String[]{"Accesso fuori dai limiti dell'array (IndexOutOfBounds)", "Array non inizializzato", "Errore di sintassi", "Manca la dichiarazione di nums"}, 
                 0),
             
             new Esercizio(
                 titolo, 
                 Grado.INTERMEDIO, 
                 "String s = null;\nSystem.out.println(s.length());", 
-                "Cosa succede?", 
-                new String[]{"NullPointerException", "String non importata", "Metodo sbagliato", "Errore di runtime"}, 
+                "Quale errore si verifica in esecuzione?", 
+                new String[]{"NullPointerException", "String non importata", "Metodo sbagliato", "Errore di sintassi"}, 
                 0)
         ));
 
@@ -172,35 +172,40 @@ public class TrovaErroreController
                 titolo, 
                 Grado.AVANZATO, 
                 "int[] arr = {1,2,3};\nfor(int i = 0; i <= arr.length; i++) {\n  System.out.println(arr[i]);\n}", 
-                "Cosa succede?", new String[]{"IndexOutOfBounds", "Errore di compilazione", "StackOverflow", "Errore di runtime"}, 
+                "Quale errore si verifica durante l'esecuzione del ciclo?", 
+                new String[]{"Accesso fuori dai limiti dell'array (IndexOutOfBounds)", "Errore di compilazione", "StackOverflow", "Errore di sintassi"}, 
                 0),
 
             new Esercizio(
                 titolo, 
                 Grado.AVANZATO, 
-                "while(true) {\n  int x = 5;\n  x++;\n}", 
-                "Qual è il problema?", new String[]{"Loop infinito", "x non definito", "Manca il break", "Errore di logica"}, 
+                "int i = 0;\nwhile(i < 5) {\n    // manca incremento\n    System.out.println(i);\n}", 
+                "Qual è il problema principale di questo ciclo?", 
+                new String[]{"Loop infinito per mancanza di incremento", "i non dichiarato", "Manca il punto e virgola", "Errore di sintassi"}, 
                 0),
 
             new Esercizio(
                 titolo, 
                 Grado.AVANZATO, 
                 "for(int i = 0; i < 5; i++)\n  break\n  System.out.println(i);", 
-                "Errore combinato?", new String[]{"Manca punto e virgola dopo break", "Ciclo sbagliato", "Variabile duplicata", "Errore di sintassi"}, 
+                "Qual è l'errore sintattico in questo frammento?", 
+                new String[]{"Manca il punto e virgola dopo break", "Ciclo sbagliato", "Variabile duplicata", "Errore di sintassi"}, 
                 0),
 
             new Esercizio(
                 titolo, 
                 Grado.AVANZATO, 
                 "int x;\nif(x > 0) {\n  System.out.println(\"Positivo\");\n}", 
-                "Cosa accade?", new String[]{"Variabile non inizializzata", "Errore di logica", "Loop non chiuso", "Errore di runtime"}, 
+                "Qual è l'errore in questo codice?", 
+                new String[]{"Variabile x non inizializzata", "Manca il punto e virgola", "Errore di logica", "Errore di sintassi"}, 
                 0),
 
             new Esercizio(
                 titolo, 
                 Grado.AVANZATO, 
                 "String[] parole = {\"ciao\", null, \"mondo\"};\nfor(String p : parole) {\n  System.out.println(p.toUpperCase());\n}", 
-                "Cosa può succedere?", new String[]{"NullPointerException", "IndexError", "ArrayIndexOutOfBounds", "Errore di runtime"}, 
+                "Quale errore si può verificare durante l'esecuzione?", 
+                new String[]{"NullPointerException", "IndexError", "ArrayIndexOutOfBounds", "Errore di sintassi"}, 
                 0)
         ));
 

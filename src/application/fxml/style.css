@@ -95,7 +95,7 @@
     -fx-padding: 0;
     -fx-border-color: transparent;
     -fx-background-radius: 8;
-    -fx-pref-height: 10px;
+    -fx-pref-height: 30px;
 }
 
 .progress-bar .bar {
