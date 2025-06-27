@@ -97,7 +97,7 @@ public class CompletaCodiceController
         )));
 
         eserciziPerLivello.put("Intermedio", new ArrayList<>(List.of(
-            new Esercizio(titolo, Grado.INTERMEDIO, "if(nome.equals(\"Mario\")) {\n    // manca azione \n}", "Aggiungi il messaggio di benvenuto", new String[]{"System.out.println(\"Benvenuto Mario\");"}, 0),
+            new Esercizio(titolo, Grado.INTERMEDIO, "if(nome.equals(\"Mario\")) {\n    // manca azione \n}", "Scrivi il messaggio di benvenuto", new String[]{"System.out.println(\"Benvenuto Mario\");"}, 0),
             new Esercizio(titolo, Grado.INTERMEDIO, "int somma = 0;\nfor (int i = 0; i < 5; i++) {\n    _____\n}", "Aggiungi i alla somma", new String[]{"somma += i;"}, 0),
             new Esercizio(titolo, Grado.INTERMEDIO, "String parola = \"ciao\";\nif (_____) {\n    System.out.println(\"ok\");\n}", "Controlla che parola sia uguale a 'ciao'", new String[]{"parola.equals(\"ciao\")"}, 0),
             new Esercizio(titolo, Grado.INTERMEDIO, "String[] frutti = {\"mela\", \"banana\", \"kiwi\"};\nfor(String frutto : frutti) {\n    // manca la stampa\n}", "Stampa ogni frutto dell'array", new String[]{"System.out.println(frutto);"}, 0),
@@ -105,11 +105,11 @@ public class CompletaCodiceController
         )));
 
         eserciziPerLivello.put("Avanzato", new ArrayList<>(List.of(
-            new Esercizio(titolo, Grado.AVANZATO, "int[] numeri = {1, 2, 3, 4};\nfor(int i = 0; i < numeri.length; i++) {\n    if(numeri[i] > 1 && numeri[i] % 2 == 0) {\n        _____\n    }\n}", "Stampa solo i numeri maggiori di 1 e pari", new String[]{"System.out.println(numeri[i]);"}, 0),
+            new Esercizio(titolo, Grado.AVANZATO, "int[] numeri = {1, 2, 3, 4};\nfor(int i = 0; i < numeri.length; i++) {\n    if(__________) {\n       System.out.println(numeri[i]);\n    }\n}", "Stampa solo i numeri maggiori di 1 e pari", new String[]{"numeri[i] > 1 && numeri[i] % 2 == 0"}, 0),
             new Esercizio(titolo, Grado.AVANZATO, "public int fattoriale(int n) {\n    if (n == 0) return 1;\n    else _____\n}", "Completa la ricorsione per il fattoriale", new String[]{"return n * fattoriale(n - 1);"}, 0),
-            new Esercizio(titolo, Grado.AVANZATO, "int[] numeri = {1, 2, 3, 4};\nfor (int n : numeri) {\n    if (n % 2 == 0) {\n        _____\n    }\n}", "Stampa solo i numeri pari", new String[]{"System.out.println(n);"}, 0),
+            new Esercizio(titolo, Grado.AVANZATO, "int[] numeri = {1, 2, 3, 4};\nfor (int n : numeri) {\n    if (_______) {\n        System.out.println(n);\n    }\n}", "Stampa solo i numeri pari", new String[]{"n % 2 == 0"}, 0),
             new Esercizio(titolo, Grado.AVANZATO, "Map<String, Integer> punteggi = new HashMap<>();\npunteggi.put(\"Alice\", 10);\npunteggi.put(\"Bob\", 8);\n// stampa punteggio di Alice", "Accedi al valore associato ad 'Alice'", new String[]{"System.out.println(punteggi.get(\"Alice\"));"}, 0),
-            new Esercizio(titolo, Grado.AVANZATO, "List<String> nomi = Arrays.asList(\"Luca\", \"Marco\");\n// stampa la lista", "Stampa tutta la lista di nomi", new String[]{"System.out.println(nomi);"}, 0)
+            new Esercizio(titolo, Grado.AVANZATO, "List<String> nomi = Arrays.asList(\"Luca\", \"Marco\", \"Anna\");\nfor(String nome : nomi) {\n    // manca una condizione\n    System.out.println(nome);\n}", "Scrivi la condizione per stampare solo i nomi che iniziano con la lettera 'M'.", new String[]{"nome.startsWith(\"M\")"}, 0)
         )));
 
         eserciziPerLivello.forEach((livello, lista) -> mostratiPerLivello.put(livello, new ArrayList<>()));

@@ -113,7 +113,7 @@ public class TrovaErroreController
                 Grado.PRINCIPIANTE, 
                 "public static void main {\n    System.out.println(\"Ciao\");\n}", 
                 "Qual è l'errore nella dichiarazione del metodo main?", 
-                new String[]{"Mancano le parentesi tonde", "Manca il modificatore static", "Manca il return", "main non è pubblico"}, 
+                new String[]{"Mancano le parentesi tonde nel main", "Manca il modificatore static", "Manca il return", "main non è pubblico"}, 
                 0),
 
             new Esercizio(
@@ -135,11 +135,11 @@ public class TrovaErroreController
                 0),
             
             new Esercizio(
-                titolo, 
-                Grado.INTERMEDIO, 
-                "boolean valido = true;\nif(valido == false);\n  System.out.println(\"Non valido\");", 
-                "Qual è l'errore logico in questo frammento?", 
-                new String[]{"Il punto e virgola dopo l'if rende il controllo inutile", "Manca la dichiarazione di valido", "Manca else", "Errore di sintassi"}, 
+                titolo,
+                Grado.INTERMEDIO,
+                "String password = \"admin\";\nif (password == \"admin\") {\n    System.out.println(\"Accesso consentito\");\n}",
+                "Qual è l'errore in questo codice?",
+                new String[]{"Il confronto tra stringhe andrebbe fatto con equals(), non con ==", "La variabile password non è dichiarata correttamente", "Manca l'istruzione else", "Il metodo println() non esiste"},
                 0),
             
             new Esercizio(
@@ -177,19 +177,19 @@ public class TrovaErroreController
                 0),
 
             new Esercizio(
-                titolo, 
-                Grado.AVANZATO, 
-                "int i = 0;\nwhile(i < 5) {\n    // manca incremento\n    System.out.println(i);\n}", 
-                "Qual è il problema principale di questo ciclo?", 
-                new String[]{"Loop infinito per mancanza di incremento", "i non dichiarato", "Manca il punto e virgola", "Errore di sintassi"}, 
+                titolo,
+                Grado.AVANZATO,
+                "String[] nomi = new String[2];\nfor (String n : nomi) {\n    System.out.println(n.toUpperCase());\n}",
+                "Qual è l'errore a runtime?",
+                new String[]{ "NullPointerException per tentativo di usare toUpperCase su un valore null", "Array non inizializzato", "Errore di compilazione","Il ciclo for non è valido per array"},
                 0),
 
             new Esercizio(
                 titolo, 
                 Grado.AVANZATO, 
-                "for(int i = 0; i < 5; i++)\n  break\n  System.out.println(i);", 
-                "Qual è l'errore sintattico in questo frammento?", 
-                new String[]{"Manca il punto e virgola dopo break", "Ciclo sbagliato", "Variabile duplicata", "Errore di sintassi"}, 
+                "class Animale {\n    void verso() { System.out.println(\"Suono\"); }\n}\nclass Gatto extends Animale {\n    void verso(String tipo) { System.out.println(\"Miao\"); }\n}\nAnimale a = new Gatto();\na.verso();",
+                "Perché questo codice stampa 'Suono' invece di 'Miao'?", 
+                new String[]{ "Il metodo verso(String) non overridea verso()", "Non si può fare override su metodi void","Errore di compilazione","Il metodo verso() non è accessibile da Gatto"},
                 0),
 
             new Esercizio(
