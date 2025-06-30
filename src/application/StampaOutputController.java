@@ -162,7 +162,7 @@ public class StampaOutputController
                 "a b c",
                 "Errore"
             },0),
-            new Esercizio(itolo, Grado.AVANZATO,"class Animale {\n  void verso() { System.out.println(\"Suono generico\"); }\n}\nclass Cane extends Animale {\n  void verso(String tipo) { System.out.println(\"Bau\"); }\n}\nAnimale a = new Cane();\na.verso();", "Cosa stamperà questo codice?", new String[]{
+            new Esercizio(titolo, Grado.AVANZATO,"class Animale {\n  void verso() { System.out.println(\"Suono generico\"); }\n}\nclass Cane extends Animale {\n  void verso(String tipo) { System.out.println(\"Bau\"); }\n}\nAnimale a = new Cane();\na.verso();", "Cosa stamperà questo codice?", new String[]{
                 "Suono generico",
                 "Bau",
                 "Errore di compilazione",
