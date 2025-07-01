@@ -85,129 +85,189 @@ public class StaticCodeController
     {
         eserciziPerLivello.put("Principiante", List.of(
             new Esercizio(
-                "Accesso a variabile statica",
+                titolo,
                 Grado.PRINCIPIANTE,
                 "public class Test {\n    static int x = 5;\n    public static void main(String[] args) {\n        System.out.println(x);\n    }\n}",
                 "Cosa verrà stampato a schermo?",
-                new String[]{"5", "null", "0", "Errore di compilazione"},
+                new String[]{
+                    "5", 
+                    "null", 
+                    "0", 
+                    "Errore di compilazione"},
                 0
             ),
             new Esercizio(
-                "Definizione di static",
+                titolo,
                 Grado.PRINCIPIANTE,
                 "",
                 "Cosa significa che una variabile è dichiarata static?",
-                new String[]{"Appartiene alla classe e non all'istanza", "Appartiene all'oggetto", "Può essere usata solo nel main", "Non può cambiare valore"},
+                new String[]{
+                    "Appartiene alla classe e non all'istanza", 
+                    "Appartiene all'oggetto", 
+                    "Può essere usata solo nel main", 
+                    "Non può cambiare valore"},
                 0
             ),
             new Esercizio(
-                "Modifica di campo statico",
+                titolo,
                 Grado.PRINCIPIANTE,
                 "public class Test {\n    static int x = 10;\n    public static void main(String[] args) {\n        Test a = new Test();\n        Test b = new Test();\n        a.x = 20;\n        System.out.println(b.x);\n    }\n}",
                 "Cosa verrà stampato a schermo?",
-                new String[]{"20", "10", "Errore", "null"},
+                new String[]{
+                    "20", 
+                    "10", 
+                    "Errore", 
+                    "null"},
                 0
             ),
             new Esercizio(
-                "Metodo statico",
+                titolo,
                 Grado.PRINCIPIANTE,
                 "public class Utility {\n    static void greet() {\n        System.out.println(\"Ciao!\");\n    }\n}",
                 "Come si può chiamare il metodo greet da un'altra classe?",
-                new String[]{"Utility.greet();", "new Utility().greet();", "Utility->greet();", "greet();"},
+                new String[]{
+                    "Utility.greet();", 
+                    "new Utility().greet();", 
+                    "Utility->greet();", 
+                    "greet();"},
                 0
             ),
             new Esercizio(
-                "Metodo statico vs. istanza",
+                titolo,
                 Grado.PRINCIPIANTE,
-                "",
+                "-",
                 "Quale tra le seguenti affermazioni è corretta riguardo ai metodi statici?",
-                new String[]{"Un metodo statico può essere chiamato senza creare un oggetto", "Un metodo statico può accedere direttamente a campi non statici", "I metodi statici devono restituire un valore", "Un metodo statico può essere sovrascritto nelle sottoclassi"},
+                new String[]{
+                    "Un metodo statico può essere chiamato senza creare un oggetto", 
+                    "Un metodo statico può accedere direttamente a campi non statici", 
+                    "I metodi statici devono restituire un valore", 
+                    "Un metodo statico può essere sovrascritto nelle sottoclassi"},
                 0
             )
         ));
 
         eserciziPerLivello.put("Intermedio", List.of(
             new Esercizio(
-                "Incremento di campo statico",
+                titolo,
                 Grado.INTERMEDIO,
                 "public class Contatore {\n    static int count = 0;\n    public Contatore() {\n        count++;\n    }\n    public static void main(String[] args) {\n        new Contatore();\n        new Contatore();\n        System.out.println(count);\n    }\n}",
                 "Cosa verrà stampato a schermo?",
-                new String[]{"2", "0", "1", "Errore"},
+                new String[]{
+                    "2", 
+                    "0", 
+                    "1", 
+                    "Errore"},
                 0
             ),
             new Esercizio(
-                "Accesso a variabili di istanza da metodo statico",
+                titolo,
                 Grado.INTERMEDIO,
-                "",
+                "-",
                 "Perché un metodo statico non può accedere direttamente a variabili d'istanza?",
-                new String[]{"Perché non esistono nel contesto statico", "Perché sono sempre private", "Perché non sono inizializzate", "Perché Java lo impedisce per motivi di sicurezza"},
+                new String[]{
+                    "Perché non esistono nel contesto statico", 
+                    "Perché sono sempre private", 
+                    "Perché non sono inizializzate", 
+                    "Perché Java lo impedisce per motivi di sicurezza"},
                 0
             ),
             new Esercizio(
-                "Blocco statico",
+                titolo,
                 Grado.INTERMEDIO,
                 "public class Test {\n    static {\n        System.out.println(\"Inizializzazione\");\n    }\n    public static void main(String[] args) {\n        System.out.println(\"Main\");\n    }\n}",
                 "Cosa verrà stampato a schermo?",
-                new String[]{"Inizializzazione\nMain", "Main\nInizializzazione", "Solo Main", "Errore"},
+                new String[]{
+                    "Inizializzazione\nMain", 
+                    "Main\nInizializzazione", 
+                    "Solo Main", 
+                    "Errore"},
                 0
             ),
             new Esercizio(
-                "Ordinamento dei blocchi statici",
+                titolo,
                 Grado.INTERMEDIO,
                 "class Esempio {\n    static int x;\n    static {\n        x = 10;\n    }\n}",
                 "Quando viene eseguito il blocco statico?",
-                new String[]{"Al caricamento della classe", "Ogni volta che si crea un oggetto", "Alla chiamata del costruttore", "Alla fine del programma"},
+                new String[]{
+                    "Al caricamento della classe", 
+                    "Ogni volta che si crea un oggetto", 
+                    "Alla chiamata del costruttore", 
+                    "Alla fine del programma"},
                 0
             ),
             new Esercizio(
-                "Parola chiave this in static",
+                titolo,
                 Grado.INTERMEDIO,
-                "",
+                "--",
                 "Cosa succede se si usa `this` in un metodo statico?",
-                new String[]{"Errore di compilazione: `this` non può essere usato in contesto statico", "Compila ma non ha effetto", "Richiama il costruttore", "Compila ma genera un warning"},
+                new String[]{
+                    "Errore di compilazione: `this` non può essere usato in contesto statico", 
+                    "Compila ma non ha effetto", 
+                    "Richiama il costruttore", 
+                    "Compila ma genera un warning"},
                 0
             )
         ));
 
         eserciziPerLivello.put("Avanzato", List.of(
             new Esercizio(
-                "Conflitto tra variabili statiche",
+                titolo,
                 Grado.AVANZATO,
                 "class A {\n    static int x = 10;\n}\nclass B extends A {\n    static int x = 20;\n}\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(B.x);\n        System.out.println(A.x);\n    }\n}",
                 "Cosa verrà stampato a schermo?",
-                new String[]{"20 e 10", "10 e 10", "20 e 20", "Errore di compilazione"},
+                new String[]{
+                    "20 e 10", 
+                    "10 e 10", 
+                    "20 e 20", 
+                    "Errore di compilazione"},
                 0
             ),
             new Esercizio(
-                "Sovrascrittura di metodo statico",
+                titolo,
                 Grado.AVANZATO,
                 "class Base {\n    static void print() {\n        System.out.println(\"Base\");\n    }\n}\nclass Derivata extends Base {\n    static void print() {\n        System.out.println(\"Derivata\");\n    }\n}",
                 "Cosa succede se chiami `Base.print()` e `Derivata.print()`?",
-                new String[]{"Ogni classe stampa il proprio metodo: Base e poi Derivata", "Entrambe stampano Derivata", "Stampa Base due volte", "Errore di override"},
+                new String[]{
+                    "Ogni classe stampa il proprio metodo: Base e poi Derivata", 
+                    "Entrambe stampano Derivata", 
+                    "Stampa Base due volte", 
+                    "Errore di override"},
                 0
             ),
             new Esercizio(
-                "Uso corretto di campo static finale",
+                titolo,
                 Grado.AVANZATO,
                 "public class Costanti {\n    static final double PI = 3.1415;\n}",
                 "Qual è il vantaggio di usare `static final`?",
-                new String[]{"Il valore è costante e condiviso tra tutte le istanze", "Si può modificare solo nel costruttore", "Serve solo per le variabili di istanza", "Non occupa memoria"},
+                new String[]{
+                    "Il valore è costante e condiviso tra tutte le istanze", 
+                    "Si può modificare solo nel costruttore", 
+                    "Serve solo per le variabili di istanza", 
+                    "Non occupa memoria"},
                 0
             ),
             new Esercizio(
-                "Compilazione campo statico derivato",
+                titolo,
                 Grado.AVANZATO,
                 "class Genitore {\n    static int x = 5;\n}\nclass Figlio extends Genitore {\n    static int y = x * 2;\n}\nSystem.out.println(Figlio.y);",
                 "Cosa verrà stampato a schermo?",
-                new String[]{"10", "5", "0", "Errore"},
+                new String[]{
+                    "10", 
+                    "5", 
+                    "0", 
+                    "Errore"},
                 0
             ),
             new Esercizio(
-                "Accesso statico tramite oggetto",
+                titolo,
                 Grado.AVANZATO,
                 "class Esempio {\n    static void stampa() {\n        System.out.println(\"Statica\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Esempio e = new Esempio();\n        e.stampa();\n    }\n}",
                 "Cosa succede eseguendo questo codice?",
-                new String[]{"Chiama il metodo ma non è buona pratica accedere static tramite istanza", "Errore di compilazione", "Nessun output", "Chiama il costruttore due volte"},
+                new String[]{
+                    "Chiama il metodo ma non è buona pratica accedere static tramite istanza", 
+                    "Errore di compilazione", 
+                    "Nessun output", 
+                    "Chiama il costruttore due volte"},
                 0
             )
         ));

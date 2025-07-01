@@ -89,7 +89,11 @@ public class TrovaErroreController
                 Grado.PRINCIPIANTE, 
                 "System.out.println(\"Hello\")", 
                 "Quale errore impedisce la compilazione di questa istruzione?", 
-                new String[]{"Manca il punto e virgola", "Manca una parentesi graffa", "Manca la dichiarazione della variabile", "Manca la parentesi quadra"},
+                new String[]{
+                    "Manca il punto e virgola", 
+                    "Manca una parentesi graffa", 
+                    "Manca la dichiarazione della variabile", 
+                    "Manca la parentesi quadra"},
                 0),
 
             new Esercizio(
@@ -97,7 +101,11 @@ public class TrovaErroreController
                 Grado.PRINCIPIANTE, 
                 "if (x > 5)\n    System.out.println(\"Grande\")\nelse\n    System.out.println(\"Piccolo\");", 
                 "Qual è l'errore sintattico in questo codice?", 
-                new String[]{"Mancano le parentesi graffe", "Manca il punto e virgola dopo System.out.println(\"Grande\")", "Manca la dichiarazione di x", "Manca la parentesi tonda"}, 
+                new String[]{
+                    "Mancano le parentesi graffe", 
+                    "Manca il punto e virgola dopo System.out.println(\"Grande\")", 
+                    "Manca la dichiarazione di x", 
+                    "Manca la parentesi tonda"}, 
                 0),
 
             new Esercizio(
@@ -105,7 +113,11 @@ public class TrovaErroreController
                 Grado.PRINCIPIANTE, 
                 "System.ou.println(\"Errore\");", 
                 "Qual è l'errore in questa istruzione?", 
-                new String[]{"Errore di battitura: 'ou' invece di 'out'", "Manca il punto e virgola", "Manca la dichiarazione di System", "Errore di runtime"}, 
+                new String[]{
+                    "Errore di battitura: 'ou' invece di 'out'", 
+                    "Manca il punto e virgola", 
+                    "Manca la dichiarazione di System", 
+                    "Errore di runtime"}, 
                 0),
 
             new Esercizio(
@@ -113,7 +125,11 @@ public class TrovaErroreController
                 Grado.PRINCIPIANTE, 
                 "public static void main {\n    System.out.println(\"Ciao\");\n}", 
                 "Qual è l'errore nella dichiarazione del metodo main?", 
-                new String[]{"Mancano le parentesi tonde nel main", "Manca il modificatore static", "Manca il return", "main non è pubblico"}, 
+                new String[]{
+                    "Mancano le parentesi tonde nel main", 
+                    "Manca il modificatore static", 
+                    "Manca il return", 
+                    "main non è pubblico"}, 
                 0),
 
             new Esercizio(
@@ -121,7 +137,11 @@ public class TrovaErroreController
                 Grado.PRINCIPIANTE, 
                 "int numero = \"dieci\";", 
                 "Qual è l'errore in questa istruzione?", 
-                new String[]{"Assegnazione di una stringa a una variabile int", "Manca il punto e virgola", "Uso scorretto dell'operatore =", "Variabile non inizializzata"}, 
+                new String[]{
+                    "Assegnazione di una stringa a una variabile int", 
+                    "Manca il punto e virgola", 
+                    "Uso scorretto dell'operatore =", 
+                    "Variabile non inizializzata"}, 
                 0)
         ));
 
@@ -131,7 +151,11 @@ public class TrovaErroreController
                 Grado.INTERMEDIO, 
                 "if(x = 10) {\n  System.out.println(\"x\");\n}", 
                 "Qual è l'errore in questa condizione?", 
-                new String[]{"Uso di '=' invece di '=='", "x non dichiarato", "Manca il punto e virgola", "Errore di runtime"}, 
+                new String[]{
+                    "Uso di '=' invece di '=='", 
+                    "x non dichiarato", 
+                    "Manca il punto e virgola", 
+                    "Errore di runtime"}, 
                 0),
             
             new Esercizio(
@@ -139,7 +163,11 @@ public class TrovaErroreController
                 Grado.INTERMEDIO,
                 "String password = \"admin\";\nif (password == \"admin\") {\n    System.out.println(\"Accesso consentito\");\n}",
                 "Qual è l'errore in questo codice?",
-                new String[]{"Il confronto tra stringhe andrebbe fatto con equals(), non con ==", "La variabile password non è dichiarata correttamente", "Manca l'istruzione else", "Il metodo println() non esiste"},
+                new String[]{
+                    "Il confronto tra stringhe andrebbe fatto con equals(), non con ==", 
+                    "La variabile password non è dichiarata correttamente", 
+                    "Manca l'istruzione else", 
+                    "Il metodo println() non esiste"},
                 0),
             
             new Esercizio(
@@ -147,7 +175,11 @@ public class TrovaErroreController
                 Grado.INTERMEDIO, 
                 "for(int i = 0; i > 10; i++) {\n  System.out.println(i);\n}", 
                 "Qual è l'errore nella condizione del ciclo?", 
-                new String[]{"La condizione è sempre falsa, il ciclo non viene mai eseguito", "i non dichiarato", "Manca il punto e virgola", "Errore di sintassi"}, 
+                new String[]{
+                    "La condizione è sempre falsa, il ciclo non viene mai eseguito", 
+                    "i non dichiarato", 
+                    "Manca il punto e virgola", 
+                    "Errore di sintassi"}, 
                 0),
             
             new Esercizio(
@@ -155,7 +187,11 @@ public class TrovaErroreController
                 Grado.INTERMEDIO, 
                 "int[] nums = new int[3];\nnums[3] = 5;", 
                 "Qual è l'errore in questo codice?", 
-                new String[]{"Accesso fuori dai limiti dell'array (IndexOutOfBounds)", "Array non inizializzato", "Errore di sintassi", "Manca la dichiarazione di nums"}, 
+                new String[]{
+                    "Accesso fuori dai limiti dell'array (IndexOutOfBounds)", 
+                    "Array non inizializzato", 
+                    "Errore di sintassi", 
+                    "Manca la dichiarazione di nums"}, 
                 0),
             
             new Esercizio(
@@ -163,7 +199,11 @@ public class TrovaErroreController
                 Grado.INTERMEDIO, 
                 "String s = null;\nSystem.out.println(s.length());", 
                 "Quale errore si verifica in esecuzione?", 
-                new String[]{"NullPointerException", "String non importata", "Metodo sbagliato", "Errore di sintassi"}, 
+                new String[]{
+                    "NullPointerException", 
+                    "String non importata", 
+                    "Metodo sbagliato", 
+                    "Errore di sintassi"}, 
                 0)
         ));
 
@@ -173,7 +213,11 @@ public class TrovaErroreController
                 Grado.AVANZATO, 
                 "int[] arr = {1,2,3};\nfor(int i = 0; i <= arr.length; i++) {\n  System.out.println(arr[i]);\n}", 
                 "Quale errore si verifica durante l'esecuzione del ciclo?", 
-                new String[]{"Accesso fuori dai limiti dell'array (IndexOutOfBounds)", "Errore di compilazione", "StackOverflow", "Errore di sintassi"}, 
+                new String[]{
+                    "Accesso fuori dai limiti dell'array (IndexOutOfBounds)", 
+                    "Errore di compilazione", 
+                    "StackOverflow", 
+                    "Errore di sintassi"}, 
                 0),
 
             new Esercizio(
@@ -181,7 +225,11 @@ public class TrovaErroreController
                 Grado.AVANZATO,
                 "String[] nomi = new String[2];\nfor (String n : nomi) {\n    System.out.println(n.toUpperCase());\n}",
                 "Qual è l'errore a runtime?",
-                new String[]{ "NullPointerException per tentativo di usare toUpperCase su un valore null", "Array non inizializzato", "Errore di compilazione","Il ciclo for non è valido per array"},
+                new String[]{ 
+                    "NullPointerException per tentativo di usare toUpperCase su un valore null", 
+                    "Array non inizializzato", 
+                    "Errore di compilazione",
+                    "Il ciclo for non è valido per array"},
                 0),
 
             new Esercizio(
@@ -189,7 +237,11 @@ public class TrovaErroreController
                 Grado.AVANZATO, 
                 "class Animale {\n    void verso() { System.out.println(\"Suono\"); }\n}\nclass Gatto extends Animale {\n    void verso(String tipo) { System.out.println(\"Miao\"); }\n}\nAnimale a = new Gatto();\na.verso();",
                 "Perché questo codice stampa 'Suono' invece di 'Miao'?", 
-                new String[]{ "Il metodo verso(String) non overridea verso()", "Non si può fare override su metodi void","Errore di compilazione","Il metodo verso() non è accessibile da Gatto"},
+                new String[]{ 
+                    "Il metodo verso(String) non overridea verso()", 
+                    "Non si può fare override su metodi void",
+                    "Errore di compilazione",
+                    "Il metodo verso() non è accessibile da Gatto"},
                 0),
 
             new Esercizio(
@@ -197,7 +249,11 @@ public class TrovaErroreController
                 Grado.AVANZATO, 
                 "int x;\nif(x > 0) {\n  System.out.println(\"Positivo\");\n}", 
                 "Qual è l'errore in questo codice?", 
-                new String[]{"Variabile x non inizializzata", "Manca il punto e virgola", "Errore di logica", "Errore di sintassi"}, 
+                new String[]{
+                    "Variabile x non inizializzata", 
+                    "Manca il punto e virgola", 
+                    "Errore di logica", 
+                    "Errore di sintassi"}, 
                 0),
 
             new Esercizio(
@@ -205,7 +261,11 @@ public class TrovaErroreController
                 Grado.AVANZATO, 
                 "String[] parole = {\"ciao\", null, \"mondo\"};\nfor(String p : parole) {\n  System.out.println(p.toUpperCase());\n}", 
                 "Quale errore si può verificare durante l'esecuzione?", 
-                new String[]{"NullPointerException", "IndexError", "ArrayIndexOutOfBounds", "Errore di sintassi"}, 
+                new String[]{
+                    "NullPointerException", 
+                    "IndexError", 
+                    "ArrayIndexOutOfBounds", 
+                    "Errore di sintassi"}, 
                 0)
         ));
 

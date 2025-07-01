@@ -6,9 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -17,7 +14,6 @@ import java.nio.file.Paths;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MenuController 

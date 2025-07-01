@@ -69,13 +69,13 @@ public class LeggiCodiceController
 
     //region Timer Livello
     private void setTimestampInizioLivello() 
-        {
+    {
         java.time.LocalDateTime now = java.time.LocalDateTime.now();
         timestampInizioLivello = now.format(java.time.format.DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
-        }
+    }
 
     private String getTimestampInizioLivello()
-            {
+    {
         return timestampInizioLivello;
     }
     //endregion
@@ -89,7 +89,11 @@ public class LeggiCodiceController
                 Grado.PRINCIPIANTE, 
                 "int x = 5;\nint y = 3;\nint z = x + y;", 
                 "Quale valore verrà assegnato alla variabile z?", 
-                new String[]{"8", "53", "x + y", "35"}, 
+                new String[]{
+                    "8",
+                    "53", 
+                    "x + y", 
+                    "35"}, 
                 0
             ),
             new Esercizio(
@@ -97,7 +101,11 @@ public class LeggiCodiceController
                 Grado.PRINCIPIANTE, 
                 "for(int i = 0; i < 3; i++) {\n  System.out.println(i);\n}", 
                 "Quante volte verrà eseguito il ciclo?", 
-                new String[]{"3", "2", "4", "1"}, 
+                new String[]{
+                    "3", 
+                    "2", 
+                    "4", 
+                    "1"}, 
                 0
             ),
             new Esercizio(
@@ -105,7 +113,11 @@ public class LeggiCodiceController
                 Grado.PRINCIPIANTE, 
                 "String s = \"Java\";\nSystem.out.println(s.length());", 
                 "Quale valore verrà stampato a schermo?", 
-                new String[]{"4", "Java", "3", "Errore"}, 
+                new String[]{
+                    "4", 
+                    "Java", 
+                    "3", 
+                    "Errore"}, 
                 0
             ),
             new Esercizio(
@@ -113,7 +125,11 @@ public class LeggiCodiceController
                 Grado.PRINCIPIANTE, 
                 "int x = 10;\nif(x > 5) {\n  System.out.println(\"Grande\");\n} else {\n  System.out.println(\"Piccolo\");\n}", 
                 "Cosa verrà stampato a schermo?", 
-                new String[]{"Grande", "Piccolo", "10", "Errore"}, 
+                new String[]{
+                    "Grande", 
+                    "Piccolo", 
+                    "10", 
+                    "Errore"}, 
                 0
             ),
             new Esercizio(
@@ -121,7 +137,11 @@ public class LeggiCodiceController
                 Grado.PRINCIPIANTE, 
                 "int[] arr = {1,2,3};\nSystem.out.println(arr[1]);", 
                 "Quale valore verrà stampato a schermo?", 
-                new String[]{"2", "1", "3", "Errore"}, 
+                new String[]{
+                    "2", 
+                    "1", 
+                    "3", 
+                    "Errore"}, 
                 0
             )
         ));
@@ -133,13 +153,11 @@ public class LeggiCodiceController
                 Grado.INTERMEDIO, 
                 "int x = 10;\nint y = x++;\nSystem.out.println(y);", 
                 "Quale valore verrà stampato a schermo?", 
-                new String[]
-                {
+                new String[]{
                     "10",
                     "11", 
                     "12", 
-                    "Errore"
-                }, 
+                    "Errore"}, 
                 0
             ),
 
@@ -149,13 +167,11 @@ public class LeggiCodiceController
                 Grado.INTERMEDIO, 
                 "String s1 = \"Ciao\";\nString s2 = new String(\"Ciao\");\nSystem.out.println(s1 == s2);", 
                 "Cosa verrà stampato a schermo?", 
-                new String[]
-                {
+                new String[]{
                     "false", 
                     "true", 
                     "Ciao", 
-                    "Errore"
-                }, 
+                    "Errore"}, 
                 0
             ),
 
@@ -165,13 +181,11 @@ public class LeggiCodiceController
                 Grado.INTERMEDIO, 
                 "List<Integer> list = new ArrayList<>();\nlist.add(1);\nlist.add(2);\nlist.remove(1);\nSystem.out.println(list.size());", 
                 "Quale valore verrà stampato a schermo?",
-                new String[]
-                {
+                new String[]{
                     "1", 
                     "2", 
                     "0", 
-                    "Errore"
-                }, 
+                    "Errore"}, 
                 0
             ),
 
@@ -181,13 +195,11 @@ public class LeggiCodiceController
                 Grado.INTERMEDIO, 
                 "int x = 5;\nint y = x > 0 ? 1 : -1;\nSystem.out.println(y);", 
                 "Quale valore verrà stampato a schermo?", 
-                new String[]
-                {
+                new String[]{
                     "1", 
                     "-1", 
                     "5", 
-                    "0"
-                }, 
+                    "0"}, 
                 0
             ),
 
@@ -197,13 +209,11 @@ public class LeggiCodiceController
                 Grado.INTERMEDIO, 
                 "try {\n  int x = 5 / 0;\n} catch (Exception e) {\n  System.out.println(\"Errore\");\n}", 
                 "Cosa verrà stampato a schermo?", 
-                new String[]
-                {
+                new String[]{
                     "Errore",
                     "Niente", 
                     "0", 
-                    "Infinity"
-                },
+                    "Infinity"},
                 0
             )
         ));
@@ -215,13 +225,11 @@ public class LeggiCodiceController
                 Grado.AVANZATO, 
                 "Map<String, Integer> map = new HashMap<>();\nmap.put(\"A\", 1);\nmap.put(\"B\", 2);\nSystem.out.println(map.get(\"C\"));", 
                 "Cosa verrà stampato a schermo?", 
-                new String[]
-                {
+                new String[]{
                     "null", 
                     "0", 
                     "Errore", 
-                    "Niente"
-                }, 
+                    "Niente"}, 
                 0
             ),
             
@@ -231,13 +239,11 @@ public class LeggiCodiceController
                 Grado.AVANZATO, 
                 "Supplier<Integer> supplier = () -> 5;\nSystem.out.println(supplier.get());", 
                 "Quale valore verrà stampato a schermo?", 
-                new String[]
-                {
+                new String[]{
                     "5", 
                     "supplier.get()", 
                     "Errore", 
-                    "Niente"
-                }, 
+                    "Niente"}, 
                 0
             ),
             
@@ -247,13 +253,11 @@ public class LeggiCodiceController
                 Grado.AVANZATO, 
                 "Stream<Integer> stream = Stream.of(1,2,3);\nlong count = stream.filter(n -> n > 1).count();\nSystem.out.println(count);", 
                 "Quale valore verrà stampato a schermo?", 
-                new String[]
-                {
+                new String[]{
                     "2", 
                     "3", 
                     "1", 
-                    "0"
-                }, 
+                    "0"}, 
                 0
             )
         ));

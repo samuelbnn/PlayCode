@@ -22,12 +22,6 @@ public class Esercizio
         this.indiceCorretta = indiceCorretta;
     }
 
-    // Costruttore senza codice (per StampaOutput)
-    public Esercizio(String titolo, Enum grado, String domanda, String[] risposte, int indiceCorretta) 
-    {
-        this(titolo, grado, null, domanda, risposte, indiceCorretta);
-    }
-
     @Override
     public boolean equals(Object o) 
     {

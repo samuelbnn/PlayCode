@@ -17,6 +17,7 @@ public class StampaOutputController
     //region FXML Variabili
     @FXML private Label titoloLabel;
     @FXML private Label livelloLabel;
+    @FXML private TextArea codiceArea;
     @FXML private Label consegnaLabel;
     @FXML private Label feedbackLabel;
     @FXML private Button btnConferma;
@@ -31,7 +32,6 @@ public class StampaOutputController
     @FXML private Button btnPrincipiante;
     @FXML private Button btnIntermedio;
     @FXML private Button btnAvanzato;
-    @FXML private TextArea codiceArea;
     //endregion
 
     //region Variabili
@@ -69,13 +69,13 @@ public class StampaOutputController
 
     //region Timer Livello
     private void setTimestampInizioLivello() 
-        {
+    {
         java.time.LocalDateTime now = java.time.LocalDateTime.now();
         timestampInizioLivello = now.format(java.time.format.DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
-        }
+    }
 
     private String getTimestampInizioLivello()
-                {
+    {
         return timestampInizioLivello;
     }
     //endregion
@@ -83,104 +83,179 @@ public class StampaOutputController
     //region Domande
     private void caricaDomande() 
     {
-        eserciziPerLivello.put("Principiante", new ArrayList<>(List.of(
-            new Esercizio(titolo, Grado.PRINCIPIANTE, "Quale istruzione stampa esattamente il numero 10 a schermo?", new String[]{
-                "System.out.println(\"10\");",
-                "System.out.print(10 + 1);",
-                "print(\"10\");",
-                "println(10);"
+        eserciziPerLivello.put("Principiante", List.of(
+            new Esercizio(
+                titolo, 
+                Grado.PRINCIPIANTE, 
+                "-",
+                "Quale istruzione stampa esattamente il numero 10 a schermo?", 
+                new String[]{
+                    "System.out.println(\"10\");",
+                    "System.out.print(10 + 1);",
+                    "print(\"10\");",
+                    "println(10);"
             }, 0),
-            new Esercizio(titolo, Grado.PRINCIPIANTE, "Quale istruzione stampa il risultato della somma tra 3 e 4?", new String[]{
-                "System.out.println(3 + 4);",
-                "System.out.println(\"3 + 4\");",
-                "System.print(7);",
-                "Console.log(7);"
+            new Esercizio(
+                titolo,
+                Grado.PRINCIPIANTE,
+                "--",
+                "Quale istruzione stampa il risultato della somma tra 3 e 4?", 
+                new String[]{
+                    "System.out.println(3 + 4);",
+                    "System.out.println(\"3 + 4\");",
+                    "System.print(7);",
+                    "Console.log(7);"
             }, 0),
-            new Esercizio(titolo, Grado.PRINCIPIANTE, "Quale istruzione stampa il messaggio 'Benvenuto!' a schermo?", new String[]{
-                "System.out.println(\"Benvenuto!\");",
-                "println(\"Benvenuto!\");",
-                "print(\"Benvenuto\");",
-                "echo(\"Benvenuto!\");"
+            new Esercizio(
+                titolo, 
+                Grado.PRINCIPIANTE,
+                "---",
+                "Quale istruzione stampa il messaggio 'Benvenuto!' a schermo?", 
+                new String[]{
+                    "System.out.println(\"Benvenuto!\");",
+                    "println(\"Benvenuto!\");",
+                    "print(\"Benvenuto\");",
+                    "echo(\"Benvenuto!\");"
             }, 0),
-            new Esercizio(titolo, Grado.PRINCIPIANTE, "Quale istruzione stampa 'Ciao' seguito da 'Mondo' sulla stessa riga?", new String[]{
-                "System.out.print(\"Ciao\"); System.out.print(\"Mondo\");",
-                "System.out.println(\"Ciao\"); System.out.println(\"Mondo\");",
-                "print(\"Ciao\" + \"\\n\" + \"Mondo\");",
-                "println(\"Ciao\" + \" \" + \"Mondo\");"
+            new Esercizio(
+                titolo, 
+                Grado.PRINCIPIANTE,
+                "----",
+                "Quale istruzione stampa 'Ciao' seguito da 'Mondo' sulla stessa riga?", 
+                new String[]{
+                    "System.out.print(\"Ciao\"); System.out.print(\"Mondo\");",
+                    "System.out.println(\"Ciao\"); System.out.println(\"Mondo\");",
+                    "print(\"Ciao\" + \"\\n\" + \"Mondo\");",
+                    "println(\"Ciao\" + \" \" + \"Mondo\");"
             }, 0),
-            new Esercizio(titolo, Grado.PRINCIPIANTE, "Quale istruzione stampa il risultato dell'operazione 15 diviso 3?", new String[]{
-                "System.out.println(15 / 3);",
-                "System.out.println(\"15 / 3\");",
-                "System.out.println(5 * 3);",
-                "System.out.print(18 - 3);"
+            new Esercizio(
+                titolo, 
+                Grado.PRINCIPIANTE, 
+                "-----", 
+                "Quale istruzione stampa il risultato dell'operazione 15 diviso 3?", 
+                new String[]{
+                    "System.out.println(15 / 3);",
+                    "System.out.println(\"15 / 3\");",
+                    "System.out.println(5 * 3);",
+                    "System.out.print(18 - 3);"
             }, 0)
-        )));
+        ));
 
-        eserciziPerLivello.put("Intermedio", new ArrayList<>(List.of(
-            new Esercizio(titolo, Grado.INTERMEDIO, "int a = 2;\nint b = 3;\nSystem.out.println(a + b * a);", "Cosa stampa questo codice?", new String[]{
-                "8",
-                "10",
-                "12",
-                "5"
+        eserciziPerLivello.put("Intermedio", List.of(
+            new Esercizio(
+                titolo, 
+                Grado.INTERMEDIO,
+                "int a = 2;\nint b = 3;\nSystem.out.println(a + b * a);", 
+                "Cosa stampa questo codice?", 
+                new String[]{
+                    "8",
+                    "10",
+                    "12",
+                    "5"
             },0),
-            new Esercizio(titolo, Grado.INTERMEDIO, "String s = \"  Java  \";\nSystem.out.println(s.trim().toLowerCase());", "Cosa verrà stampato a schermo?", new String[]{
-                "java",
-                "Java",
-                "  java  ",
-                "Errore"
+            new Esercizio(
+                titolo, 
+                Grado.INTERMEDIO, 
+                "String s = \"  Java  \";\nSystem.out.println(s.trim().toLowerCase());", 
+                "Cosa verrà stampato a schermo?", 
+                new String[]{
+                    "java",
+                    "Java",
+                    "  java  ",
+                    "Errore"
             },0),
-            new Esercizio(titolo, Grado.INTERMEDIO, "int n = 5;\nif (n % 2 == 0)\n    System.out.println(\"Pari\");\nelse\n    System.out.println(\"Dispari\");", "Cosa verrà stampato a schermo?", new String[]{
-                "Dispari",
-                "Pari",
-                "5",
-                "Errore"
+            new Esercizio(
+                titolo, 
+                Grado.INTERMEDIO, 
+                "int n = 5;\nif (n % 2 == 0)\n    System.out.println(\"Pari\");\nelse\n    System.out.println(\"Dispari\");", 
+                "Cosa verrà stampato a schermo?", 
+                new String[]{
+                    "Dispari",
+                    "Pari",
+                    "5",
+                    "Errore"
             },0),
-            new Esercizio(titolo, Grado.INTERMEDIO, "int[] nums = {9, 8, 7};\nSystem.out.println(nums[0]);", "Cosa verrà stampato a schermo?", new String[]{
-                "9",
-                "8",
-                "7",
-                "nums"
+            new Esercizio(
+                titolo, 
+                Grado.INTERMEDIO, 
+                "int[] nums = {9, 8, 7};\nSystem.out.println(nums[0]);",
+                "Cosa verrà stampato a schermo?", 
+                new String[]{
+                    "9",
+                    "8",
+                    "7",
+                    "nums"
             }, 0),
-            new Esercizio(titolo, Grado.INTERMEDIO, "boolean attivo = true;\nif(attivo) System.out.println(\"OK\");", "Cosa verrà stampato se attivo è true?", new String[]{
-                "OK",
-                "Niente",
-                "true",
-                "Errore"
+            new Esercizio(
+                titolo, 
+                Grado.INTERMEDIO, 
+                "boolean attivo = true;\nif(attivo) System.out.println(\"OK\");", 
+                "Cosa verrà stampato se attivo è true?", 
+                new String[]{
+                    "OK",
+                    "Niente",
+                    "true",
+                    "Errore"
             }, 0)
-        )));
+        ));
 
-        eserciziPerLivello.put("Avanzato", new ArrayList<>(List.of(
-            new Esercizio(titolo, Grado.AVANZATO, "char c = 'A' + 1;\nSystem.out.println(c);","Cosa verrà stampato a schermo?",new String[]{
-                "B",
-                "A1",
-                "66",
-                "Errore di compilazione"
+        eserciziPerLivello.put("Avanzato", List.of(
+            new Esercizio(
+                titolo, 
+                Grado.AVANZATO, 
+                "char c = 'A' + 1;\nSystem.out.println(c);",
+                "Cosa verrà stampato a schermo?",
+                new String[]{
+                    "B",
+                    "A1",
+                    "66",
+                    "Errore di compilazione"
             },0),
-            new Esercizio(titolo, Grado.AVANZATO, "List<String> arr = List.of(\"a\", \"b\", \"c\");\narr.stream().forEach(s -> System.out.print(s.toUpperCase()));", "Cosa verrà stampato a schermo?", new String[]{
-                "ABC",
-                "abc",
-                "a b c",
-                "Errore"
+            new Esercizio(
+                titolo, 
+                Grado.AVANZATO, 
+                "List<String> arr = List.of(\"a\", \"b\", \"c\");\narr.stream().forEach(s -> System.out.print(s.toUpperCase()));", 
+                "Cosa verrà stampato a schermo?", 
+                new String[]{
+                    "ABC",
+                    "abc",
+                    "a b c",
+                    "Errore"
             },0),
-            new Esercizio(titolo, Grado.AVANZATO,"class Animale {\n  void verso() { System.out.println(\"Suono generico\"); }\n}\nclass Cane extends Animale {\n  void verso(String tipo) { System.out.println(\"Bau\"); }\n}\nAnimale a = new Cane();\na.verso();", "Cosa stamperà questo codice?", new String[]{
-                "Suono generico",
-                "Bau",
-                "Errore di compilazione",
-                "Niente"
+            new Esercizio(
+                titolo, 
+                Grado.AVANZATO,
+                "class Animale {\n  void verso() { System.out.println(\"Suono generico\"); }\n}\nclass Cane extends Animale {\n  void verso(String tipo) { System.out.println(\"Bau\"); }\n}\nAnimale a = new Cane();\na.verso();", 
+                "Cosa stamperà questo codice?", 
+                new String[]{
+                    "Suono generico",
+                    "Bau",
+                    "Errore di compilazione",
+                    "Niente"
             },0),
-            new Esercizio(titolo, Grado.AVANZATO, "try {\n    int x = 10 / 0;\n} catch(ArithmeticException e) {\n    System.out.println(\"Divisione per zero\");\n}", "Cosa verrà stampato?", new String[]{
-                "Divisione per zero",
-                "Errore",
-                "10",
-                "Niente"
+            new Esercizio(
+                titolo, 
+                Grado.AVANZATO, 
+                "try {\n    int x = 10 / 0;\n} catch(ArithmeticException e) {\n    System.out.println(\"Divisione per zero\");\n}", 
+                "Cosa verrà stampato?", 
+                new String[]{
+                    "Divisione per zero",
+                    "Errore",
+                    "10",
+                    "Niente"
             },0),
-            new Esercizio(titolo, Grado.AVANZATO, "int result = 0;\nfor (int i = 1; i <= 3; i++) {\n    result += i;\n}\nSystem.out.println(result);", "Cosa verrà stampato a schermo dopo il ciclo?", new String[]{
-                "6",
-                "3",
-                "1 2 3",
-                "Errore"
+            new Esercizio(
+                titolo, 
+                Grado.AVANZATO,
+                "int result = 0;\nfor (int i = 1; i <= 3; i++) {\n    result += i;\n}\nSystem.out.println(result);", 
+                "Cosa verrà stampato a schermo dopo il ciclo?", 
+                new String[]{
+                    "6",
+                    "3",
+                    "1 2 3",
+                    "Errore"
             },0)
-        )));
+        ));
 
         eserciziPerLivello.forEach((livello, lista) -> mostratiPerLivello.put(livello, new ArrayList<>()));
     }
@@ -198,7 +273,7 @@ public class StampaOutputController
             return;
         }
 
-        List<String> tacchette = statoTacche.getOrDefault(livelloCorrente, new ArrayList<>());
+         List<String> tacchette = statoTacche.getOrDefault(livelloCorrente, new ArrayList<>());
         if (tacchette.stream().allMatch(t -> t.equals("G") || t.equals("R"))) 
         {
             feedbackLabel.setText("Hai già completato il livello!");
@@ -224,12 +299,16 @@ public class StampaOutputController
         titoloLabel.setText(esercizioCorrente.titolo);
         consegnaLabel.setText(esercizioCorrente.domanda);
         // Mostra codice se presente
-        if (codiceArea != null) {
-            if (esercizioCorrente.codice != null && !esercizioCorrente.codice.isEmpty()) {
+        if (codiceArea != null) 
+        {
+            if (esercizioCorrente.codice != null && !esercizioCorrente.codice.isEmpty() && !esercizioCorrente.codice.contains("-")) 
+            {
                 codiceArea.setText(esercizioCorrente.codice);
                 codiceArea.setVisible(true);
                 codiceArea.setManaged(true);
-            } else {
+            } 
+            else 
+            {
                 codiceArea.clear();
                 codiceArea.setVisible(false);
                 codiceArea.setManaged(false);

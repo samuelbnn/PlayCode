@@ -89,7 +89,11 @@ public class LinkedListController
                 Grado.PRINCIPIANTE,
                 "class Node {\n    int data;\n    Node next;\n    Node(int data) {\n        this.data = data;\n        this.next = null;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Node node = new Node(10);\n        System.out.println(node.data);\n    }\n}",
                 "Cosa verrà stampato a schermo?",
-                new String[]{"10", "null", "Errore di compilazione", "0"},
+                new String[]{
+                    "10", 
+                    "null", 
+                    "Errore di compilazione", 
+                    "0"},
                 0
             ),
             new Esercizio(
@@ -97,7 +101,11 @@ public class LinkedListController
                 Grado.PRINCIPIANTE,
                 "Node node = new Node(5);",
                 "Qual è il valore iniziale del campo 'next' in un nuovo nodo?",
-                new String[]{"null", "0", "node", "true"},
+                new String[]{
+                    "null", 
+                    "0", 
+                    "node", 
+                    "true"},
                 0
             ),
             new Esercizio(
@@ -105,7 +113,11 @@ public class LinkedListController
                 Grado.PRINCIPIANTE,
                 "Node first = new Node(1);\nNode second = new Node(2);",
                 "Come si collega il nodo 'first' al nodo 'second'?",
-                new String[]{"first.next = second;", "first.data = second;", "second = first.next;", "first = next.second;"},
+                new String[]{
+                    "first.next = second;", 
+                    "first.data = second;", 
+                    "second = first.next;", 
+                    "first = next.second;"},
                 0
             ),
             new Esercizio(
@@ -113,7 +125,11 @@ public class LinkedListController
                 Grado.PRINCIPIANTE,
                 "class Node {\n    int data;\n    Node next;\n}",
                 "Qual è la funzione del campo 'next' in una Linked List?",
-                new String[]{"Puntare al nodo successivo", "Conservare il valore del nodo", "Contare il numero di nodi", "Stampare i nodi"},
+                new String[]{
+                    "Puntare al nodo successivo", 
+                    "Conservare il valore del nodo", 
+                    "Contare il numero di nodi", 
+                    "Stampare i nodi"},
                 0
             ),
             new Esercizio(
@@ -121,7 +137,11 @@ public class LinkedListController
                 Grado.PRINCIPIANTE,
                 "Node node = new Node(7);\nSystem.out.println(node.next);",
                 "Cosa verrà stampato a schermo?",
-                new String[]{"null", "7", "0", "Errore di compilazione"},
+                new String[]{
+                    "null", 
+                    "7", 
+                    "0", 
+                    "Errore di compilazione"},
                 0
             )
         ));
@@ -132,7 +152,11 @@ public class LinkedListController
                 Grado.INTERMEDIO,
                 "Node a = new Node(1);\nNode b = new Node(2);\na.next = b;\nSystem.out.println(a.next.data);",
                 "Cosa verrà stampato a schermo?",
-                new String[]{"2", "1", "null", "Errore"},
+                new String[]{
+                    "2", 
+                    "1", 
+                    "null", 
+                    "Errore"},
                 0
             ),
             new Esercizio(
@@ -140,7 +164,11 @@ public class LinkedListController
                 Grado.INTERMEDIO,
                 "void printList(Node head) {\n    while (head != null) {\n        System.out.print(head.data + \" \" );\n        head = head.next;\n    }\n}",
                 "Cosa fa questo metodo?",
-                new String[]{"Stampa tutti gli elementi della lista", "Crea una nuova lista", "Rimuove il primo nodo", "Conta i nodi"},
+                new String[]{
+                    "Stampa tutti gli elementi della lista", 
+                    "Crea una nuova lista", 
+                    "Rimuove il primo nodo", 
+                    "Conta i nodi"},
                 0
             ),
             new Esercizio(
@@ -148,7 +176,11 @@ public class LinkedListController
                 Grado.INTERMEDIO,
                 "Node head = new Node(1);\nhead.next = new Node(2);\nhead.next.next = new Node(3);\nSystem.out.println(head.next.next.data);",
                 "Cosa verrà stampato a schermo?",
-                new String[]{"3", "2", "1", "null"},
+                new String[]{
+                    "3", 
+                    "2", 
+                    "1", 
+                    "null"},
                 0
             ),
             new Esercizio(
@@ -156,7 +188,11 @@ public class LinkedListController
                 Grado.INTERMEDIO,
                 "Node head = new Node(1);\nhead.next.data = 2;",
                 "Qual è il problema in questo codice?",
-                new String[]{"head.next è null", "Il nodo è statico", "Mancano i getter", "data non è accessibile"},
+                new String[]{
+                    "head.next è null", 
+                    "Il nodo è statico", 
+                    "Mancano i getter", 
+                    "data non è accessibile"},
                 0
             ),
             new Esercizio(
@@ -164,7 +200,11 @@ public class LinkedListController
                 Grado.INTERMEDIO,
                 "int countNodes(Node head) {\n    int count = 0;\n    while (head != null) {\n        count++;\n        head = head.next;\n    }\n    return count;\n}",
                 "Cosa restituisce questo metodo?",
-                new String[]{"Conta il numero di nodi", "Ritorna l'ultimo nodo", "Stampa tutti i nodi", "Crea una nuova lista"},
+                new String[]{
+                    "Conta il numero di nodi", 
+                    "Ritorna l'ultimo nodo",
+                    "Stampa tutti i nodi", 
+                    "Crea una nuova lista"},
                 0
             )
         ));
@@ -175,7 +215,11 @@ public class LinkedListController
                 Grado.AVANZATO,
                 "Node reverse(Node head) {\n    Node prev = null;\n    Node curr = head;\n    while (curr != null) {\n        Node next = curr.next;\n        curr.next = prev;\n        prev = curr;\n        curr = next;\n    }\n    return prev;\n}",
                 "Cosa fa questo metodo?",
-                new String[]{"Inverte la lista", "Conta i nodi", "Elimina i nodi duplicati", "Crea una nuova lista"},
+                new String[]{
+                    "Inverte la lista", 
+                    "Conta i nodi", 
+                    "Elimina i nodi duplicati", 
+                    "Crea una nuova lista"},
                 0
             ),
             new Esercizio(
@@ -183,7 +227,11 @@ public class LinkedListController
                 Grado.AVANZATO,
                 "Node reverse(Node head) { /* stessa funzione dell'esercizio precedente */ }",
                 "Qual è la complessità temporale della funzione 'reverse'?",
-                new String[]{"O(n)", "O(log n)", "O(n²)", "O(1)"},
+                new String[]{
+                    "O(n)",
+                    "O(log n)", 
+                    "O(n²)", 
+                    "O(1)"},
                 0
             ),
             new Esercizio(
@@ -191,7 +239,11 @@ public class LinkedListController
                 Grado.AVANZATO,
                 "Node head = new Node(1);\nhead.next = new Node(2);\nhead.next.next = new Node(3);\nNode temp = head;\nwhile (temp.next != null) {\n    temp = temp.next;\n}\nSystem.out.println(temp.data);",
                 "Cosa verrà stampato a schermo?",
-                new String[]{"3", "2", "1", "null"},
+                new String[]{
+                    "3", 
+                    "2", 
+                    "1", 
+                    "null"},
                 0
             ),
             new Esercizio(
@@ -199,7 +251,11 @@ public class LinkedListController
                 Grado.AVANZATO,
                 "Node a = new Node(1);\nNode b = new Node(2);\na.next = b;\nb.next = a;",
                 "Qual è il rischio di questo codice?",
-                new String[]{"Crea un ciclo infinito nella lista", "Nessuno", "È più veloce", "Elimina il nodo precedente"},
+                new String[]{
+                    "Crea un ciclo infinito nella lista", 
+                    "Nessuno", 
+                    "È più veloce", 
+                    "Elimina il nodo precedente"},
                 0
             ),
             new Esercizio(
@@ -207,7 +263,11 @@ public class LinkedListController
                 Grado.AVANZATO,
                 "Node head = null;\nSystem.out.println(head.data);",
                 "Cosa succede eseguendo questo codice?",
-                new String[]{"NullPointerException", "0", "Errore di compilazione", "Stampa null"},
+                new String[]{
+                    "NullPointerException", 
+                    "0", 
+                    "Errore di compilazione", 
+                    "Stampa null"},
                 0
             )
         ));
