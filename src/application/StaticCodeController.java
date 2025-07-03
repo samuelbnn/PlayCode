@@ -312,19 +312,23 @@ public class StaticCodeController
         mostratiPerLivello.get(livelloCorrente).add(esercizioCorrente);
         
         titoloLabel.setText(esercizioCorrente.titolo);
-
-        // Mostra o nascondi il box codice a seconda della domanda
-        if (esercizioCorrente.codice != null && !esercizioCorrente.codice.isEmpty()) {
+ 		consegnaLabel.setText(esercizioCorrente.domanda);
+        // Mostra codice se presente
+        if (codiceArea != null) 
+        {
+            if (esercizioCorrente.codice != null && !esercizioCorrente.codice.isEmpty() && !esercizioCorrente.codice.contains("-")) 
+            {
         codiceArea.setText(esercizioCorrente.codice);
             codiceArea.setVisible(true);
             codiceArea.setManaged(true);
-        } else {
+            } 
+            else 
+            {
             codiceArea.clear();
             codiceArea.setVisible(false);
             codiceArea.setManaged(false);
         }
-
-        consegnaLabel.setText(esercizioCorrente.domanda);
+        }
         
         // Mescola le risposte
         List<String> risposteMischiate = new ArrayList<>(List.of(esercizioCorrente.risposte));
