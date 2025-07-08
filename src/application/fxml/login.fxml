@@ -57,14 +57,18 @@
             </TextField>
 
             <!-- Password -->
-            <StackPane prefWidth="328">
-                <PasswordField fx:id="hiddenPassword" prefWidth="328" promptText="Password">
+            <StackPane prefWidth="328" maxWidth="Infinity">
+                <PasswordField fx:id="hiddenPassword" prefWidth="328" maxWidth="Infinity" promptText="Password">
                     <font>
                         <Font size="18" />
                     </font>
                 </PasswordField>
 
-                <TextField fx:id="password" prefWidth="328" promptText="Password" visible="false"/>
+                <TextField fx:id="password" prefWidth="328" maxWidth="Infinity" promptText="Password" visible="false">
+                    <font>
+                        <Font size="18" />
+                    </font>
+                </TextField>
 
                 <CheckBox fx:id="showPassword" onAction="#changeVisibility" StackPane.alignment="CENTER_RIGHT">
                     <StackPane.margin>
