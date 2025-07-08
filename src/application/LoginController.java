@@ -26,10 +26,7 @@ public class LoginController
     @FXML
     public void goto_login(ActionEvent event) throws IOException 
     {
-        System.out.println("CLICK SU PLAY RICEVUTO!");
-
         Parent root = FXMLLoader.load(App.class.getResource(Costanti.PATH_FXML_LOGIN));
-
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
 
@@ -40,7 +37,7 @@ public class LoginController
         stage.setWidth(screenBounds.getWidth());
         stage.setHeight(screenBounds.getHeight());
 
-        // Imposta la scena DOPO aver settato dimensioni
+        // Imposta la scena
         stage.setScene(scene);
         stage.setResizable(false); // per bloccare il ridimensionamento
         stage.show();

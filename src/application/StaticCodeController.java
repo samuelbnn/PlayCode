@@ -83,7 +83,7 @@ public class StaticCodeController
     //region Domande
     private void caricaDomande() 
     {
-        eserciziPerLivello.put("Principiante", List.of(
+        eserciziPerLivello.put(Costanti.LIVELLO_PRINCIPIANTE, List.of(
             new Esercizio(
                 titolo,
                 Grado.PRINCIPIANTE,
@@ -146,7 +146,7 @@ public class StaticCodeController
             )
         ));
 
-        eserciziPerLivello.put("Intermedio", List.of(
+        eserciziPerLivello.put(Costanti.LIVELLO_INTERMEDIO, List.of(
             new Esercizio(
                 titolo,
                 Grado.INTERMEDIO,
@@ -209,7 +209,7 @@ public class StaticCodeController
             )
         ));
 
-        eserciziPerLivello.put("Avanzato", List.of(
+        eserciziPerLivello.put(Costanti.LIVELLO_AVANZATO, List.of(
             new Esercizio(
                 titolo,
                 Grado.AVANZATO,
@@ -355,15 +355,15 @@ public class StaticCodeController
 
         switch (livelloCorrente) 
         {
-            case "Principiante" -> {
+            case Costanti.LIVELLO_PRINCIPIANTE -> {
                 livelloCorrente = "Intermedio";
                 setTimestampInizioLivello();    //Reset timestamp per nuovo livello
             }
-            case "Intermedio" -> {
-                livelloCorrente = "Avanzato";
+            case Costanti.LIVELLO_INTERMEDIO -> {
+                livelloCorrente = Costanti.LIVELLO_AVANZATO;
                 setTimestampInizioLivello();    //Reset timestamp per nuovo livello
             }
-            case "Avanzato" -> {
+            case Costanti.LIVELLO_AVANZATO -> {
                 feedbackLabel.setText("Hai completato tutti i livelli! Complimenti!");
                 feedbackLabel.setStyle("-fx-text-fill: " + Costanti.VERDE + ";");
                 feedbackLabel.setVisible(true);
@@ -385,9 +385,9 @@ public class StaticCodeController
 
         if (statoTacche.isEmpty()) 
         {
-            statoTacche.put("Principiante", new ArrayList<>(Collections.nCopies(5, "")));
-            statoTacche.put("Intermedio", new ArrayList<>(Collections.nCopies(5, "")));
-            statoTacche.put("Avanzato", new ArrayList<>(Collections.nCopies(5, "")));
+            statoTacche.put(Costanti.LIVELLO_PRINCIPIANTE, new ArrayList<>(Collections.nCopies(5, "")));
+            statoTacche.put(Costanti.LIVELLO_INTERMEDIO, new ArrayList<>(Collections.nCopies(5, "")));
+            statoTacche.put(Costanti.LIVELLO_AVANZATO, new ArrayList<>(Collections.nCopies(5, "")));
         }
 
         String utente = Session.getCurrentUser();
@@ -398,9 +398,9 @@ public class StaticCodeController
                 String[] parts = scanner.nextLine().split(",");
                 if (progressManager.isProgressoValido(parts, utente, titolo)) 
                 {
-                    statoTacche.put("Principiante", progressManager.normalizeTacche(parts[6], 5));
-                    statoTacche.put("Intermedio", progressManager.normalizeTacche(parts[7], 5));
-                    statoTacche.put("Avanzato", progressManager.normalizeTacche(parts[8], 5));
+                    statoTacche.put(Costanti.LIVELLO_PRINCIPIANTE, progressManager.normalizeTacche(parts[6], 5));
+                    statoTacche.put(Costanti.LIVELLO_INTERMEDIO, progressManager.normalizeTacche(parts[7], 5));
+                    statoTacche.put(Costanti.LIVELLO_AVANZATO, progressManager.normalizeTacche(parts[8], 5));
                     return;
                 }
             }
@@ -420,17 +420,17 @@ public class StaticCodeController
 
         switch (livelloCorrente) 
         {
-            case "Principiante" -> coloraTacca(tacchePrincipiante, colore);
-            case "Intermedio" -> coloraTacca(taccheIntermedio, colore);
-            case "Avanzato" -> coloraTacca(taccheAvanzato, colore);
+            case Costanti.LIVELLO_PRINCIPIANTE -> coloraTacca(tacchePrincipiante, colore);
+            case Costanti.LIVELLO_INTERMEDIO -> coloraTacca(taccheIntermedio, colore);
+            case Costanti.LIVELLO_AVANZATO -> coloraTacca(taccheAvanzato, colore);
         }
     }
 
     private void aggiornaTacche() 
     {
-        aggiornaVisualizzazioneTacche(tacchePrincipiante, statoTacche.get("Principiante"));
-        aggiornaVisualizzazioneTacche(taccheIntermedio, statoTacche.get("Intermedio"));
-        aggiornaVisualizzazioneTacche(taccheAvanzato, statoTacche.get("Avanzato"));
+        aggiornaVisualizzazioneTacche(tacchePrincipiante, statoTacche.get(Costanti.LIVELLO_PRINCIPIANTE));
+        aggiornaVisualizzazioneTacche(taccheIntermedio, statoTacche.get(Costanti.LIVELLO_INTERMEDIO));
+        aggiornaVisualizzazioneTacche(taccheAvanzato, statoTacche.get(Costanti.LIVELLO_AVANZATO));
     }
 
     private void aggiornaVisualizzazioneTacche(HBox tacche, List<String> stato) 
@@ -546,23 +546,23 @@ public class StaticCodeController
         Map<String, List<String>> loadedProgress = ProgressManager.loadProgress(utente, titolo);
 
         //Conversione R e G in rosso e verde
-        statoTacche.put("Principiante", ProgressManager.translateTacche(loadedProgress.getOrDefault("Principiante", new ArrayList<>()), 5));
-        statoTacche.put("Intermedio", ProgressManager.translateTacche(loadedProgress.getOrDefault("Intermedio", new ArrayList<>()), 5));
-        statoTacche.put("Avanzato", ProgressManager.translateTacche(loadedProgress.getOrDefault("Avanzato", new ArrayList<>()), 5));
+        statoTacche.put(Costanti.LIVELLO_PRINCIPIANTE, ProgressManager.translateTacche(loadedProgress.getOrDefault(Costanti.LIVELLO_PRINCIPIANTE, new ArrayList<>()), 5));
+        statoTacche.put(Costanti.LIVELLO_INTERMEDIO, ProgressManager.translateTacche(loadedProgress.getOrDefault(Costanti.LIVELLO_INTERMEDIO, new ArrayList<>()), 5));
+        statoTacche.put(Costanti.LIVELLO_AVANZATO, ProgressManager.translateTacche(loadedProgress.getOrDefault(Costanti.LIVELLO_AVANZATO, new ArrayList<>()), 5));
 
-        if (loadedProgress.getOrDefault("Principiante", new ArrayList<>()).stream().anyMatch(t -> t.equals("G") || t.equals("R"))) 
+        if (loadedProgress.getOrDefault(Costanti.LIVELLO_PRINCIPIANTE, new ArrayList<>()).stream().anyMatch(t -> t.equals("G") || t.equals("R"))) 
         {
-            livelliCompletati.add("Principiante");
-            livelloCorrente = "Intermedio";
+            livelliCompletati.add(Costanti.LIVELLO_PRINCIPIANTE);
+            livelloCorrente = Costanti.LIVELLO_INTERMEDIO;
         }
-        if (loadedProgress.getOrDefault("Intermedio", new ArrayList<>()).stream().anyMatch(t -> t.equals("G") || t.equals("R"))) 
+        if (loadedProgress.getOrDefault(Costanti.LIVELLO_INTERMEDIO, new ArrayList<>()).stream().anyMatch(t -> t.equals("G") || t.equals("R"))) 
         {
-            livelliCompletati.add("Intermedio");
-            livelloCorrente = "Avanzato";
+            livelliCompletati.add(Costanti.LIVELLO_INTERMEDIO);
+            livelloCorrente = Costanti.LIVELLO_AVANZATO;
         }
-        if (loadedProgress.getOrDefault("Avanzato", new ArrayList<>()).stream().anyMatch(t -> t.equals("G") || t.equals("R"))) 
+        if (loadedProgress.getOrDefault(Costanti.LIVELLO_AVANZATO, new ArrayList<>()).stream().anyMatch(t -> t.equals("G") || t.equals("R"))) 
         {
-            livelliCompletati.add("Avanzato");
+            livelliCompletati.add(Costanti.LIVELLO_AVANZATO);
 
             //Pop-up per completamento dell'esercizio
             ButtonType btnRisultati = new ButtonType("Visualizza i risultati", ButtonBar.ButtonData.OK_DONE);
@@ -618,15 +618,15 @@ public class StaticCodeController
     @FXML
     private void vaiALivelloPrincipiante(ActionEvent event) 
     {
-        if (livelliCompletati.contains("Principiante")) 
+        if (livelliCompletati.contains(Costanti.LIVELLO_PRINCIPIANTE)) 
         {
-            feedbackLabel.setText("Hai già completato il livello Principiante!");
+            feedbackLabel.setText("Hai già completato il livello " + Costanti.LIVELLO_PRINCIPIANTE + "!");
             feedbackLabel.setStyle("-fx-text-fill: " + Costanti.BLU + ";");
             feedbackLabel.setVisible(true);
             return;
         }
 
-        livelloCorrente = "Principiante";
+        livelloCorrente = Costanti.LIVELLO_PRINCIPIANTE;
         aggiornaStileLivelli();
         setTimestampInizioLivello(); //Reset timestamp quando si entra nel livello
     }
@@ -634,23 +634,23 @@ public class StaticCodeController
     @FXML
     private void vaiALivelloIntermedio(ActionEvent event) 
     {
-        if (!livelliCompletati.contains("Principiante")) 
+        if (!livelliCompletati.contains(Costanti.LIVELLO_PRINCIPIANTE)) 
         {
-            feedbackLabel.setText("Completa il livello Principiante prima di accedere a Intermedio!");
+            feedbackLabel.setText("Completa il livello " + Costanti.LIVELLO_PRINCIPIANTE + " prima di accedere a " + Costanti.LIVELLO_INTERMEDIO + "!");
             feedbackLabel.setStyle("-fx-text-fill: " + Costanti.ROSSO + ";");
             feedbackLabel.setVisible(true);
             return;
         }
 
-        if (livelliCompletati.contains("Intermedio")) 
+        if (livelliCompletati.contains(Costanti.LIVELLO_INTERMEDIO)) 
         {
-            feedbackLabel.setText("Hai già completato il livello Intermedio!");
+            feedbackLabel.setText("Hai già completato il livello " + Costanti.LIVELLO_INTERMEDIO+ "!");
             feedbackLabel.setStyle("-fx-text-fill: " + Costanti.BLU + ";");
             feedbackLabel.setVisible(true);
             return;
         }
 
-        livelloCorrente = "Intermedio";
+        livelloCorrente = Costanti.LIVELLO_INTERMEDIO;
         aggiornaStileLivelli();
         setTimestampInizioLivello(); //Reset timestamp quando si entra nel livello
     }
@@ -658,23 +658,23 @@ public class StaticCodeController
     @FXML
     private void vaiALivelloAvanzato(ActionEvent event) 
     {
-        if (!livelliCompletati.contains("Intermedio")) 
+        if (!livelliCompletati.contains(Costanti.LIVELLO_INTERMEDIO)) 
         {
-            feedbackLabel.setText("Completa il livello Intermedio prima di accedere a Avanzato!");
+            feedbackLabel.setText("Completa il livello " + Costanti.LIVELLO_INTERMEDIO + " prima di accedere a " + Costanti.LIVELLO_AVANZATO + "!");
             feedbackLabel.setStyle("-fx-text-fill: " + Costanti.ROSSO + ";");
             feedbackLabel.setVisible(true);
             return;
         }
 
-        if (livelliCompletati.contains("Avanzato")) 
+        if (livelliCompletati.contains(Costanti.LIVELLO_AVANZATO)) 
         {
-            feedbackLabel.setText("Hai già completato il livello Avanzato!");
+            feedbackLabel.setText("Hai già completato il livello " + Costanti.LIVELLO_AVANZATO + "!");
             feedbackLabel.setStyle("-fx-text-fill: " + Costanti.BLU + ";");
             feedbackLabel.setVisible(true);
             return;
         }
 
-        livelloCorrente = "Avanzato";
+        livelloCorrente = Costanti.LIVELLO_AVANZATO;
         aggiornaStileLivelli();
         setTimestampInizioLivello(); //Reset timestamp quando si entra nel livello
     }
@@ -687,9 +687,9 @@ public class StaticCodeController
 
         switch (livelloCorrente) 
         {
-            case "Principiante" -> btnPrincipiante.getStyleClass().add("selected");
-            case "Intermedio" -> btnIntermedio.getStyleClass().add("selected");
-            case "Avanzato" -> btnAvanzato.getStyleClass().add("selected");
+            case Costanti.LIVELLO_PRINCIPIANTE -> btnPrincipiante.getStyleClass().add("selected");
+            case Costanti.LIVELLO_INTERMEDIO -> btnIntermedio.getStyleClass().add("selected");
+            case Costanti.LIVELLO_AVANZATO -> btnAvanzato.getStyleClass().add("selected");
         }
     }
     //endregion

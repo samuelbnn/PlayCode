@@ -13,6 +13,7 @@ public class Costanti
     public static final String PATH_FXML_LOGIN = "/application/fxml/login.fxml";
     public static final String PATH_FXML_MENU = "/application/fxml/menu.fxml";
     public static final String PATH_FXML_RISULTATI = "/application/fxml/risultati.fxml";
+    public static final String PATH_FXML_DESCRIZIONE = "/application/fxml/descrizione.fxml";
 
     public static final String PATH_FXML_LEGGICODICE = "/application/fxml/leggiCodice.fxml";
     public static final String PATH_FXML_STAMPAOUTPUT = "/application/fxml/stampaOutput.fxml";
@@ -23,7 +24,6 @@ public class Costanti
 
     // Altre costanti globali
     public static final String APP_NAME = "PlayCode";
-
     public static final String LOGO = "application/fxml/img/logo.png";
 
     // Chiavi per gli esercizi
@@ -35,7 +35,7 @@ public class Costanti
     public static final String ES_STAMPA_OUTPUT = "Stampa Output";    
 
     //Grado livello
-    public static final String LIVELLO_BASE = "Principiante";
+    public static final String LIVELLO_PRINCIPIANTE = "Principiante";
     public static final String LIVELLO_INTERMEDIO = "Intermedio";
     public static final String LIVELLO_AVANZATO = "Avanzato";
 

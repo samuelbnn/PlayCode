@@ -14,11 +14,9 @@ public class App extends Application
     {
         try
         {
-            System.out.println("Carico schermata iniziale...");
             Parent root = FXMLLoader.load(App.class.getResource(Costanti.PATH_FXML_HOMEPAGE));
             Image image = new Image(Costanti.LOGO);
             primaryStage.getIcons().add(image);
-            System.out.println("FXML caricato!");
             Scene scene = new Scene(root);
             primaryStage.setTitle(Costanti.APP_NAME);
             primaryStage.setScene(scene);

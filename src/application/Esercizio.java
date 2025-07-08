@@ -10,7 +10,8 @@ public class Esercizio
     String domanda;
     String[] risposte;
     int indiceCorretta;
-    public boolean isAnswered = false; // Nuovo campo per tracciare se la domanda è già stata risolta
+
+    public boolean isAnswered = false;  // Indica se l'utente ha risposto correttamente
 
     public Esercizio(String titolo, Enum grado, String codice, String domanda, String[] risposte, int indiceCorretta) 
     {

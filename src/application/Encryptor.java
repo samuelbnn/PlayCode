@@ -7,10 +7,8 @@ import java.util.Scanner;
 
 public class Encryptor 
 {
-
     public String encryptString(String input) throws NoSuchAlgorithmException 
     {
-
         //MessageDigest works with MD2, MD5, SHA-1, SHA-224, SHA-256
         //SHA-384 and SHA-512
         MessageDigest md = MessageDigest.getInstance("MD5");
@@ -30,17 +28,15 @@ public class Encryptor
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Insert your Password: \n");
-
         String userInput = scanner.nextLine();
 
         if(encryptor.encryptString(userInput).equals(hashedPas))
         {
-            System.out.println("Correct!");
+            System.out.println("Corretto!");
         } 
         else
         {
-            System.out.println("Wrong!");
+            System.out.println("Errore!");
         }
         scanner.close();
     }

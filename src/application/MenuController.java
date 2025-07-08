@@ -18,10 +18,8 @@ import java.util.List;
 
 public class MenuController 
 {
-
     @FXML
     private Label userNameLabel;
-
     @FXML
     private ProgressBar progressBarTrovaErrore;
     @FXML
@@ -35,6 +33,9 @@ public class MenuController
     @FXML
     private ProgressBar progressBarStampaOutput;
         
+    /**
+     * Inizializza la schermata del menu e aggiorna le progress bar in base all'utente.
+     */
     @FXML
     public void initialize() 
     {
@@ -49,7 +50,7 @@ public class MenuController
             userNameLabel.setText("Benvenuto!");
         }
 
-        // Imposta le progress bar solo se non sono null per evitare NullPointerException
+        // Imposta le progress bar
         if (progressBarLinkedList != null)
             progressBarLinkedList.setProgress(calcolaAvanzamentoProgressBar(username, Costanti.ES_LINKED_LIST));
         if (progressBarCompletaCodice != null)
@@ -64,6 +65,9 @@ public class MenuController
             progressBarStaticCode.setProgress(calcolaAvanzamentoProgressBar(username, Costanti.ES_STATIC_CODE));
     }
 
+    /**
+     * Calcola il valore di avanzamento della progress bar.
+     */
     private double calcolaAvanzamentoProgressBar(String utente, String titoloEsercizio) 
     {
         String grado = leggiGradoPerUtenteEsercizio(utente, titoloEsercizio);
@@ -79,6 +83,9 @@ public class MenuController
         };
     }
 
+    /**
+     * Lettura grado raggiunto dall'utente per uno specifico esercizio.
+     */
     private String leggiGradoPerUtenteEsercizio(String utente, String titoloEsercizio) 
     {
         Path path = Paths.get(Costanti.PATH_FILE_STATO);
@@ -124,23 +131,31 @@ public class MenuController
     
     //#region Esercizi
 
+    /**
+     * Avvio dell'esercizio "Leggi il Codice".
+     */
     @FXML
-    private void apriLeggiCodice(ActionEvent event) throws IOException {
-        FXMLLoader popupLoader = new FXMLLoader(App.class.getResource("fxml/descrizione.fxml"));
+    private void apriLeggiCodice(ActionEvent event) throws IOException 
+    {
+        FXMLLoader popupLoader = new FXMLLoader(App.class.getResource(Costanti.PATH_FXML_DESCRIZIONE));
         Parent popupRoot = popupLoader.load();
         DescrizioneEsercizioController descrController = popupLoader.getController();
 
-        descrController.setTitolo("Leggi il Codice");
+        descrController.setTitolo(Costanti.ES_LEGGI_CODICE);
         descrController.setDescrizione("Leggi attentamente il codice fornito e comprendi il suo funzionamento." +
                                         "Rispondi alle domande per verificare la tua comprensione.");
         descrController.setAzioneInizia(() -> {
-            try {
+
+            try 
+            {
                 FXMLLoader loader = new FXMLLoader(App.class.getResource(Costanti.PATH_FXML_LEGGICODICE));
                 Parent root = loader.load();
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root));
                 stage.show();
-            } catch (IOException e) {
+            } 
+            catch (IOException e) 
+            {
                 e.printStackTrace();
             }
         });
@@ -153,22 +168,30 @@ public class MenuController
         popupStage.showAndWait();
     }
 
+    /**
+     * Avvio dell'esercizio "Stampa l'Output".
+     */
     @FXML
-    private void apriStampaOutput(ActionEvent event) throws IOException {
-        FXMLLoader popupLoader = new FXMLLoader(App.class.getResource("fxml/descrizione.fxml"));
+    private void apriStampaOutput(ActionEvent event) throws IOException 
+    {
+        FXMLLoader popupLoader = new FXMLLoader(App.class.getResource(Costanti.PATH_FXML_DESCRIZIONE));
         Parent popupRoot = popupLoader.load();
         DescrizioneEsercizioController descrController = popupLoader.getController();
 
-        descrController.setTitolo("Stampa l'Output");
+        descrController.setTitolo(Costanti.ES_STAMPA_OUTPUT);
         descrController.setDescrizione("Digita il codice corretto che genera l’output indicato.");
-        descrController.setAzioneInizia(() -> {
-            try {
+        descrController.setAzioneInizia(() -> 
+        {
+            try 
+            {
                 FXMLLoader loader = new FXMLLoader(App.class.getResource(Costanti.PATH_FXML_STAMPAOUTPUT));
                 Parent root = loader.load();
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root));
                 stage.show();
-            } catch (IOException e) {
+            } 
+            catch (IOException e) 
+            {
                 e.printStackTrace();
             }
         });
@@ -181,23 +204,31 @@ public class MenuController
         popupStage.showAndWait();
     }
 
+    /**
+     * Avvio dell'esercizio "Trova l'Errore".
+     */
     @FXML
-    private void apriTrovaErrore(ActionEvent event) throws IOException {
-        FXMLLoader popupLoader = new FXMLLoader(App.class.getResource("fxml/descrizione.fxml"));
+    private void apriTrovaErrore(ActionEvent event) throws IOException 
+    {
+        FXMLLoader popupLoader = new FXMLLoader(App.class.getResource(Costanti.PATH_FXML_DESCRIZIONE));
         Parent popupRoot = popupLoader.load();
         DescrizioneEsercizioController descrController = popupLoader.getController();
 
-        descrController.setTitolo("Trova l'Errore");
+        descrController.setTitolo(Costanti.ES_TROVA_ERRORE);
         descrController.setDescrizione("Analizza il codice proposto e individua gli errori di logica o sintassi." +
                                         "Scegli tra le opzioni quella che corregge correttamente il problema.");
-        descrController.setAzioneInizia(() -> {
-            try {
+        descrController.setAzioneInizia(() -> 
+        {
+            try 
+            {
                 FXMLLoader loader = new FXMLLoader(App.class.getResource(Costanti.PATH_FXML_TROVAERRORE));
                 Parent root = loader.load();
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root));
                 stage.show();
-            } catch (IOException e) {
+            } 
+            catch (IOException e) 
+            {
                 e.printStackTrace();
             }
         });
@@ -210,23 +241,31 @@ public class MenuController
         popupStage.showAndWait();
     }
 
+    /**
+     * Avvio dell'esercizio "Completa il Codice".
+     */
     @FXML
-    private void apriCompletaCodice(ActionEvent event) throws IOException {
-        FXMLLoader popupLoader = new FXMLLoader(App.class.getResource("fxml/descrizione.fxml"));
+    private void apriCompletaCodice(ActionEvent event) throws IOException 
+    {
+        FXMLLoader popupLoader = new FXMLLoader(App.class.getResource(Costanti.PATH_FXML_DESCRIZIONE));
         Parent popupRoot = popupLoader.load();
         DescrizioneEsercizioController descrController = popupLoader.getController();
 
-        descrController.setTitolo("Completa il Codice");
+        descrController.setTitolo(Costanti.ES_COMPLETA_CODICE);
         descrController.setDescrizione("Osserva il frammento di codice incompleto e riempi gli spazi vuoti." +
                                         "Inserisci le istruzioni corrette per far funzionare il programma.");
-        descrController.setAzioneInizia(() -> {
-            try {
+        descrController.setAzioneInizia(() -> 
+        {
+            try 
+            {
                 FXMLLoader loader = new FXMLLoader(App.class.getResource(Costanti.PATH_FXML_COMPLETACODICE));
                 Parent root = loader.load();
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root));
                 stage.show();
-            } catch (IOException e) {
+            } 
+            catch (IOException e) 
+            {
                 e.printStackTrace();
             }
         });
@@ -239,23 +278,31 @@ public class MenuController
         popupStage.showAndWait();
     }
     
+    /**
+     * Avvio dell'esercizio "Linked List".
+     */
     @FXML
-    private void apriLinkedList(ActionEvent event) throws IOException {
-        FXMLLoader popupLoader = new FXMLLoader(App.class.getResource("fxml/descrizione.fxml"));
+    private void apriLinkedList(ActionEvent event) throws IOException 
+    {
+        FXMLLoader popupLoader = new FXMLLoader(App.class.getResource(Costanti.PATH_FXML_DESCRIZIONE));
         Parent popupRoot = popupLoader.load();
         DescrizioneEsercizioController descrController = popupLoader.getController();
 
-        descrController.setTitolo("Linked List");
+        descrController.setTitolo(Costanti.ES_LINKED_LIST);
         descrController.setDescrizione("Lavora con strutture dati dinamiche come le liste collegate." +
                                         "Completa o modifica il codice per gestire correttamente nodi e collegamenti.");
-        descrController.setAzioneInizia(() -> {
-            try {
+        descrController.setAzioneInizia(() -> 
+        {
+            try 
+            {
                 FXMLLoader loader = new FXMLLoader(App.class.getResource(Costanti.PATH_FXML_LINKEDLIST));
                 Parent root = loader.load();
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root));
                 stage.show();
-            } catch (IOException e) {
+            } 
+            catch (IOException e) 
+            {
                 e.printStackTrace();
             }
         });
@@ -268,23 +315,31 @@ public class MenuController
         popupStage.showAndWait();
     }
 
+    /**
+     * Avvio dell'esercizio "Static Code".
+     */
     @FXML
-    private void apriStaticCode(ActionEvent event) throws IOException {
-        FXMLLoader popupLoader = new FXMLLoader(App.class.getResource("fxml/descrizione.fxml"));
+    private void apriStaticCode(ActionEvent event) throws IOException 
+    {
+        FXMLLoader popupLoader = new FXMLLoader(App.class.getResource(Costanti.PATH_FXML_DESCRIZIONE));
         Parent popupRoot = popupLoader.load();
         DescrizioneEsercizioController descrController = popupLoader.getController();
 
-        descrController.setTitolo("Static Code");
+        descrController.setTitolo(Costanti.ES_STATIC_CODE);
         descrController.setDescrizione("Analizza blocchi di codice statici, comprendendo classi e metodi." +
                                         "Risolvi quesiti focalizzati su struttura e comportamento statico in Java.");
-        descrController.setAzioneInizia(() -> {
-            try {
+        descrController.setAzioneInizia(() -> 
+        {
+            try 
+            {
                 FXMLLoader loader = new FXMLLoader(App.class.getResource(Costanti.PATH_FXML_STATICCODE));
                 Parent root = loader.load();
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root));
                 stage.show();
-            } catch (IOException e) {
+            } 
+            catch (IOException e) 
+            {
                 e.printStackTrace();
             }
         });
@@ -299,13 +354,16 @@ public class MenuController
 
     //#endregion
 
+    /**
+     * Esegue il logout e torna alla schermata principale.
+     */
     @FXML
     private void logout(ActionEvent event) 
     {
         try 
         {
             Session.setCurrentUser(null); 
-            Parent root = FXMLLoader.load(App.class.getResource(Costanti.PATH_FXML_HOMEPAGE)); // oppure "login.fxml"
+            Parent root = FXMLLoader.load(App.class.getResource(Costanti.PATH_FXML_HOMEPAGE));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();

@@ -35,10 +35,12 @@ public class AccountManager
     private final HashMap<String, String> loginInfo = new HashMap<>();
     private final Encryptor encryptor = new Encryptor();
 
+    /**
+     * Carica le informazioni di login dal file.
+     */
     @FXML
-    void initialize() 
+    void initialize()  
     {
-        // Load accounts from file at the start
         try 
         {
             updateLoginInfo();
@@ -49,6 +51,9 @@ public class AccountManager
         }
     }
 
+    /**
+     * Gestione visibilità password.
+     */
     @FXML
     void changeVisibility(ActionEvent event) 
     {
@@ -66,6 +71,9 @@ public class AccountManager
         }
     }
 
+    /**
+     * Verifica le credenziali dell'utente.
+     */
     @FXML
     void loginHandler(ActionEvent event) 
     {
@@ -122,6 +130,9 @@ public class AccountManager
         }
     }
 
+    /**
+     * Gestisce la creazione di un nuovo account.
+     */
     @FXML
     void createAccount(ActionEvent event) 
     {
@@ -155,7 +166,7 @@ public class AccountManager
                         try 
                         {
                             Session.setCurrentUser(user); // salva l'utente
-                            goto_menu(event);             // vai subito al menu
+                            goto_menu(event);
                         } 
                         catch (IOException e) 
                         {
@@ -176,6 +187,9 @@ public class AccountManager
         }
     }
 
+    /**
+     * Aggiorna login file.
+     */
     private void updateLoginInfo() throws IOException 
     {
         loginInfo.clear();
@@ -197,6 +211,9 @@ public class AccountManager
         }
     }
 
+    /**
+     * Registrazione nuovo account criptato nel file.
+     */
     private void writeToFile(String user, String psw) throws Exception 
     {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) 
@@ -210,6 +227,9 @@ public class AccountManager
         return password.isVisible() ? password.getText() : hiddenPassword.getText();
     }
 
+    /**
+     * Messaggi di feedback all'utente.
+     */
     private void showMessage(String message, boolean isSuccess) 
     {
         Platform.runLater(() -> {
@@ -219,7 +239,8 @@ public class AccountManager
             if (isSuccess) 
             {
                 messageField.setStyle("-fx-background-color: #d4edda; -fx-text-fill: #155724; -fx-border-color: #c3e6cb; -fx-border-radius: 4;");
-            } else 
+            } 
+            else 
             {
                 messageField.setStyle("-fx-background-color: #f8d7da; -fx-text-fill: #721c24; -fx-border-color: #f5c6cb; -fx-border-radius: 4;");
             }
@@ -239,16 +260,25 @@ public class AccountManager
         });
     }
 
+    /**
+     * Reindirizzamento al login.
+     */
     public void goto_login(ActionEvent event) throws IOException 
     {
         navigateTo(Costanti.PATH_FXML_LOGIN, event);
     }
 
+    /**
+     * Reindirizzamento al menu principale.
+     */
     public void goto_menu(ActionEvent event) throws IOException 
     {
         navigateTo(Costanti.PATH_FXML_MENU, event);
     }
 
+    /**
+     * Naviga a una schermata specificata dal file FXML.
+     */
     private void navigateTo(String fxmlFile, ActionEvent event) throws IOException 
     {
         Parent root = FXMLLoader.load(App.class.getResource(fxmlFile));

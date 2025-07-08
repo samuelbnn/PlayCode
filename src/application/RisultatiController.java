@@ -60,7 +60,7 @@ public class RisultatiController
             return;
         }
 
-        // Imposta cell factory per colorare le righe in base al punteggio
+        // Impostazione colorazione delle righe in base al punteggio
         risultatiListView.setCellFactory(lv -> new javafx.scene.control.ListCell<>() 
         {
             @Override
@@ -113,13 +113,16 @@ public class RisultatiController
             }
         });
 
-        // Populate the ListView with results
+        // Aggiungo i risultati alla ListView
         for (RisultatiController.Risultato risultato : lista) 
         {
             risultatiListView.getItems().add(risultato.toString());
         }
     }
 
+    /**
+     * Chiude la finestra dei risultati.
+     */
     @FXML
     private void chiudiSchermata() 
     {
@@ -127,13 +130,15 @@ public class RisultatiController
         stage.close();
     }
 
-    // Oggetto che contiene i dati di un singolo risultato
+    /**
+     * Classe che definisce il singolo risultato di un esercizio.
+     */
     public static class Risultato 
     {
         private final String esercizio;
         private final String livello;
         private final int risposteCorrette;
-        private final String durata; // aggiunto campo durata opzionale
+        private final String durata;
         private final LocalDateTime data;
 
         public Risultato(String esercizio, String livello, int risposteCorrette, String durata, LocalDateTime data) 
@@ -151,6 +156,9 @@ public class RisultatiController
         public String getDurata()           { return durata; }
         public LocalDateTime getData()      { return data; }
 
+        /**
+         * Stampa dei risultati ottenuti dall'utente.
+         */
         @Override
         public String toString() 
         { 
@@ -162,7 +170,7 @@ public class RisultatiController
     }
 
     /**
-     * Legge risultati.csv e restituisce la lista di Risultato per lo user specificato.
+     * Legge i risultati del csv e restituisce la lista del risultato per l'utente.
      */
     public static List<Risultato> leggiRisultatiPerUtente(String utente) throws IOException 
     {
@@ -172,7 +180,7 @@ public class RisultatiController
             return Collections.emptyList();
         }
 
-        // Trovo la riga dell'utente (assumo una sola riga per utente)
+        // Ricerca riga dell'utente
         String lineaUtente = Files.readAllLines(path, StandardCharsets.UTF_8).stream()
             .filter(l -> l.startsWith(utente + ","))
             .findFirst()
@@ -194,14 +202,16 @@ public class RisultatiController
 
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
-        while (bloccoMatcher.find()) {
+        while (bloccoMatcher.find()) 
+        {
             String contenuto = bloccoMatcher.group(1).trim();
             // separo nome esercizio da tutte le tuple
             int idxPar = contenuto.indexOf('(');
             String nomeEsercizio = contenuto.substring(0, idxPar).trim();
 
             Matcher tuplaMatcher = tuplaPattern.matcher(contenuto);
-            while (tuplaMatcher.find()) {
+            while (tuplaMatcher.find()) 
+            {
                 String livello = tuplaMatcher.group(1);
                 int count    = Integer.parseInt(tuplaMatcher.group(2));
                 String durata = tuplaMatcher.group(3);
