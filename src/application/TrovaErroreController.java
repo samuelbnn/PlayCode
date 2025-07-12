@@ -102,8 +102,8 @@ public class TrovaErroreController
                 "if (x > 5)\n    System.out.println(\"Grande\")\nelse\n    System.out.println(\"Piccolo\");", 
                 "Qual è l'errore sintattico in questo codice?", 
                 new String[]{
+                    "Manca il punto e virgola", 
                     "Mancano le parentesi graffe", 
-                    "Manca il punto e virgola dopo System.out.println(\"Grande\")", 
                     "Manca la dichiarazione di x", 
                     "Manca la parentesi tonda"}, 
                 0),
